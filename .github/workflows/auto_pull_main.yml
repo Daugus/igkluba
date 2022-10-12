@@ -17,7 +17,7 @@ jobs:
     # pasos
     steps:
     - name: ejecutar pull en servidor mediante ssh
-      uses: Daugus/igkluba@main
+    #  uses: Daugus/igkluba@main
       with:
         host: ${{ secrets.IP }}
         key: ${{ secrets.KEY }}
