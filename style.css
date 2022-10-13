@@ -12,3 +12,10 @@ body {
 
   background-color: #f0ffff;
 }
+
+.center {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
