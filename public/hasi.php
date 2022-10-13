@@ -7,7 +7,7 @@
 
   <title>Saioa hasi | IGKluba</title>
 
-  <link rel='stylesheet' href='style.css' />
+  <link rel='stylesheet' href='src/style.css' />
 </head>
 
 <?php
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $apodoEnviado = $_REQUEST['apodo'];
   $passEnviado = $_REQUEST['pass'];
 
-  include_once('db-config.php');
+  include_once(__DIR__ . '/../db-config.php');
   $usrCorrecto = $pdo->prepare('SELECT apodo, pass FROM cuenta WHERE apodo = :apodo;');
   $usrCorrecto->execute(['apodo' => $apodoEnviado]);
   $usrCorrecto = $usrCorrecto->fetch();
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="campo">
       <label for="pass">Pasahitza</label>
-      <input type="password" id="pass" name="pass" minlength="8" maxlength="30" required>
+      <input type="password" id="pass" name="pass" minlength="1" maxlength="30" required>
     </div>
 
     <button>Saioa hasi</button>

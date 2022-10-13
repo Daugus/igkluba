@@ -1,5 +1,5 @@
 <?php
-$envFile = file_get_contents(dirname(__DIR__) . '/env.json');
+$envFile = file_get_contents(__DIR__ . '/env.json');
 $env = json_decode($envFile, false);
 
 // Variables

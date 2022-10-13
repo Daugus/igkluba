@@ -7,8 +7,8 @@
 
   <title>Sortu kontua | IGKluba</title>
 
-  <link rel='stylesheet' href='style.css' />
-  <script src='script.js' defer></script>
+  <link rel='stylesheet' href='src/style.css' />
+  <script src='src/js/sortu.js' defer></script>
 </head>
 
 <?php
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $apodoEnviado = $_REQUEST['apodo'];
   $passEnviado = $_REQUEST['pass'];
 
-  include_once('db-config.php');
+  include_once(__DIR__ . '/../db-config.php');
   $usrCorrecto = $pdo->prepare('SELECT apodo, pass FROM cuenta WHERE apodo = :apodo;');
   $usrCorrecto->execute(['apodo' => $apodoEnviado]);
   $usrCorrecto = $usrCorrecto->fetch();

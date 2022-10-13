@@ -7,7 +7,7 @@
 
   <title>IGKluba</title>
 
-  <link rel='stylesheet' href='style.css' />
+  <link rel='stylesheet' href='src/style.css' />
 </head>
 
 <body>

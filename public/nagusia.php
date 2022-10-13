@@ -7,10 +7,13 @@
 
   <title>IGKluba | Nagusia</title>
 
-  <link rel='stylesheet' href='style.css' />
+  <link rel='stylesheet' href='src/style.css' />
 </head>
 
 <body>
+  <?php
+  echo (__DIR__ . '/../db-config.php');
+  ?>
 
 </body>
 

@@ -1,8 +1,7 @@
 const btnRegistro = document.querySelector('#registrarse');
-if (btnRegistro !== null) {
-  btnRegistro.addEventListener('click', (e) => {
-    e.preventDefault();
-    /*
+btnRegistro.addEventListener('click', (e) => {
+  e.preventDefault();
+  /*
      TODO: comprobar contraseña con regex
      TODO: comprobar contraseña entre ellas
      TODO: comprobar archivo ?
@@ -10,5 +9,4 @@ if (btnRegistro !== null) {
     ! TODO: encriptar contraseña
      btnRegistro.doClick();
      */
-  });
-}
+});
