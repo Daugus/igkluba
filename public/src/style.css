@@ -19,3 +19,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.error {
+  background-color: #ff3232;
+}

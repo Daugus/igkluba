@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $usrCorrecto->execute(['apodo' => $apodoEnviado]);
   $usrCorrecto = $usrCorrecto->fetch();
 
-  if (!empty($usrCorrecto) && $apodoEnviado === $usrCorrecto['apodo'] && $passEnviado === $usrCorrecto['pass']) {
+  if (!empty($usrCorrecto) && $apodoEnviado === $usrCorrecto['apodo'] && password_verify($passEnviado, $usrCorrecto['pass'])) {
     header('Location: nagusia.php');
   }
 

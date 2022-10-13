@@ -11,10 +11,6 @@
 </head>
 
 <body>
-  <?php
-  echo (__DIR__ . '/../db-config.php');
-  ?>
-
 </body>
 
 </html>
