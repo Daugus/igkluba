@@ -23,7 +23,7 @@ values (
     'lboyra',
     'admin',
     true,
-    '1234',
+    '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
     null,
     1
@@ -35,7 +35,7 @@ values (
     'dlc',
     'admin',
     true,
-    '1234',
+    '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2002-12-26',
     null,
     1
@@ -47,7 +47,7 @@ values (
     'ucabo',
     'irakasle',
     true,
-    '1234',
+    '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
     null,
     1
@@ -59,7 +59,7 @@ values (
     'xbravo',
     'ikasle',
     true,
-    '1234',
+    '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
     '1234abcd',
     1
@@ -71,7 +71,7 @@ values (
     'test',
     'ikasle',
     true,
-    '1234',
+    '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
     '1234abcd',
     1

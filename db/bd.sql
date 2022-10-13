@@ -22,7 +22,7 @@ create table if not exists cuenta (
   apodo varchar(20) not null,
   rol enum('Admin', 'Irakasle', 'Ikasle') not null,
   activo boolean not null,
-  pass varchar(30) not null,
+  pass varchar(100) not null,
   fecha_nacimiento date not null,
   cod_clase char(8),
   id_centro int unsigned not null,
