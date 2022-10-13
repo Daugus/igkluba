@@ -12,6 +12,8 @@
 
 <body>
   <h1>kaixo</h1>
+  <a href="login.php">Login</a>
+  <a href="sortu-kontua.php">Sortu kontua</a>
 </body>
 
 </html>
