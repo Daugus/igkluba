@@ -1,17 +1,10 @@
 <!DOCTYPE html>
-<html lang='en'>
-
-<head>
-  <meta charset='UTF-8' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-
-  <title>Sortu kontua | IGKluba</title>
-
-  <link rel='stylesheet' href='src/style.css' />
-  <script src='src/js/sortu.js' defer></script>
-</head>
+<html lang='eu'>
 
 <?php
+include_once('../templates/head.php');
+agregarHead('Sortu kontua | IGKluba', __FILE__);
+
 $claseInvalida = false;
 $imgInvalida = '';
 
@@ -35,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   if ($imgInvalida === '') {
-    include_once(__DIR__ . '/../db-config.php');
+    include_once('../modules/db-config.php');
     $clase = $pdo->prepare('SELECT cod FROM clase where cod = :cod');
     $clase->execute(['cod' => $_REQUEST['clase']]);
     $clase = $clase->fetch();
@@ -60,13 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $rutaArchivo = $directorio . $pdo->lastInsertId() . '.png';
       move_uploaded_file($archivo['tmp_name'], $rutaArchivo);
 
-      header('Location: hasi.php');
+      header('Location: hasi');
     }
   }
 }
 ?>
 
-<body class="center">
+<body class="flex-center">
   <form action="" method="post" enctype="multipart/form-data">
     <div class="campo">
       <label for="nombre">Izena</label>
@@ -87,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <label for="centro">Zentroa</label>
       <select name="centro" id="centro">
         <?php
-        include_once(__DIR__ . '/../db-config.php');
+        include_once('../modules/db-config.php');
         $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
         $centros->execute();
         $centros = $centros->fetchAll();

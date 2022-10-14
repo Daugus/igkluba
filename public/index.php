@@ -1,19 +1,15 @@
-<!DOCTYPE html>
-<html lang='eu'>
+<?php
+include_once('../modules/url.php');
+$url = getPage();
 
-<head>
-  <meta charset='UTF-8' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+$ruta_elegida = '';
 
-  <title>IGKluba</title>
+if (count($url) === 1) {
+  $ruta_elegida = '../views/' . $url[0] . '.php';
+}
 
-  <link rel='stylesheet' href='src/style.css' />
-</head>
+if (count($url) === 0 || !file_exists($ruta_elegida)) {
+  header('Location: hasiera');
+}
 
-<body>
-  <h1>kaixo</h1>
-  <a href="hasi.php">Saioa hasi</a>
-  <a href="sortu.php">Sortu kontua</a>
-</body>
-
-</html>
+include_once $ruta_elegida;
