@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'apellido' => $_REQUEST['apellido'],
         'apodo' => $_REQUEST['apodo'],
         'rol' => 'ikasle',
-        'activo' => false,
+        'activo' => 0,
         'pass' => password_hash($_REQUEST['pwd'], PASSWORD_DEFAULT),
         'fecha_nacimiento' => $_REQUEST['fecha'],
         'cod_clase' => $_REQUEST['clase'],

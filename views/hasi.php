@@ -6,9 +6,7 @@ include_once('../templates/head.php');
 include_once('../templates/header.php');
 agregarHead('Saioa hasi | IGKluba');
 headerLogin();
-?>
 
-<?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $apodoEnviado = $_REQUEST['apodo'];
   $passEnviado = $_REQUEST['pass'];
