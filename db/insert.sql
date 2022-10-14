@@ -13,6 +13,7 @@ insert into cuenta (
     activo,
     pass,
     fecha_nacimiento,
+    tel,
     cod_clase,
     id_centro
   )
@@ -26,6 +27,7 @@ values (
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
     null,
+    null,
     1
   ),
   (
@@ -38,6 +40,7 @@ values (
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2002-12-26',
     null,
+    null,
     1
   ),
   (
@@ -49,6 +52,7 @@ values (
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
+    '987654321',
     null,
     1
   ),
@@ -61,6 +65,7 @@ values (
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
+    null,
     '1234abcd',
     1
   ),
@@ -73,6 +78,7 @@ values (
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
+    null,
     '1234abcd',
     1
   );

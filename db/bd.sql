@@ -24,6 +24,7 @@ create table if not exists cuenta (
   activo boolean not null,
   pass varchar(100) not null,
   fecha_nacimiento date not null,
+  tel char(9),
   cod_clase char(8),
   id_centro int unsigned not null,
   foreign key (cod_clase) references clase(cod),
