@@ -19,7 +19,7 @@ create table if not exists cuenta (
   id int unsigned auto_increment primary key,
   nombre varchar(50) not null,
   apellido varchar(50) not null,
-  apodo varchar(20) not null,
+  apodo varchar(20) unique not null,
   rol enum('Admin', 'Irakasle', 'Ikasle') not null,
   activo boolean not null,
   pass varchar(100) not null,

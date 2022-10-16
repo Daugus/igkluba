@@ -1,7 +1,7 @@
 <?php
 function agregarHead(String $title = 'IGKluba', String $archivoJS = '')
 {
-  include_once('../modules/url.php');
+  include_once '../modules/url.php';
   $url = getUrl();
 ?>
 
@@ -15,7 +15,7 @@ function agregarHead(String $title = 'IGKluba', String $archivoJS = '')
     <?php
     if (!empty($archivoJS)) {
     ?>
-      <script src='src/js/<?php echo basename('$archivoJS', '.php') ?>.js' defer></script>
+      <script src='src/js/<?php echo basename("$archivoJS", '.php') ?>.js' defer></script>
     <?php
     }
     ?>

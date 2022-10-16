@@ -2,8 +2,11 @@
 <html lang='eu'>
 
 <?php
-include_once('../templates/head.php');
-include_once('../templates/header.php');
+include_once '../modules/session.php';
+checkLogin();
+
+include_once '../templates/head.php';
+include_once '../templates/header.php';
 agregarHead('IGKluba');
 ?>
 

@@ -1,5 +1,5 @@
 <?php
-include_once('../modules/url.php');
+include_once '../modules/url.php';
 $url = getPage();
 
 $ruta_elegida = '';
