@@ -46,8 +46,8 @@ header {
   gap: 1rem;
 }
 
-.fa-star {
-  color: #fadb5f;
+.libro {
+  text-align: center;
 }
 
 /* ===== clases de utilidad ===== */
@@ -69,4 +69,8 @@ a.btn {
 
 .error {
   background-color: var(--clr-error);
+}
+
+.fa-star {
+  color: #fadb5f;
 }
