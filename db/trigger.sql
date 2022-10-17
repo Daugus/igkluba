@@ -4,7 +4,7 @@ delimiter //
 create trigger recalcular_medias_insert after insert on review
 for each row
 begin
-  declare media_nota float (3, 2) unsigned;
+  declare media_nota float(3, 2) unsigned;
   declare media_edad int(2) unsigned;
   declare cuenta_reviews int unsigned;
 
@@ -21,7 +21,7 @@ end;//
 create trigger recalcular_medias_update after update on review
 for each row
 begin
-  declare media_nota float (3, 2) unsigned;
+  declare media_nota float(3, 2) unsigned;
   declare media_edad int(2) unsigned;
   declare cuenta_reviews int unsigned;
 
@@ -38,7 +38,7 @@ end;//
 create trigger recalcular_medias_delete after delete on review
 for each row
 begin
-  declare media_nota float (3, 2) unsigned;
+  declare media_nota float(3, 2) unsigned;
   declare media_edad int(2) unsigned;
   declare cuenta_reviews int unsigned;
 

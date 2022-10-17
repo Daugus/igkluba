@@ -15,7 +15,6 @@ $apodoInvalido = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (array_key_exists('imagen', $_FILES) && !empty($_FILES['imagen']['name'])) {
     $archivo = $_FILES['imagen'];
-    print_r($archivo);
 
     $directorio = './src/img/profila/';
     $imageFileType = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
