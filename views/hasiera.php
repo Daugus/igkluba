@@ -7,6 +7,7 @@ checkLogin();
 
 include_once '../templates/head.php';
 include_once '../templates/header.php';
+
 agregarHead('IGKluba');
 ?>
 
@@ -20,6 +21,10 @@ agregarHead('IGKluba');
       En esta web hay libros para chavales y no tan jovencitos: los más exitosos…incluso los que no nos han gustado. ¡Busca y disfruta!
     </p>
   </main>
+  <?php include_once '../templates/footer.php';
+  footerInicio(); 
+  ?>
+  
 
 </body>
 
