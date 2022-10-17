@@ -1,15 +1,18 @@
 <?php
 include_once '../modules/url.php';
-$url = getPage();
+$url['page'] = getPage();
 
 $ruta_elegida = '';
 
-if (count($url) === 1) {
-  $ruta_elegida = '../views/' . $url[0] . '.php';
+if (count($url['page']) === 1) {
+  $ruta_elegida = '../views/' . $url['page'][0] . '.php';
+} else if (count($url['page']) === 2 && $url['page'][0] === 'liburu') {
+  $ruta_elegida = '../views/' . $url['page'][0] . '.php';
+  $id = $url['page'][1];
 }
 
-if (count($url) === 0 || !file_exists($ruta_elegida)) {
-  header('Location: hasiera');
+if (empty($ruta_elegida) || !file_exists($ruta_elegida)) {
+  header('Location: ' . getUrl() . '/hasiera');
 }
 
 include_once $ruta_elegida;

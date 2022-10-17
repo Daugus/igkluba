@@ -70,100 +70,102 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<body class="flex-center">
-  <form action="" method="post" enctype="multipart/form-data">
-    <div class="campo">
-      <label for="nombre">Izena</label>
-      <input type="text" id="nombre" name="nombre" maxlength="50">
-    </div>
+<body>
+  <main class="flex-center">
+    <form action="" method="post" enctype="multipart/form-data">
+      <div class="campo">
+        <label for="nombre">Izena</label>
+        <input type="text" id="nombre" name="nombre" maxlength="50">
+      </div>
 
-    <div class="campo">
-      <label for="apellido">Abizena</label>
-      <input type="text" id="apellido" name="apellido" maxlength="50">
-    </div>
+      <div class="campo">
+        <label for="apellido">Abizena</label>
+        <input type="text" id="apellido" name="apellido" maxlength="50">
+      </div>
 
-    <div class="campo">
-      <label for="apodo">Ezizena</label>
-      <input type="text" id="apodo" name="apodo" maxlength="20">
+      <div class="campo">
+        <label for="apodo">Ezizena</label>
+        <input type="text" id="apodo" name="apodo" maxlength="20">
 
-      <?php
-      if ($apodoInvalido) {
-      ?>
-        <div class="error">
-          <p>Ese apodo ya está existe</p>
-        </div>
-      <?php
-      }
-      ?>
-    </div>
-
-    <div class="campo">
-      <label for="centro">Zentroa</label>
-      <select name="centro" id="centro">
         <?php
-        include_once '../modules/db-config.php';
-        $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
-        $centros->execute();
-        $centros = $centros->fetchAll();
-
-        foreach ($centros as $centro) {
+        if ($apodoInvalido) {
         ?>
-          <option value="<?php echo $centro['id'] ?>"><?php echo $centro['nombre'] ?></option>
+          <div class="error">
+            <p>Ese apodo ya está existe</p>
+          </div>
         <?php
         }
         ?>
-      </select>
-    </div>
+      </div>
 
-    <div class="campo">
-      <label for="clase">Klasea</label>
-      <input type="text" id="clase" name="clase" maxlength="8">
+      <div class="campo">
+        <label for="centro">Zentroa</label>
+        <select name="centro" id="centro">
+          <?php
+          include_once '../modules/db-config.php';
+          $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
+          $centros->execute();
+          $centros = $centros->fetchAll();
 
-      <?php
-      if ($claseInvalida) {
-      ?>
-        <div class="error">
-          <p>Esa clase no existe</p>
-        </div>
-      <?php
-      }
-      ?>
-    </div>
+          foreach ($centros as $centro) {
+          ?>
+            <option value="<?php echo $centro['id'] ?>"><?php echo $centro['nombre'] ?></option>
+          <?php
+          }
+          ?>
+        </select>
+      </div>
 
-    <div class="campo">
-      <label for="fecha">Jaiotze data</label>
-      <input type="date" id="fecha" name="fecha">
-    </div>
+      <div class="campo">
+        <label for="clase">Klasea</label>
+        <input type="text" id="clase" name="clase" maxlength="8">
 
-    <div class="campo">
-      <label for="imagen">Profileko argazkia</label>
-      <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png">
+        <?php
+        if ($claseInvalida) {
+        ?>
+          <div class="error">
+            <p>Esa clase no existe</p>
+          </div>
+        <?php
+        }
+        ?>
+      </div>
 
-      <?php
-      if ($imgInvalida !== '') {
-      ?>
-        <div class="error">
-          <p>
-            <?php echo $imgInvalida ?>
-          </p>
-        </div>
-      <?php
-      }
-      ?>
-    </div>
+      <div class="campo">
+        <label for="fecha">Jaiotze data</label>
+        <input type="date" id="fecha" name="fecha">
+      </div>
 
-    <div class="campo">
-      <label for="pwd">Pasahitza</label>
-      <input type="password" id="pwd" name="pwd" maxlength="30">
-    </div>
+      <div class="campo">
+        <label for="imagen">Profileko argazkia</label>
+        <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png">
 
-    <div class="campo">
-      <label for="pwdConf">Pasahitza berridatzi</label>
-      <input type="password" id="pwdConf" name="pwdConf" maxlength="30">
-    </div>
+        <?php
+        if ($imgInvalida !== '') {
+        ?>
+          <div class="error">
+            <p>
+              <?php echo $imgInvalida ?>
+            </p>
+          </div>
+        <?php
+        }
+        ?>
+      </div>
 
-    <button type="submit" id="registrarse">Sortu kontua</button>
-  </form>
+      <div class="campo">
+        <label for="pwd">Pasahitza</label>
+        <input type="password" id="pwd" name="pwd" maxlength="30">
+      </div>
+
+      <div class="campo">
+        <label for="pwdConf">Pasahitza berridatzi</label>
+        <input type="password" id="pwdConf" name="pwdConf" maxlength="30">
+      </div>
+
+      <button type="submit" id="registrarse">Sortu kontua</button>
+    </form>
+  </main>
 </body>
 
 </html>

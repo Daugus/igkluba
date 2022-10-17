@@ -46,6 +46,10 @@ header {
   gap: 1rem;
 }
 
+.fa-star {
+  color: #fadb5f;
+}
+
 /* ===== clases de utilidad ===== */
 .flex-center {
   display: flex;

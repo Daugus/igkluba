@@ -47,9 +47,14 @@ create table if not exists libro (
   nota_media float(3, 2) unsigned not null default 0,
   edad_media tinyint(2) unsigned not null default 0,
   formato enum('Nobela', 'Komikia', 'Nobela Grafikoa', 'Manga') not null,
-  etiqueta varchar(15),
   sinopsis varchar(2550) not null,
   enlace varchar(255) not null
+);
+create table if not exists etiqueta (
+  nombre varchar(15) not null,
+  id_libro int unsigned,
+  primary key (nombre, id_libro),
+  foreign key (id_libro) references libro(id)
 );
 create table if not exists idioma (nombre varchar(30) primary key);
 create table if not exists idiomas_libro (

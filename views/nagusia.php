@@ -10,7 +10,9 @@ agregarHead('IGKluba');
 ?>
 
 <body>
-  <a href="logout">Logout</a>
+  <main>
+    <a href="logout">Logout</a>
+  </main>
 </body>
 
 </html>
