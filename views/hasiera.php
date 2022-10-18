@@ -7,19 +7,22 @@ checkLogin();
 
 include_once '../templates/head.php';
 include_once '../templates/header.php';
+include_once '../templates/footer.php';
 agregarHead('IGKluba');
 ?>
 
-<body>
+<body class="flex-stretch-col">
   <?php headerInicio() ?>
 
-  <main>
+  <main id="hasiera">
     <h1>Irakurle Gazteen Kluba</h1>
     <p>
       Muchos jóvenes de Secundaria nos apasionan por la lectura. Sin embargo, en las librerías hay tantos libros que no sabemos por dónde empezar!
       En esta web hay libros para chavales y no tan jovencitos: los más exitosos…incluso los que no nos han gustado. ¡Busca y disfruta!
     </p>
   </main>
+
+  <?php footerInicio() ?>
 
 </body>
 

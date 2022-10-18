@@ -33,6 +33,10 @@ agregarHead($titulo_castellano . ' | IGKluba');
 ?>
 
 <body>
+  <?php
+  include_once '../templates/header.php';
+  headerLogin();
+  ?>
   <main>
     <a href="<?php echo $libro['enlace'] ?>" target="_blank" rel="noopener noreferrer"><img src="../src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada" width="200"></a>
     <h2><?php echo $titulo_castellano ?></h2>

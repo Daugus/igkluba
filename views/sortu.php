@@ -68,10 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 }
+
+include_once '../templates/header.php';
+agregarHead('Saioa hasi | IGKluba', __FILE__);
+headerLogin();
 ?>
 
-<body>
-  <main class="flex-center">
+<body class="flex-stretch-col">
+  <main class="flex-center-row">
     <form action="" method="post" enctype="multipart/form-data">
       <div class="campo">
         <label for="nombre">Izena</label>
@@ -166,6 +170,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <button type="submit" id="registrarse">Sortu kontua</button>
     </form>
   </main>
+
+  <?php
+  include_once '../templates/footer.php';
+  footerInicio();
+  ?>
 </body>
 
 </html>

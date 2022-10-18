@@ -6,9 +6,6 @@ include_once '../modules/session.php';
 checkLogin();
 
 include_once '../templates/head.php';
-include_once '../templates/header.php';
-agregarHead('Saioa hasi | IGKluba', __FILE__);
-headerLogin();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $apodoEnviado = $_REQUEST['apodo'];
@@ -28,10 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   echo 'Ezizena edo pasahitza txarto sartu egin da. Saiatu berriz.';
 }
+
+include_once '../templates/header.php';
+agregarHead('Saioa hasi | IGKluba', __FILE__);
+headerLogin();
 ?>
 
-<body>
-  <main class="flex-center">
+<body class="flex-stretch-col">
+  <main class="flex-center-row">
     <form action="" method="post">
       <div class="campo">
         <label for="apodo">Ezizena</label>
@@ -45,6 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <button id="login">Saioa hasi</button>
     </form>
   </main>
+
+  <?php
+  include_once '../templates/footer.php';
+  footerInicio();
+  ?>
 </body>
 
 </html>

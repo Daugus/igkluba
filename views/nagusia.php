@@ -9,12 +9,12 @@ include_once '../templates/head.php';
 agregarHead('IGKluba');
 ?>
 
-<body>
+<body class="flex-stretch-col">
   <?php
   include_once '../templates/header.php';
   headerLogin();
   ?>
-  <main class="flex-center">
+  <main class="flex-center-row">
     <?php
     include_once '../modules/db-config.php';
     $libros = $pdo->prepare('SELECT l.id, il.titulo_alternativo titulo, l.autor, l.nota_media FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro WHERE il.nombre_idioma = "Gaztelania" ORDER BY l.nota_media DESC;');
@@ -32,6 +32,10 @@ agregarHead('IGKluba');
     }
     ?>
   </main>
+  <?php
+  include_once '../templates/footer.php';
+  footerGeneral();
+  ?>
 </body>
 
 </html>
