@@ -12,7 +12,7 @@ agregarHead('IGKluba');
 <body class="flex-stretch-col">
   <?php
   include_once '../templates/header.php';
-  headerLogin();
+  headerGeneral();
   ?>
   <main class="flex-center-row">
     <?php

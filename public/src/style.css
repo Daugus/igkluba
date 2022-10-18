@@ -12,6 +12,16 @@
   --clr-blanco: #ffffff;
 
   --gradiente: linear-gradient(to right, #14409e, #2784a8, #27d4eb);
+  --sombra-superior: 0 -0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
+  --sombra-inferior: 0 0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
+
+  font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: 'Inter var', sans-serif;
+  }
 }
 
 /* ===== general ===== */
@@ -23,9 +33,9 @@ a:visited {
 
 /* ===== header ===== */
 header {
-  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.2);
   padding: 1rem 4rem;
   background-color: var(--clr-blanco);
+  box-shadow: var(--sombra-inferior);
 }
 
 /* --- hasiera --- */
@@ -45,6 +55,64 @@ header {
 #header-inicio ul {
   justify-content: end;
   gap: 1rem;
+}
+
+/* --- general --- */
+#perfil {
+  display: flex;
+  justify-content: right;
+  float: right;
+
+  padding: 0.625rem 0.875rem;
+
+  height: 6%;
+  width: 6%;
+}
+
+#nav-general {
+  background-color: var(--clr-gris-oscuro);
+  box-shadow: var(--sombra-inferior);
+
+  border-bottom: 3px solid;
+  border-image-slice: 1;
+  border-image-source: var(--gradiente);
+
+  padding-block: 0.75rem;
+}
+
+#nav-general ul {
+  gap: 0.25rem 8rem;
+  flex-wrap: wrap;
+}
+
+#nav-general li {
+  text-align: center;
+  white-space: nowrap;
+}
+
+#nav-general a {
+  color: var(--clr-blanco);
+  text-decoration: none;
+  opacity: 0.6;
+  font-size: 1.1rem;
+}
+
+.header li a:hover,
+#nav-general a:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  text-shadow: 0px 0px 0.625rem var(--clr-acento);
+}
+
+.buscador {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-top: 1%;
+}
+
+#buscador {
+  width: 50%;
 }
 
 /* ===== body ===== */
@@ -70,6 +138,7 @@ footer {
   border-top: 3px solid;
   border-image-slice: 1;
   border-image-source: var(--gradiente);
+  box-shadow: var(--sombra-superior);
 }
 
 /* --- hasiera --- */
@@ -189,6 +258,8 @@ a.btn {
   font-weight: 600;
   padding: 0.5rem 1rem;
   border-radius: 10px;
+
+  white-space: nowrap;
 }
 
 .error {
@@ -198,3 +269,5 @@ a.btn {
 .fa-star {
   color: #fadb5f;
 }
+
+/* test */
