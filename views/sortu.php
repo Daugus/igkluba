@@ -5,9 +5,6 @@
 include_once '../modules/session.php';
 checkLogin();
 
-include_once '../templates/head.php';
-agregarHead('Sortu kontua | IGKluba', __FILE__);
-
 $imgInvalida = '';
 $claseInvalida = false;
 $apodoInvalido = false;
@@ -69,8 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
+include_once '../templates/head.php';
+agregarHead('Sortu kontua | IGKluba', __FILE__, false);
+
 include_once '../templates/header.php';
-agregarHead('Saioa hasi | IGKluba', __FILE__);
 headerLogin();
 ?>
 

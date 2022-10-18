@@ -10,7 +10,7 @@ function footerInicio(): void
 function footerGeneral(): void
 {
 ?>
-  <footer id="footer-general">
+  <footer class="flex-center-col" id="footer-general">
     <div class="footer-row">
       <div class="footer-col">
         <p>Perfil</p>
@@ -36,17 +36,15 @@ function footerGeneral(): void
       </div>
 
       <div class="footer-texto">
-        <ul>
-          <li>Muchos jóvenes de Secundaria nos apasionan por la lectura. Sin embargo, en las librerías hay tantos libros que no sabemos por dónde empezar. En esta web hay libros para jóvenes y no tan jóvenes: los más exitosos… también los que no nos han gustado. ¡Busca y disfruta!
-          </li>
-          <br>
+        <ul class="flex-stretch-col">
+          <li>Muchos jóvenes de Secundaria nos apasionan por la lectura. Sin embargo, en las librerías hay tantos libros que no sabemos por dónde empezar. En esta web hay libros para jóvenes y no tan jóvenes: los más exitosos… también los que no nos han gustado. ¡Busca y disfruta!</li>
 
           <li>Contacto: <a href="mailto:leireirakas21@gmail.com">leireirakas21@gmail.com</a></li>
-          <br>
-
-          <li>Esta web ha sido diseñada por los alumnos Augusto, Xabier y Unai de último curso de Formación Profesional del CIFPTxurdinaga LHII.</li>
         </ul>
       </div>
+    </div>
+
+    <p>Esta web ha sido diseñada por los alumnos Augusto, Unai y Xabi de último curso de Formación Profesional de Txurdinaga.</p>
   </footer>
 <?php
 }

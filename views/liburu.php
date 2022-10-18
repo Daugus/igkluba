@@ -5,7 +5,8 @@
 include_once '../modules/session.php';
 checkSession();
 
-if (!isset($id)) header('Location: nagusia');
+if (!isset($busqueda)) header('Location: /nagusia');
+$id = $busqueda;
 
 include_once '../modules/db-config.php';
 $libro = $pdo->prepare('SELECT * FROM libro WHERE id = :id;');
@@ -41,7 +42,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
     <a href="<?php echo $libro['enlace'] ?>" target="_blank" rel="noopener noreferrer"><img src="../src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada" width="200"></a>
     <h2><?php echo $titulo_castellano ?></h2>
     <p><?php echo $libro['serie'] . ' #' . $libro['serie_num'] ?></p>
-    <p>Autorea: <?php echo $libro['autor'] ?></p>
+    <p>Egilea: <?php echo $libro['autor'] ?></p>
     <p><?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i></p>
     <p>Argitaratze data: <?php echo $libro['fecha_pub'] ?></p>
     <?php

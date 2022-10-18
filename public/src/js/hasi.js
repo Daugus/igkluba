@@ -1,3 +1,5 @@
+'use strict';
+
 const btnLogin = document.querySelector('#login');
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();

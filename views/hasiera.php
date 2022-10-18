@@ -8,7 +8,7 @@ checkLogin();
 include_once '../templates/head.php';
 include_once '../templates/header.php';
 include_once '../templates/footer.php';
-agregarHead('IGKluba');
+agregarHead('IGKluba', '', false);
 ?>
 
 <body class="flex-stretch-col">

@@ -1,3 +1,5 @@
+'use strict';
+
 const btnRegistro = document.querySelector('#registrarse');
 btnRegistro.addEventListener('click', (e) => {
   e.preventDefault();
