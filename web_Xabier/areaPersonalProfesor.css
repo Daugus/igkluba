@@ -1,0 +1,165 @@
+/* Global */
+
+body {
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: azure;
+    margin: 0;
+}
+
+table  {
+    border: 3px solid dodgerblue;
+    border-radius: 10px; 
+    text-align: center;
+    padding: 10px;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    background-color: black;
+    border-radius: 5px;
+    margin-right: 5%;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#botones :hover {
+    background-color: rgb(70, 70, 70);   
+}
+
+#botones :active {
+    background-color: rgb(150, 150, 150);   
+}
+
+.pfp {
+    width: 120px;
+    height: 120px;
+    margin-top: 1%;
+    border: 3px solid dodgerblue;
+    border-radius: 10px; 
+}
+
+#contenedorClase {
+    border: 3px solid dodgerblue;
+    border-radius: 10px; 
+}
+
+#contenedorAlumno {
+    display: grid; 
+    text-align: center;
+    margin-top: 3%;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 25px; 
+    grid-template-areas: 
+      "FOTO-PERFIL LI"; 
+}
+.FOTO-PERFIL { 
+    grid-area: FOTO-PERFIL; 
+}
+.NOMBRE-APELLIDOS { 
+    grid-area: NOMBRE-APELLIDOS; 
+}
+.LI { 
+    grid-area: LI; 
+    text-align: left; 
+}
+
+#eliminar {
+    background-color: red;
+    border-radius: 5px;
+    color: black;
+    padding: 10px;
+    text-decoration: none;
+    margin-left: 35%;
+}
+
+#eliminar :hover {
+    background-color: rgb(200, 0, 0);   
+}
+
+#eliminar :active {
+    background-color: rgb(255, 40, 40);   
+}
+
+/* Movil */
+@media screen and (max-width: 500px) {
+
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 2%;
+    }
+
+    #contenedorUsuario {
+        display: flex;
+        justify-content: center;
+    }
+
+    .perfilLista {
+        margin-left: -15%;
+    }
+
+    #botones {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+/* Tablet */
+@media screen and (min-width: 501px) and (max-width: 1000px) {
+
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase {
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-top: 2%;
+    }
+
+    #contenedorUsuario {
+        display: flex;
+        justify-content: center;
+    }
+
+    .perfilLista {
+        margin-left: -15%;
+    }
+
+    #botones {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+/* PC */
+@media screen and (min-width: 1000px) {
+
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase {
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-top: 2%;
+    }
+
+    #contenedorUsuario {
+        display: flex;
+        justify-content: center;
+    }
+
+    .perfilLista {
+        margin-left: -15%;
+    }
+
+    #botones {
+        display: flex;
+        justify-content: center;
+    }
+
+    .LI { 
+        margin-left: -35%;
+    }
+}

@@ -1,0 +1,110 @@
+/* global */
+body {
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: azure;
+    margin: 0;
+}
+
+
+nav, ul, li, a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+header {
+    box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);
+    margin-bottom: 10%;
+}
+
+div {
+    text-align: center;
+}
+
+#botones {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+a {
+    background-color: black;
+    border-radius: 5px;
+    margin-right: 5%;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#botones :hover {
+    background-color: rgb(70, 70, 70);   
+    border-radius: 5px;
+}
+
+#botones :active {
+    background-color: rgb(150, 150, 150);   
+    border-radius: 5px;
+}
+
+/* Movil */
+@media screen and (max-width: 500px) {
+    p {
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+
+
+    nav, ul, li, a {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+}
+
+/* Tablet */
+@media screen and (min-width: 501px) and (max-width: 1000px) {
+
+    nav, ul, li, a {
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+
+    #IGKlub {
+        margin-left: -300%;
+    }
+    
+    p {
+        margin-left: 15%;
+        margin-right: 15%;
+        background-color: rgba(200, 200, 200, 0.5);
+        border: 3px solid dodgerblue;
+        border-radius: 10px;
+        color: black;
+    }
+}
+
+
+/* PC */
+@media screen and (min-width: 1000px) {
+    p {
+        margin-left: 25%;
+        margin-right: 25%;
+        background-color: rgba(200, 200, 200, 0.5);
+        border: 3px solid dodgerblue;
+        border-radius: 10px;
+        color: black;
+    }
+
+    #IGKlub {
+        margin-left: -300%;
+    }
+
+    nav, ul, li, a {
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+
+}
