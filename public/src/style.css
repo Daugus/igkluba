@@ -21,6 +21,7 @@ a:visited {
 /* ===== body ===== */
 body {
   background-color: var(--clr-fondo);
+  font-family: 'Inter UI', sans-serif;
 }
 
 /* ===== header ===== */
@@ -195,7 +196,6 @@ ul{
   margin-bottom: 35px;
   font-weight:500;
   position: relative;
-
 }
 
 .footer-col h4::before {
@@ -287,17 +287,16 @@ ul{
 body {
   background: white;
   font-family: 'Inter UI', sans-serif;
-  margin: 0;
-  padding: 20px;
+  
 }
 .page {
   background: #e2e2e5;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 40px);
+  height: 100% ;
   position: absolute;
   place-content: center;
-  width: calc(100% - 40px);
+  width: 100% ;
 }
 @media (max-width: 767px) {
   .page {
@@ -320,11 +319,12 @@ body {
   }
 }
 .left {
-  background: white;
+  background: var(--clr-blanco);
   height: calc(100% - 40px);
   top: 20px;
   position: relative;
   width: 50%;
+  border-radius: 7px;
 }
 @media (max-width: 767px) {
   .left {
@@ -335,15 +335,17 @@ body {
   }
 }
 .login {
-  font-size: 50px;
-  font-weight: 900;
-  margin: 50px 40px 40px;
+  font-size: 35px;
+  font-weight: 800;
+  margin: 20px 40px 10px;
 }
 .eula {
-  color: #999;
-  font-size: 14px;
-  line-height: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 40px;
+  text-align: center;
+  text-transform: uppercase;
 }
 .right {
   background: #474A59;
@@ -360,16 +362,7 @@ body {
     max-height: 350px;
   }
 }
-svg {
-  position: absolute;
-  width: 320px;
-}
-path {
-  fill: none;
-  stroke: url(#linearGradient);;
-  stroke-width: 4;
-  stroke-dasharray: 240 1386;
-}
+
 .form {
   margin: 40px;
   position: absolute;
@@ -386,7 +379,7 @@ input {
   background: transparent;
   border: 0;
   color: #f2f2f2;
-  font-size: 20px;
+  font-size: 15px;
   height: 30px;
   line-height: 30px;
   outline: none !important;
@@ -399,10 +392,40 @@ input::-moz-focus-inner {
   color: #707075;
   margin-top: 40px;
   transition: color 300ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-left: 30%;
+  font-size: 20px;
 }
 #submit:focus {
   color: #f2f2f2;
 }
-#submit:active {
+#submit:hover {
   color: #d0d0d2;
 }
+
+/* btn itzuli */
+.btn-one {
+  line-height: 50px;
+  height: 50px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#formulario{
+  width: 45%;
+  color: rgb(128, 124, 124);
+  transition: all 0.1s ease;
+}
+
+
+#formulario label{
+  font-size: 14px;
+  height: 16px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+
