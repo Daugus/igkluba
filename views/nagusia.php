@@ -23,10 +23,10 @@ agregarHead('IGKluba');
     foreach ($libros as $libro) {
     ?>
       <div class="flex-center-col libro">
-        <a href="liburu/<?php echo $libro['id'] ?>" class="libro__portada"><img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>"></a>
-        <div>
-          <p class="libro__titulo"><?php echo $libro['titulo'] ?></p>
-          <p class="libro__autor"><?php echo $libro['autor'] ?></p>
+        <a href="/liburu/<?php echo $libro['id'] ?>" class="libro__portada"><img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>"></a>
+        <div class="flex-center-col libro__texto">
+          <a href="/liburu/<?php echo $libro['id'] ?>" class="libro__titulo"><?php echo $libro['titulo'] ?></a>
+          <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor"><?php echo $libro['autor'] ?></a>
           <p class="libro__nota"><?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i></p>
         </div>
       </div>

@@ -11,7 +11,12 @@
   --clr-negro: #000000;
   --clr-blanco: #ffffff;
 
-  --gradiente: linear-gradient(to right, #14409e, #2784a8, #27d4eb);
+  --clr-gradiente-inicial: #14409e;
+  --clr-gradiente-central: #2784a8;
+  --clr-gradiente-final: #27d4eb;
+  --gradiente: linear-gradient(to right, var(--clr-gradiente-inicial), var(--clr-gradiente-central), var(--clr-gradiente-final));
+  --borde-gradiente-radius: linear-gradient(var(--clr-blanco), var(--clr-blanco)) padding-box, var(--gradiente) border-box;
+
   --sombra-superior: 0 -0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
   --sombra-inferior: 0 0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
 
@@ -36,6 +41,42 @@ a,
 a:visited {
   text-decoration: none;
   color: var(--clr-acento);
+}
+
+input:not([type='file']),
+.file-input-text {
+  border: none;
+
+  border-bottom: 3px solid;
+  border-image-slice: 1;
+  border-image-source: var(--gradiente);
+
+  margin: 0.25rem;
+}
+
+.file-input-text i {
+  color: var(--clr-gradiente-inicial);
+  margin-right: 0.25rem;
+}
+
+[type='date'] {
+  cursor: text;
+}
+
+button,
+select,
+option,
+.file-input-text,
+[type='file'] {
+  cursor: pointer;
+}
+
+input:focus-visible,
+button:focus-visible,
+select:focus-visible,
+.file-input-text:focus-visible {
+  outline: var(--clr-gris-oscuro) solid 0.1875rem;
+  outline-offset: 0.25rem;
 }
 
 /* ===== header ===== */
@@ -86,7 +127,6 @@ header {
   right: 5%;
   background: none;
   border: none;
-  cursor: pointer;
 }
 
 #perfil img {
@@ -98,15 +138,17 @@ header {
 }
 
 /* ===== nav ===== */
-/* --- general --- */
+#header-login,
 #nav-general {
-  background-color: var(--clr-gris-oscuro);
-  box-shadow: var(--sombra-inferior);
-
   border-bottom: 3px solid;
   border-image-slice: 1;
   border-image-source: var(--gradiente);
 
+  box-shadow: var(--sombra-inferior);
+}
+/* --- general --- */
+#nav-general {
+  background-color: var(--clr-gris-oscuro);
   padding-block: 0.75rem;
 }
 
@@ -145,19 +187,48 @@ main {
   padding-block: 2rem;
 }
 
+/* --- hasi y sortu --- */
+.form-hasi-sortu {
+  background-color: var(--clr-blanco);
+  padding: 1.75rem 2.75rem;
+
+  border: 3px solid transparent;
+  border-radius: 2rem;
+  background: var(--borde-gradiente-radius);
+
+  gap: 0.625rem;
+}
+
+.form-hasi-sortu .campo {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 1rem;
+}
+
+.form-hasi-sortu :is(select, [type='file'], [type='date']) {
+  justify-self: stretch;
+}
+
+.form-hasi-sortu button {
+  margin-top: 1rem;
+  align-self: center;
+}
+
 /* --- nagusia --- */
 #main-nagusia {
-  --grid-layout-gap: 8rem;
-  --grid-column-count: 4;
-  --grid-item--min-width: 8rem;
+  --gap: 8rem;
+  --min-width: 8rem;
 
-  --gap-count: calc(var(--grid-column-count) - 1);
-  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
-  --grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+  --total-gap-width: calc(3 * var(--gap));
+  --libro-max-width: calc((100% - var(--total-gap-width)) / 4);
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
-  grid-gap: 2rem var(--grid-layout-gap);
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--min-width), var(--libro-max-width)), 1fr));
+  grid-gap: 2rem var(--gap);
   align-items: start;
 }
 
@@ -166,9 +237,21 @@ main {
   gap: 0.5rem;
 }
 
+.libro a {
+  color: var(--clr-negro);
+}
+
+.libro__texto,
+.libro__titulo {
+  width: 120%;
+}
+
 .libro__titulo {
   font-weight: 600;
   font-size: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .libro__autor {
@@ -328,4 +411,6 @@ a.btn {
   color: #fadb5f;
 }
 
-/* test */
+.hidden {
+  display: none;
+}

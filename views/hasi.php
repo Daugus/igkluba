@@ -33,13 +33,14 @@ headerLogin();
 
 <body class="flex-stretch-col">
   <main class="flex-center-row">
-    <form action="" method="post">
+    <form action="" method="post" class="flex-stretch-col form-hasi-sortu">
       <div class="campo">
-        <label for="apodo">Ezizena</label>
+        <label for="apodo">Ezizena:</label>
         <input type="text" id="apodo" name="apodo" minlength="1" maxlength="20" required>
       </div>
+
       <div class="campo">
-        <label for="pass">Pasahitza</label>
+        <label for="pass">Pasahitza:</label>
         <input type="password" id="pass" name="pass" minlength="1" maxlength="30" required>
       </div>
 

@@ -75,19 +75,19 @@ headerLogin();
 
 <body class="flex-stretch-col">
   <main class="flex-center-row">
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" class="flex-stretch-col form-hasi-sortu">
       <div class="campo">
-        <label for="nombre">Izena</label>
+        <label for="nombre">Izena:</label>
         <input type="text" id="nombre" name="nombre" maxlength="50">
       </div>
 
       <div class="campo">
-        <label for="apellido">Abizena</label>
+        <label for="apellido">Abizena:</label>
         <input type="text" id="apellido" name="apellido" maxlength="50">
       </div>
 
       <div class="campo">
-        <label for="apodo">Ezizena</label>
+        <label for="apodo">Ezizena:</label>
         <input type="text" id="apodo" name="apodo" maxlength="20">
 
         <?php
@@ -102,7 +102,7 @@ headerLogin();
       </div>
 
       <div class="campo">
-        <label for="centro">Zentroa</label>
+        <label for="centro">Zentroa:</label>
         <select name="centro" id="centro">
           <?php
           include_once '../modules/db-config.php';
@@ -120,7 +120,7 @@ headerLogin();
       </div>
 
       <div class="campo">
-        <label for="clase">Klasea</label>
+        <label for="clase">Klasea:</label>
         <input type="text" id="clase" name="clase" maxlength="8">
 
         <?php
@@ -135,13 +135,14 @@ headerLogin();
       </div>
 
       <div class="campo">
-        <label for="fecha">Jaiotze data</label>
+        <label for="fecha">Jaiotze data:</label>
         <input type="date" id="fecha" name="fecha">
       </div>
 
       <div class="campo">
-        <label for="imagen">Profileko argazkia</label>
-        <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png">
+        <label for="imagen">Profileko argazkia:</label>
+        <label for="imagen" class="file-input-text" tabindex="0"><i class="fa-solid fa-file-image"></i> <span>Aukeratu argazki bat...</span></label>
+        <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" class="hidden">
 
         <?php
         if ($imgInvalida !== '') {
@@ -157,12 +158,12 @@ headerLogin();
       </div>
 
       <div class="campo">
-        <label for="pwd">Pasahitza</label>
+        <label for="pwd">Pasahitza:</label>
         <input type="password" id="pwd" name="pwd" maxlength="30">
       </div>
 
       <div class="campo">
-        <label for="pwdConf">Pasahitza berridatzi</label>
+        <label for="pwdConf">Pasahitza berridatzi:</label>
         <input type="password" id="pwdConf" name="pwdConf" maxlength="30">
       </div>
 

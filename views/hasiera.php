@@ -16,10 +16,7 @@ agregarHead('IGKluba', '', false);
 
   <main id="hasiera">
     <h1>Irakurle Gazteen Kluba</h1>
-    <p>
-      Muchos jóvenes de Secundaria nos apasionan por la lectura. Sin embargo, en las librerías hay tantos libros que no sabemos por dónde empezar!
-      En esta web hay libros para chavales y no tan jovencitos: los más exitosos…incluso los que no nos han gustado. ¡Busca y disfruta!
-    </p>
+    <p>Bigarren Hezkuntzako gazte askok irakurtzeko zaletasuna dugu. Hala ere, liburudendetan hainbeste liburu daude, ez dakigula nondik hasi! Webgune honetan gaztetxuentzako eta ez hain gaztetxuentzako liburuak daude: arrakastatsuenak…baita gustatu ez zaizkigunak ere. Bilatu eta gozatu!</p>
   </main>
 
   <?php footerInicio() ?>

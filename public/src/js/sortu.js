@@ -1,5 +1,12 @@
 'use strict';
 
+const fileInput = document.querySelector('#imagen');
+const labelFileInput = document.querySelector('.file-input-text');
+labelFileInput.addEventListener('keyup', (e) => {
+  if (['Enter', 'Space'].includes(e.code)) fileInput.click();
+});
+fileInput.addEventListener('input', () => (labelFileInput.querySelector('span').innerText = fileInput.files[0].name));
+
 const btnRegistro = document.querySelector('#registrarse');
 btnRegistro.addEventListener('click', (e) => {
   e.preventDefault();
