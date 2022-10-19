@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <div class="page">
     <div class="container">
-      <div class="left">
+      <div class="left" id="hasi-left">
         <div class="eula">
           <img src="src/img/soloLogo.png" alt="logo">
         </div>
@@ -44,32 +44,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         
       </div>
-      <div class="right">
-        <div class="form" id="formulario">
-          <label for="email" >Ezizena</label>
-          <input type="email" id="email" placeholder="Sartu Email-a">
-          <label for="password" >Pasahitza</label>
-          <input type="password" id="password" placeholder="Sartu pasahitza">
-          <input type="submit" id="submit" value="Bidali">
-        </div>
+      <div class="right" id="registro-hasi">
+
+        <form class="form" id="formulario" action="" method="post">
+          <label for="apodo" >Ezizena</label>
+          <input type="text" id="apodo" name="apodo" placeholder="Sartu zure ezizena-a" required>
+          <label for="pass" >Pasahitza</label>
+          <input type="password" id="pass" name="pass" placeholder="Sartu pasahitza" required>
+          <button type="submit" id="registrarse">Bidali</button>
+        </form>
       </div>
     </div>
   </div>
 
-  <main class="flex-center">
-    <form action="" method="post">
-      <div class="campo">
-        <label for="apodo">Ezizena</label>
-        <input type="text" id="apodo" name="apodo" minlength="1" maxlength="20" required>
-      </div>
-      <div class="campo">
-        <label for="pass">Pasahitza</label>
-        <input type="password" id="pass" name="pass" minlength="1" maxlength="30" required>
-      </div>
-
-      <button id="login">SAIOA HASI</button>
-    </form>
-  </main>
+ 
 </body>
 
 </html>

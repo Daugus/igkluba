@@ -71,100 +71,135 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<body class="flex-center">
-  <form action="" method="post" enctype="multipart/form-data">
-    <div class="campo">
-      <label for="nombre">Izena</label>
-      <input type="text" id="nombre" name="nombre" maxlength="50">
-    </div>
-
-    <div class="campo">
-      <label for="apellido">Abizena</label>
-      <input type="text" id="apellido" name="apellido" maxlength="50">
-    </div>
-
-    <div class="campo">
-      <label for="apodo">Ezizena</label>
-      <input type="text" id="apodo" name="apodo" maxlength="20">
-
-      <?php
-      if ($apodoInvalido) {
-      ?>
-        <div class="error">
-          <p>Ese apodo ya está existe</p>
+<body>
+  <div class="page">
+    <div class="container">
+      <div class="left">
+        <div class="eula">
+          <img src="src/img/soloLogo.png" alt="logo">
         </div>
-      <?php
-      }
-      ?>
-    </div>
+        <div class="login">SAIOA SORTU</div>
 
-    <div class="campo">
-      <label for="centro">Zentroa</label>
-      <select name="centro" id="centro">
-        <?php
-        include_once '../modules/db-config.php';
-        $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
-        $centros->execute();
-        $centros = $centros->fetchAll();
-
-        foreach ($centros as $centro) {
-        ?>
-          <option value="<?php echo $centro['id'] ?>"><?php echo $centro['nombre'] ?></option>
-        <?php
-        }
-        ?>
-      </select>
-    </div>
-
-    <div class="campo">
-      <label for="clase">Klasea</label>
-      <input type="text" id="clase" name="clase" maxlength="8">
-
-      <?php
-      if ($claseInvalida) {
-      ?>
-        <div class="error">
-          <p>Esa clase no existe</p>
+        <div class="btn-one">
+          <a href="/">ITZULI</a>
         </div>
-      <?php
-      }
-      ?>
+
+      </div>
+      <div class="right">
+
+        <main class="flex-center-row">
+          <form action="" method="post" enctype="multipart/form-data">
+          <div class="flexbox-container">
+            <div>
+            <div class="campo">
+              <label for="nombre">Izena</label>
+              <input type="text" id="nombre" name="nombre" maxlength="50">
+            </div>
+
+            <div class="campo">
+              <label for="apellido">Abizena</label>
+              <input type="text" id="apellido" name="apellido" maxlength="50">
+            </div>
+
+            <div class="campo">
+              <label for="apodo">Ezizena</label>
+              <input type="text" id="apodo" name="apodo" maxlength="20">
+
+              <?php
+              if ($apodoInvalido) {
+              ?>
+                <div class="error">
+                  <p>Ese apodo ya está existe</p>
+                </div>
+              <?php
+              }
+              ?>
+            </div>
+
+            <div class="campo">
+              <label for="centro">Zentroa</label>
+              <select name="centro" id="centro">
+                <?php
+                include_once '../modules/db-config.php';
+                $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
+                $centros->execute();
+                $centros = $centros->fetchAll();
+
+                foreach ($centros as $centro) {
+                ?>
+                  <option value="<?php echo $centro['id'] ?>"><?php echo $centro['nombre'] ?></option>
+                <?php
+                }
+                ?>
+              </select>
+            </div>
+
+            
+
+            <div class="campo">
+              <label for="clase">Klasea</label>
+              <input type="text" id="clase" name="clase" maxlength="8">
+
+              <?php
+              if ($claseInvalida) {
+              ?>
+                <div class="error">
+                  <p>Esa clase no existe</p>
+                </div>
+              <?php
+              }
+              ?>
+            </div>
+
+            </div>
+            <div>
+
+            <div class="campo">
+              <label for="fecha">Jaiotze data</label>
+              <input type="date" id="fecha" name="fecha">
+            </div>
+
+            <div class="campo">
+              <label for="imagen">Profileko argazkia</label>
+              <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png">
+
+              <?php
+              if ($imgInvalida !== '') {
+              ?>
+                <div class="error">
+                  <p>
+                    <?php echo $imgInvalida ?>
+                  </p>
+                </div>
+              <?php
+              }
+              ?>
+            </div>
+
+            <div class="campo">
+              <label for="pwd">Pasahitza</label>
+              <input type="password" id="pwd" name="pwd" maxlength="30">
+            </div>
+
+            <div class="campo">
+              <label for="pwdConf">Pasahitza berridatzi</label>
+              <input type="password" id="pwdConf" name="pwdConf" maxlength="30">
+            </div>
+            
+        <button type="submit" id="registrarse">Sortu kontua</button>
+            </div>
+            
+            
+          </form>
+          
+        </main>
+      </div>
     </div>
+  </div>
 
-    <div class="campo">
-      <label for="fecha">Jaiotze data</label>
-      <input type="date" id="fecha" name="fecha">
-    </div>
 
-    <div class="campo">
-      <label for="imagen">Profileko argazkia</label>
-      <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png">
-
-      <?php
-      if ($imgInvalida !== '') {
-      ?>
-        <div class="error">
-          <p>
-            <?php echo $imgInvalida ?>
-          </p>
-        </div>
-      <?php
-      }
-      ?>
-    </div>
-
-    <div class="campo">
-      <label for="pwd">Pasahitza</label>
-      <input type="password" id="pwd" name="pwd" maxlength="30">
-    </div>
-
-    <div class="campo">
-      <label for="pwdConf">Pasahitza berridatzi</label>
-      <input type="password" id="pwdConf" name="pwdConf" maxlength="30">
-    </div>
-
-    <button type="submit" id="registrarse">Sortu kontua</button>
-  </form>
 </body>
+
+
 
 </html>
