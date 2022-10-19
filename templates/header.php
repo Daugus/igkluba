@@ -33,8 +33,8 @@ function headerGeneral(): void
       <a href="/"><img src="/src/img/logo.png" alt="Logo IGKluba"></a>
     </div>
 
-    <form id="buscador" action="" method="GET" class="flex-center-row">
-      <input id="busqueda" type="search" name="buscador" placeholder="Bilatu liburua edo egilea...">
+    <form id="buscador" action="/bilaketa" method="POST" class="flex-center-row">
+      <input id="busqueda" type="search" name="busqueda" placeholder="Bilatu liburua edo egilea...">
       <button id="buscar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
     </form>
 
@@ -42,16 +42,9 @@ function headerGeneral(): void
       <a href="/gune-pertsonala">
         <?php
         $rutaImagen = '/src/img/profila/' . $_SESSION['usr']['id'] .  '.png';
-        if (file_exists('../public' . $rutaImagen)) {
+        if (!file_exists('../public' . $rutaImagen)) $rutaImagen = '/src/img/profila/default.svg';
         ?>
-          <img src="<?php echo $rutaImagen ?>" alt="Profileko argazkia">
-        <?php
-        } else {
-        ?>
-          <i class="fa-solid fa-user"></i>
-        <?php
-        }
-        ?>
+        <img src="<?php echo $rutaImagen ?>" alt="Profileko argazkia">
       </a>
     </div>
   </header>

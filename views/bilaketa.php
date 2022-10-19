@@ -5,10 +5,16 @@
 include_once '../modules/session.php';
 checkSession();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['busqueda'])) {
+  $busqueda = preg_replace('/^#/', 'e:', str_replace(' ', '_', trim($_REQUEST['busqueda'])));
+  header('Location: /bilaketa/' . $busqueda);
+}
+
 if (!isset($busqueda)) header('Location: /nagusia');
+$busqueda = str_replace('_', ' ', $busqueda);
 
 include_once '../templates/head.php';
-agregarHead('term' . ' | IGKluba');
+agregarHead($busqueda . ' | IGKluba');
 ?>
 
 <body class="flex-stretch-col">

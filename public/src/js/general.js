@@ -11,6 +11,5 @@ const btnBuscar = document.querySelector('#buscar');
 
 btnBuscar.addEventListener('click', (e) => {
   e.preventDefault();
-  // if (campoBusqueda.value !== '') console.log(`/bilaketa/${campoBusqueda.value}`);
-  if (campoBusqueda.value !== '') window.location = `/bilaketa/${campoBusqueda.value}`;
+  if (campoBusqueda.value !== '') formBuscador.submit();
 });

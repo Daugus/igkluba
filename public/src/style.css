@@ -71,23 +71,30 @@ header {
 
 #buscador {
   flex-basis: 45%;
+  position: relative;
 }
 
 #buscador input {
   flex: 1 0;
+  padding: 1rem 2rem;
+  border: 2px solid var(--clr-gris-oscuro);
+  border-radius: 2rem;
 }
 
 #buscador button {
+  position: absolute;
+  right: 5%;
   background: none;
   border: none;
   cursor: pointer;
 }
 
-#perfil :is(img, i) {
-  width: 5vw;
+#perfil img {
+  height: 5vw;
+}
+
+#perfil img[src$='png'] {
   border-radius: 100%;
-  text-align: center;
-  font-size: 5vw;
 }
 
 /* ===== nav ===== */
@@ -133,11 +140,44 @@ header {
 /* ===== main ===== */
 main {
   flex-grow: 1;
+  width: 75vw;
+  margin-inline: auto;
+  padding-block: 2rem;
 }
 
 /* --- nagusia --- */
+#main-nagusia {
+  --grid-layout-gap: 8rem;
+  --grid-column-count: 4;
+  --grid-item--min-width: 8rem;
+
+  --gap-count: calc(var(--grid-column-count) - 1);
+  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+  --grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
+  grid-gap: 2rem var(--grid-layout-gap);
+  align-items: start;
+}
+
 .libro {
   text-align: center;
+  gap: 0.5rem;
+}
+
+.libro__titulo {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.libro__autor {
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+.libro__nota {
+  font-size: 1.125rem;
 }
 
 /* ===== footer ===== */
