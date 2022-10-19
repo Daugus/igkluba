@@ -151,7 +151,7 @@ values (1, 'Gaztelania', 'El Camino de los Reyes'),
   (2, 'Ingelesa', 'Words of Radiance'),
   (3, 'Gaztelania', 'Juramentada'),
   (3, 'Ingelesa', 'Oathbringer'),
-  (4, 'Gaztelania', 'El ritmo de la Guerra'),
+  (4, 'Gaztelania', 'El Ritmo de la Guerra'),
   (4, 'Ingelesa', 'Rhythm of War');
 insert into review (
     id,
