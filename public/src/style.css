@@ -363,7 +363,7 @@ main {
   font-size: 1.5rem;
 }
 
-#main-libro #titulo-serie .nota {
+#main-libro .nota {
   font-size: 1.35rem;
 }
 
@@ -381,8 +381,8 @@ main {
   gap: 1.5rem;
 }
 
-#main-libro #reviews .nota {
-  font-size: 1.5rem;
+.ver-respuestas {
+  font-size: 1.15rem;
 }
 
 /* ===== footer ===== */

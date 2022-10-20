@@ -6,7 +6,7 @@ $ruta_elegida = '';
 
 if (count($page) === 1) {
   $ruta_elegida = '../views/' . $page[0] . '.php';
-} else if (count($page) === 2 && in_array($page[0], ['liburu', 'bilaketa'])) {
+} else if (count($page) === 2 && in_array($page[0], ['liburu', 'bilaketa', 'erantzunak'])) {
   $ruta_elegida = '../views/' . $page[0] . '.php';
   $busqueda = $page[1];
 }

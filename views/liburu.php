@@ -14,7 +14,7 @@ $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
 if (empty($libro)) header('Location: ../nagusia');
 
-$reviews = $pdo->prepare('SELECT * FROM review WHERE id_libro = :id_libro');
+$reviews = $pdo->prepare('SELECT * FROM review WHERE id_libro = :id_libro;');
 $reviews->execute(['id_libro' => $id]);
 $reviews = $reviews->fetchAll();
 
@@ -98,7 +98,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
             ?>
               <h3 id="reviewer">
                 <?php
-                $cuenta = $pdo->prepare('SELECT * FROM cuenta WHERE id = :id;');
+                $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
                 $cuenta->execute(['id' => $review['id_cuenta']]);
                 $cuenta = $cuenta->fetch();
                 echo $cuenta['apodo'];
@@ -106,9 +106,28 @@ agregarHead($titulo_castellano . ' | IGKluba');
               </h3>
             <?php
             }
+
+            if (isset($review['texto'])) {
             ?>
-            <p><?php echo $review['texto'] ?></p>
+              <p><?php echo $review['texto'] ?></p>
+            <?php
+            }
+            ?>
+
             <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
+
+            <?php
+            $cantidadRespuestas = $pdo->prepare('SELECT count(id) AS cantidad_respuestas FROM respuesta WHERE id_review = :id_review;');
+            $cantidadRespuestas->execute(['id_review' => $review['id']]);
+            $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
+            if ($cantidadRespuestas > 0) {
+            ?>
+              <a href="/erantzunak/<?php echo $review['id'] ?>" class="ver-respuestas">
+                Erantzunak (<?php echo $cantidadRespuestas ?>)
+              </a>
+            <?php
+            }
+            ?>
           </div>
         <?php
         }
