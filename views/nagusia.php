@@ -27,7 +27,7 @@ agregarHead('IGKluba');
         <div class="flex-center-col libro__texto">
           <a href="/liburu/<?php echo $libro['id'] ?>" class="libro__titulo"><?php echo $libro['titulo'] ?></a>
           <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor"><?php echo $libro['autor'] ?></a>
-          <p class="libro__nota"><?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i></p>
+          <p class="nota libro__nota"><?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i></p>
         </div>
       </div>
     <?php

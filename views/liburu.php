@@ -38,56 +38,83 @@ agregarHead($titulo_castellano . ' | IGKluba');
   include_once '../templates/header.php';
   headerGeneral();
   ?>
-  <main>
-    <a href="<?php echo $libro['enlace'] ?>" target="_blank" rel="noopener noreferrer"><img src="../src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada" width="200"></a>
-    <h2><?php echo $titulo_castellano ?></h2>
-    <p><?php echo $libro['serie'] . ' #' . $libro['serie_num'] ?></p>
-    <p>Egilea: <?php echo $libro['autor'] ?></p>
-    <p><?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i></p>
-    <p>Argitaratze data: <?php echo $libro['fecha_pub'] ?></p>
-    <?php
-    $idiomas = [];
-    foreach ($titulos as $titulo) {
-      $idiomas[] = $titulo['nombre_idioma'];
-    }
-    ?>
-    <p>Hizkuntza<?php if (count($idiomas) > 1) echo 'k' ?>: <?php echo implode(', ', $idiomas) ?></p>
-    <p>Batez besteko adina: <?php echo $libro['edad_media'] ?></p>
-    <p>Irakurle kopurua: <?php echo $libro['cantidad_reviews'] ?></p>
-    <p>Formatua: <?php echo $libro['formato'] ?></p>
-    <?php
-    $etiquetas = [];
-    foreach ($consultaEtiquetas as $etiqueta) {
-      $etiquetas[] = $etiqueta['nombre'];
-    }
-    ?>
-    <p>Etiketa<?php if (count($etiquetas) > 1) echo 'k' ?>: <?php echo implode(', ', $etiquetas) ?></p>
-    <p>Sinopsia: <?php echo $libro['sinopsis'] ?></p>
-    <h3>Iritziak:</h3>
-    <?php
-    foreach ($reviews as $review) {
-    ?>
-      <div class="review">
-        <p><?php echo $review['texto'] ?></p>
-        <p><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
+  <main class="flex-center-col" id="main-libro">
+    <section class="flex-center-row" id="superior">
+      <a href="<?php echo $libro['enlace'] ?>" target="_blank" rel="noopener noreferrer" id="portada">
+        <img src="../src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada">
+      </a>
+
+      <div class="flex-center-col" id="datos">
+        <div class="flex-center-col" id="titulo-serie">
+          <h1><?php echo $titulo_castellano ?></h1>
+
+          <?php
+          if (isset($libro['serie'])) {
+          ?>
+            <p id="serie"><?php echo $libro['serie'] . ' #' . $libro['serie_num'] ?></p>
+          <?php
+          }
+          ?>
+
+          <p id="autor"><?php echo $libro['autor'] ?></p>
+          <p class="nota"><?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i></p>
+        </div>
+
+        <p><span>Argitaratze data:</span> <?php echo $libro['fecha_pub'] ?></p>
         <?php
-        if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+        $idiomas = [];
+        foreach ($titulos as $titulo) {
+          $idiomas[] = $titulo['nombre_idioma'];
+        }
         ?>
-          <p>
+        <p><span>Hizkuntza<?php if (count($idiomas) > 1) echo 'k' ?>:</span> <?php echo implode(', ', $idiomas) ?></p>
+        <p><span>Batez besteko adina:</span> <?php echo $libro['edad_media'] ?></p>
+        <p><span>Irakurle kopurua:</span> <?php echo $libro['cantidad_reviews'] ?></p>
+        <p><span>Formatua:</span> <?php echo $libro['formato'] ?></p>
+        <?php
+        $etiquetas = [];
+        foreach ($consultaEtiquetas as $etiqueta) {
+          $etiquetas[] = $etiqueta['nombre'];
+        }
+        ?>
+        <p><span>Etiketa<?php if (count($etiquetas) > 1) echo 'k' ?>:</span> <?php echo implode(', ', $etiquetas) ?></p>
+      </div>
+    </section>
+
+    <section id="central">
+      <h2>Sinopsia:</h2>
+      <p id="sinopsis"><?php echo $libro['sinopsis'] ?></p>
+    </section>
+
+    <section id="inferior">
+      <h2>Iritziak:</h2>
+      <div class="flex-stretch-col" id="reviews">
+        <?php
+        foreach ($reviews as $review) {
+        ?>
+          <div class="review">
             <?php
-            $cuenta = $pdo->prepare('SELECT * FROM cuenta WHERE id = :id;');
-            $cuenta->execute(['id' => $review['id_cuenta']]);
-            $cuenta = $cuenta->fetch();
-            echo $cuenta['apodo'];
+            if ($_SESSION['usr']['rol'] !== 'Ikasle') {
             ?>
-          </p>
+              <h3 id="reviewer">
+                <?php
+                $cuenta = $pdo->prepare('SELECT * FROM cuenta WHERE id = :id;');
+                $cuenta->execute(['id' => $review['id_cuenta']]);
+                $cuenta = $cuenta->fetch();
+                echo $cuenta['apodo'];
+                ?>:
+              </h3>
+            <?php
+            }
+            ?>
+            <p><?php echo $review['texto'] ?></p>
+            <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
+          </div>
         <?php
         }
         ?>
       </div>
-    <?php
-    }
-    ?>
+    </section>
   </main>
 
   <?php

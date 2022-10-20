@@ -37,6 +37,15 @@ body {
   overflow-y: scroll;
 }
 
+p {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.nota i {
+  margin-left: 0.25rem;
+}
+
 a,
 a:visited {
   text-decoration: none;
@@ -138,6 +147,7 @@ header {
 }
 
 /* ===== nav ===== */
+#header-inicio,
 #header-login,
 #nav-general {
   border-bottom: 3px solid;
@@ -184,7 +194,7 @@ main {
   flex-grow: 1;
   width: 75vw;
   margin-inline: auto;
-  padding-block: 2rem;
+  padding-block: 3rem;
 }
 
 /* --- hasi y sortu --- */
@@ -261,6 +271,69 @@ main {
 
 .libro__nota {
   font-size: 1.125rem;
+}
+
+/* --- libro --- */
+#main-libro {
+  align-items: start;
+  gap: 2.5rem;
+}
+
+#main-libro #superior {
+  gap: 12.5rem;
+}
+
+#main-libro #portada {
+  flex: 0 1 30%;
+}
+
+#main-libro #datos {
+  align-items: start;
+  font-size: 1.25rem;
+  gap: 1rem;
+}
+
+#main-libro #titulo-serie {
+  align-items: start;
+  gap: 0.5rem;
+}
+
+#main-libro #titulo-serie h1 {
+  font-size: 2.5rem;
+}
+
+#main-libro #titulo-serie > * {
+  line-height: 1.1;
+}
+
+#main-libro #serie {
+  font-size: 1.75rem;
+}
+
+#main-libro #autor {
+  font-size: 1.5rem;
+}
+
+#main-libro #titulo-serie .nota {
+  font-size: 1.35rem;
+}
+
+#main-libro #datos span,
+#main-libro h2,
+#main-libro h3 {
+  font-weight: 500;
+}
+
+#main-libro h3 {
+  font-size: 1.25rem;
+}
+
+#main-libro #reviews {
+  gap: 1.5rem;
+}
+
+#main-libro #reviews .nota {
+  font-size: 1.5rem;
 }
 
 /* ===== footer ===== */
@@ -381,6 +454,14 @@ footer {
   flex-direction: row;
 
   justify-content: space-between;
+  align-items: center;
+}
+
+.flex-space-evenly-row {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-evenly;
   align-items: center;
 }
 
