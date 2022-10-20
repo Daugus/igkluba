@@ -8,8 +8,8 @@ function headerInicio(): void
     </div>
     <nav>
       <ul class="flex-center-row">
-        <li><a href="/sortu" class="btn">Sortu kontua</a></li>
-        <li><a href="/hasi" class="btn">Saioa hasi</a></li>
+        <a href="/sortu" class="btn">Sortu kontua</a>
+        <a href="/hasi" class="btn">Saioa hasi</a>
       </ul>
     </nav>
   </header>
