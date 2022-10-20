@@ -25,76 +25,60 @@
 
 
 try {
+
     $usuario = "root";
     $contrasena = "";
     $servidor = "localhost";
     $database = "bdlibrosunamuno";
 
-    //CREAMOS LA CONEXIÓN CON EL SERVIDOR QUE SE ALMACENARÁ EN $conexion
-    $conexion = mysqli_connect($servidor, $usuario, $contrasena) or die("No se ha podido conectar con el servidor");
+    // obtencion del perfil
+    // creo la conexion
+    $conexion = new PDO("mysql:host=$servidor;dbname=$database",$usuario,$contrasena);
+    // convierto un posible error en una excepcion
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Conexion establecida";
+    echo "<br>";
 
-    //CREAMOS LA CONEXIÓN CON LA BASE DE DATOS QUE SE ALMACENARÁ EN $db
-    $db = mysqli_select_db($conexion, $database) or die("No se ha podido conectar con la base de datos");
+    // preparo la consulta
+    $consulta = $conexion->prepare('SELECT * FROM cuenta where ID_cuenta = 1');
+    // ejecuto la consulta
+    $consulta->execute();
+    // en resultados guardo todos los registros y los muesto en el perfil
+    $resultadosPerfil = $consulta->fetch();
 
-    echo "conexion correcta";
-
-    $sql = "SELECT * FROM cuenta where ID_cuenta = 1";
-    $resultados = mysqli_query($conexion, $sql);
-    if ($resultados->num_rows > 0) {
-        while ($fila = $resultados->fetch_assoc()) {
-            $item_1 = $fila["ID_cuenta"];
-            $item_2 = $fila["nombre"];
-            $item_3 = $fila["apellidos"];
-            $item_4 = $fila["apodo"];
-            $item_5 = $fila["cod_clase"];
-            $item_6 = $fila["rol"];
-        }
-    }
-    // este for each vacio actua de contenedor para los campos de perfil de usuario que se encuentra mas abajo
-    foreach ($resultados as $columna) {
-    }
 
     // calculo de la fecha de caducidad
-    $fechaActual = date('10-06-y'); // 2016-12-29
+    $fechaActual = date('10-06-y');
     $fechaCaducida = strtotime('+1 day', strtotime($fechaActual)); //Se añade un año mas
     $fechaCaducida = date('d-m-y', $fechaCaducida);
 
     // obtencion de reviews
-    $sql = "SELECT nota,texto,nombre_idioma,titulo FROM review, libro where ID_cuenta = 1 and review.ID_libro = libro.ID_libro;";
-    $resultadosReview = mysqli_query($conexion, $sql);
-    if ($resultadosReview->num_rows > 0) {
-        while ($fila = $resultadosReview->fetch_assoc()) {
-            $item_1 = $fila["titulo"];
-            $item_2 = $fila["nota"];
-            $item_3 = $fila["texto"];
-            $item_4 = $fila["nombre_idioma"];
-        }
-    }
+    // preparo la consulta
+    $consulta = $conexion->prepare('SELECT nota,texto,nombre_idioma,titulo FROM review, libro where ID_cuenta = 1 and review.ID_libro = libro.ID_libro;');
+    // ejecuto la consulta
+    $consulta->execute();
+    // en resultados guardo todos los registros y los muesto en el perfil
+    $resultadosReview = $consulta->fetchAll();
 
     // obtencion de la clase
-    $sql = "SELECT cod_clase, nombre from clase;";
-    $resultadosClase = mysqli_query($conexion, $sql);
-    if ($resultadosClase->num_rows > 0) {
-        while ($fila = $resultadosClase->fetch_assoc()) {
-            $item_1 = $fila["cod_clase"];
-            $item_2 = $fila["nombre"];
-        }
-    }
-
+    // preparo la consulta
+    $consulta = $conexion->prepare('SELECT cod_clase, nombre from clase;');
+    // ejecuto la consulta
+    $consulta->execute();
+    // en resultados guardo todos los registros y los muesto en el perfil
+    $resultadosClase = $consulta->fetchAll();
+    
     // obtencion de alumnos
-    // obtenido del desplegable de las clases
-    $codigoClase = $_REQUEST['codigo_clase'];
+    // preparo la consulta usando la clase obtenida del desplegable de clases
+    $codigoClase = $_REQUEST['cod_clase'];
+    $consulta = $conexion->prepare("SELECT nombre, apellidos, apodo, fecha_nac from cuenta where rol = 'alumno' and cod_clase = '".$codigoClase."';");
+    // ejecuto la consulta
+    $consulta->execute();
+    // en resultados guardo todos los registros y los muesto en el perfil
+    $resultadosAlumnos = $consulta->fetchAll();
     // la consulta de los alumnos utiliza la clase obtenida
-    $sql = "SELECT nombre, apellidos, apodo, fecha_nac from cuenta where rol = 'alumno' and cod_clase = '".$codigoClase."';";
-    $resultadosAlumnos = mysqli_query($conexion, $sql);
-    if ($resultadosAlumnos->num_rows > 0) {
-        while ($fila = $resultadosAlumnos->fetch_assoc()) {
-            $item_1 = $fila["nombre"];
-            $item_2 = $fila["apellidos"];
-            $item_3 = $fila["apodo"];
-            $item_4 = $fila["fecha_nac"];
-        }
-    }
+    
+    
 
 } catch (PDOException $e) {
     echo "la conexion ha fallado: " . $e->getMessage();
@@ -114,16 +98,17 @@ try {
         </nav>
     </header>
 
+    <!-- PERFIL -->
     <div id="contenedorUsuario">
         <img class="pfp" src="img_110805-1084281250.png" alt="Foto de perfil">
-        <?php
+        <?php 
         echo "<ul>";
-        echo    "<li class='perfilLista'>" . $columna['nombre'] . " " . $columna['apellidos'] . "</li>";
-        echo    "<li class='perfilLista'> Apodo: " . $columna['apodo'] . "</li>";
-        echo    "<li class='perfilLista'> Nacimiento: " . $columna['fecha_nac'] . "</li>";
-        echo    "<li class='perfilLista'> Clase: " . $columna['cod_clase'] . "</li>";
+        echo    "<li class='perfilLista'>" . $resultadosPerfil['nombre'] . " " . $resultadosPerfil['apellidos'] . "</li>";
+        echo    "<li class='perfilLista'> Apodo: " . $resultadosPerfil['apodo'] . "</li>";
+        echo    "<li class='perfilLista'> Nacimiento: " . $resultadosPerfil['fecha_nac'] . "</li>";
+        echo    "<li class='perfilLista'> Clase: " . $resultadosPerfil['cod_clase'] . "</li>";
         echo    "<li class='perfilLista'> Fecha caducidad: " . $fechaCaducida . "</li>";
-        echo    "<li class='perfilLista'>  Rol: " . $columna['rol'] . "</li>";
+        echo    "<li class='perfilLista'>  Rol: " . $resultadosPerfil['rol'] . "</li>";
         echo "</ul>";
         ?>
     </div>
@@ -135,9 +120,10 @@ try {
         <a href="" id="solicitudAdmision">Solicitudes admisión</a>
     </div>
 
+    <!-- REVIEWS -->
     <div id="contenedorReviews">
         <h2>Mis Valoraciones</h2>
-        <?php
+        <?php 
         foreach ($resultadosReview as $columna) {
             echo "<table>";
             echo    "<tr>";
@@ -153,19 +139,20 @@ try {
         ?>
     </div>
 
+    <!-- CLASES Y ALUMNOS -->
     <div id="contenedorClase">
         <form action="areaPersonalProfesor.php" method="POST">
             <label for="clase">Mostrar grupo </label>
-            <select name="clase" id="clase">
+            <select name="cod_clase" id="clase">
                 <?php
                 foreach ($resultadosClase as $columna) {
-                    echo "<option class='cod_clase' name='cod_clase' value='" . $columna['cod_clase'] . "'>" . $columna['nombre'] . "</option>";
+                    echo "<option class='cod_clase' value='" . $columna['cod_clase'] . "'>" . $columna['nombre'] . "</option>";
                 }
                 ?>
             </select>
             <input type="submit" id="Enviar" name="Enviar" value="Enviar">
         </form>
-        <?php
+        <?php 
             foreach ($resultadosAlumnos as $columna) {
                 echo    "<div id='contenedorAlumno'>";
                 echo        "<div class='FOTO-PERFIL'><img class='pfp' src='img_110805-1084281250.png' alt='Foto de perfil'></div>";
