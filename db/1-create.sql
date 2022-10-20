@@ -41,8 +41,8 @@ create table if not exists profesor_clase (
 create table if not exists libro (
   id int unsigned auto_increment primary key,
   autor varchar(100) not null,
-  serie varchar(30) not null,
-  serie_num smallint(4) not null,
+  serie varchar(30),
+  serie_num smallint(4),
   fecha_pub date not null,
   cantidad_reviews int unsigned not null default 0,
   nota_media float(3, 2) unsigned not null default 0,
