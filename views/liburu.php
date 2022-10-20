@@ -38,6 +38,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
   include_once '../templates/header.php';
   headerGeneral();
   ?>
+
   <main class="flex-center-col" id="main-libro">
     <section class="flex-center-row" id="superior">
       <a href="<?php echo $libro['enlace'] ?>" target="_blank" rel="noopener noreferrer" id="portada">
@@ -57,7 +58,11 @@ agregarHead($titulo_castellano . ' | IGKluba');
           ?>
 
           <p id="autor"><?php echo $libro['autor'] ?></p>
-          <p class="nota"><?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i></p>
+          <p class="nota">
+            <a href="#iritziak">
+              <?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i>
+            </a>
+          </p>
         </div>
 
         <p><span>Argitaratze data:</span> <?php echo $libro['fecha_pub'] ?></p>
@@ -87,7 +92,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
     </section>
 
     <section id="inferior">
-      <h2>Iritziak:</h2>
+      <h2 id="iritziak">Iritziak:</h2>
       <div class="flex-stretch-col" id="reviews">
         <?php
         foreach ($reviews as $review) {

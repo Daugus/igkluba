@@ -12,13 +12,15 @@ include_once '../modules/db-config.php';
 $review = $pdo->prepare('SELECT * FROM review WHERE id = :id;');
 $review->execute(['id' => $id_review]);
 $review = $review->fetch();
+if (empty($review)) header('Location: /liburu/' . $review['id']);
+if (empty($review['texto'])) header('Location: /nagusia');
 
 $respuestas = $pdo->prepare('SELECT * FROM respuesta where id_review = :id_review;');
 $respuestas->execute(['id_review' => $review['id']]);
 $respuestas = $respuestas->fetchAll();
 
 include_once '../templates/head.php';
-agregarHead('erantzunak' . ' | IGKluba');
+agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '... | IGKluba');
 ?>
 
 <body>
@@ -28,7 +30,7 @@ agregarHead('erantzunak' . ' | IGKluba');
   ?>
 
   <main class="flex-center-col" id="main-respuestas">
-    <div class="review">
+    <section class="flex-center-col">
       <h1>Iritzia:</h1>
       <?php
       if ($_SESSION['usr']['rol'] !== 'Ikasle') {
@@ -48,7 +50,45 @@ agregarHead('erantzunak' . ' | IGKluba');
       <p><?php echo $review['texto'] ?></p>
 
       <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
-    </div>
+    </section>
+
+    <section>
+      <h2>Erantzunak</h2>
+
+      <div class="flex-stretch-col" id="respuestas">
+        <?php
+        foreach ($respuestas as $respuesta) {
+        ?>
+          <div class="repuesta">
+            <?php
+            if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+            ?>
+              <h3 id="reviewer">
+                <?php
+                $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
+                $cuenta->execute(['id' => $review['id_cuenta']]);
+                $cuenta = $cuenta->fetch();
+                echo $cuenta['apodo'];
+                ?>:
+              </h3>
+            <?php
+            }
+
+            if (isset($respuesta['texto'])) {
+            ?>
+              <p><?php echo $respuesta['texto'] ?></p>
+            <?php
+            }
+            ?>
+
+          </div>
+        <?php
+        }
+        ?>
+      </div>
+    </section>
+
+    <a href="/liburu/<?php echo $review['id_libro'] ?>" id="volver">Itzuli liburura</a>
   </main>
 
   <?php

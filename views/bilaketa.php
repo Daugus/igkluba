@@ -25,6 +25,11 @@ agregarHead($busqueda . ' | IGKluba');
 
   <main class="flex-center-col">
     <p>bilaketa: <?php echo $busqueda ?></p>
+    <?php
+    $busqueda = strtolower($busqueda);
+    include_once '../modules/libros.php';
+    buscarLibros("LOWER(il.titulo_alternativo) like '%$busqueda%'", 'il.titulo_alternativo ASC');
+    ?>
   </main>
 
   <?php
