@@ -14,7 +14,20 @@
   --clr-gradiente-inicial: #14409e;
   --clr-gradiente-central: #2784a8;
   --clr-gradiente-final: #27d4eb;
+  --clr-gradiente-inicial-transparente: #14409e42;
+  --clr-gradiente-central-transparente: #2783a84c;
+  --clr-gradiente-final-transparente: #27d4eb2f;
+
   --gradiente: linear-gradient(to right, var(--clr-gradiente-inicial), var(--clr-gradiente-central), var(--clr-gradiente-final));
+  --gradiente-transparente: linear-gradient(
+    120deg,
+    transparent,
+    var(--clr-gradiente-inicial-transparente),
+    var(--clr-gradiente-central-transparente),
+    var(--clr-gradiente-final-transparente),
+    transparent
+  );
+
   --borde-gradiente-radius: linear-gradient(var(--clr-blanco), var(--clr-blanco)) padding-box, var(--gradiente) border-box;
 
   --sombra-superior: 0 -0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
@@ -52,6 +65,14 @@ a:visited {
   color: var(--clr-acento);
 }
 
+#collage {
+  width: 1000;
+  height: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3%;
+}
 input:not([type='file']),
 .file-input-text {
   border: none;
@@ -226,6 +247,27 @@ main {
 .form-hasi-sortu button {
   margin-top: 1rem;
   align-self: center;
+  border: 3px solid transparent;
+  border-radius: 1rem;
+  background: var(--borde-gradiente-radius);
+  padding: 0.5rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-hasi-sortu button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradiente-transparente);
+  transition: all 650ms;
+}
+
+.form-hasi-sortu button:hover::before {
+  left: 100%;
 }
 
 /* --- nagusia --- */
