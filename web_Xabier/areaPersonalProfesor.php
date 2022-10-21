@@ -78,7 +78,16 @@ try {
     $resultadosAlumnos = $consulta->fetchAll();
     // la consulta de los alumnos utiliza la clase obtenida
     
+    // mantengo la seleccion de la clase despues de darle a enviar
     
+    
+    // obtencion de solicitudes de idioma
+    // preparo la consulta
+    $consulta = $conexion->prepare('SELECT titulo, nombre_idioma, nombre, apellidos, apodo FROM cuenta, solicitudidioma WHERE cuenta.ID_cuenta = solicitudidioma.ID_cuenta and cod_clase = "'.$codigoClase.'";');
+    // ejecuto la consulta
+    $consulta->execute();
+    // en resultados guardo las solicitudes y las muestro en solicitudes de idioma
+    $resultadosSolIdioma = $consulta->fetchAll();
 
 } catch (PDOException $e) {
     echo "la conexion ha fallado: " . $e->getMessage();
@@ -103,7 +112,7 @@ try {
         <img class="pfp" src="img_110805-1084281250.png" alt="Foto de perfil">
         <?php 
         echo "<ul>";
-        echo    "<li class='perfilLista'>" . $resultadosPerfil['nombre'] . " " . $resultadosPerfil['apellidos'] . "</li>";
+        echo    "<li class='perfilLista'>". $resultadosPerfil['nombre'] ." ". $resultadosPerfil['apellidos'] ."</li>";
         echo    "<li class='perfilLista'> Apodo: " . $resultadosPerfil['apodo'] . "</li>";
         echo    "<li class='perfilLista'> Nacimiento: " . $resultadosPerfil['fecha_nac'] . "</li>";
         echo    "<li class='perfilLista'> Clase: " . $resultadosPerfil['cod_clase'] . "</li>";
@@ -155,24 +164,60 @@ try {
         <?php 
             foreach ($resultadosAlumnos as $columna) {
                 echo    "<div id='contenedorAlumno'>";
-                echo        "<div class='FOTO-PERFIL'><img class='pfp' src='img_110805-1084281250.png' alt='Foto de perfil'></div>";
+                echo            "<div class='FOTO-PERFIL'><img class='pfp' src='img_110805-1084281250.png' alt='Foto de perfil'></div>";
                 echo            "<div class='LI'>";
                 echo                "<ul>";
-                echo                    "<li>". $columna['nombre'] . "". $columna['apellidos'] ."</li>";
+                echo                    "<li>". $columna['nombre'] . " ". $columna['apellidos'] ."</li>";
                 echo                    "<li> Apodo: ". $columna['apodo'] ."</li>";
                 echo                    "<li>Fecha nacimiento: ". $columna['fecha_nac'] ." </li>";
                 echo                    "<li>Curso: 22-23 </li>";
                 echo                    "<li>Fecha caducidad: ". $fechaCaducida ."</li>";
-                echo                    "<li><a href='' id='eliminar'>Eliminar</a></li>";
                 echo                "</ul>";
                 echo             "</div>";
+                echo            "<div class='BOTON'>";
+                echo                "<a href='' id='eliminar'>Eliminar</a>";
+                echo            "</div>";
                 echo       "</div>";
             }
         ?>
 
     </div>
 
-
+    <!-- SOLICITUDES IDIOMA -->
+    <div id="contenedorIdioma">
+        <form action="areaPersonalProfesor.php" method="POST">
+            <label for="clase">Mostrar grupo </label>
+            <select name="cod_clase" id="clase">
+                <?php
+                foreach ($resultadosClase as $columna) {
+                    echo "<option class='cod_clase' value='" . $columna['cod_clase'] . "'>" . $columna['nombre'] . "</option>";
+                }
+                ?>
+            </select>
+            <input type="submit" id="Enviar" name="Enviar" value="Enviar">
+        </form>
+    <?php
+    foreach ($resultadosSolIdioma as $columna) {
+        echo    "<div id='contenedorSolicitudIdioma'>";
+        echo        "<div class='FOTO-LIBRO'><img id='caratula' src='img_110805-1084281250.png' alt='Carátula del libro'></div>";
+        echo        "<div class='ALUMNO'>";
+        echo            "<ul>";
+        echo                "<li>". $columna['nombre'] . " ". $columna['apellidos'] ."</li>";
+        echo                "<li> Apodo: ". $columna['apodo'] ."</li>";
+        echo                "<li> Ha solicitado el libro: ".$columna['titulo']." en ".$columna['nombre_idioma'];
+        echo            "</ul>";    
+        echo        "</div>";
+        echo        "<div class='BOTONES'>";
+        echo            "<ul>";
+        echo                "<a href='' id='aceptar'>Aceptar</a>";
+        echo                "<a href='' id='eliminar'>Eliminar</a>";
+        echo            "</ul>";
+        echo        "</div>";
+        echo    "</div>";
+    }
+    ?>
+    </div>
+    
 
 </body>
 

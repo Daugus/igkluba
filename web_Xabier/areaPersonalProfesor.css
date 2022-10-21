@@ -43,7 +43,7 @@ a {
     border-radius: 10px; 
 }
 
-#contenedorClase {
+#contenedorClase, #contenedorSolicitudIdioma, #contenedorIdioma {
     border: 3px solid dodgerblue;
     border-radius: 10px; 
 }
@@ -52,11 +52,11 @@ a {
     display: grid; 
     text-align: center;
     margin-top: 3%;
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: 1fr 1fr 1fr; 
     grid-template-rows: 1fr; 
     gap: 0px 25px; 
     grid-template-areas: 
-      "FOTO-PERFIL LI"; 
+      "FOTO-PERFIL LI BOTON"; 
 }
 .FOTO-PERFIL { 
     grid-area: FOTO-PERFIL; 
@@ -69,13 +69,21 @@ a {
     text-align: left; 
 }
 
+.BOTON { 
+    grid-area: BOTON; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
 #eliminar {
     background-color: red;
     border-radius: 5px;
     color: black;
     padding: 10px;
     text-decoration: none;
-    margin-left: 35%;
 }
 
 #eliminar :hover {
@@ -86,10 +94,44 @@ a {
     background-color: rgb(255, 40, 40);   
 }
 
+#contenedorSolicitudIdioma {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 25px;
+    grid-auto-flow: row;
+    grid-template-areas: "FOTO-LIBRO ALUMNO BOTONES";
+}
+  
+.FOTO-LIBRO { 
+    grid-area: FOTO-LIBRO; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#caratula {
+    width: 150px;
+    height: 250px;
+    justify-content: center;
+    align-items: center;
+}
+.ALUMNO { 
+    grid-area: ALUMNO;
+}
+  
+.BOTONES { 
+    grid-area: BOTONES; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+}
+
 /* Movil */
 @media screen and (max-width: 500px) {
 
-    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase {
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase, #contenedorSolicitudIdioma, #contenedorIdioma {
         margin-left: 5%;
         margin-right: 5%;
         margin-top: 2%;
@@ -100,21 +142,33 @@ a {
         justify-content: center;
     }
 
-    .perfilLista {
-        margin-left: -15%;
-    }
-
     #botones {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        margin-left: 10%;
+        margin-right: 10%;
+        
     }
 
+    #contenedorAlumno, #contenedorSolicitudIdioma {
+        display: flex; 
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .LI {
+        position: relative;
+        text-align: left;
+        margin-left: 20%;
+    }
+
+    
 }
 
 /* Tablet */
 @media screen and (min-width: 501px) and (max-width: 1000px) {
 
-    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase {
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase, #contenedorIdioma {
         margin-left: 15%;
         margin-right: 15%;
         margin-top: 2%;
@@ -134,12 +188,29 @@ a {
         justify-content: center;
     }
 
+    #contenedorAlumno, #contenedorSolicitudIdioma {
+        gap: 0px 0px; 
+    }
+
+    .LI {
+        position: relative;
+        text-align: left;
+        margin-left: -20%;
+    }
+
+    .BOTONES, ul{
+        margin-left: -10%;
+    }
+
+    
 }
+
+
 
 /* PC */
 @media screen and (min-width: 1000px) {
 
-    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase {
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase, #contenedorSolicitudIdioma, #contenedorIdioma {
         margin-left: 15%;
         margin-right: 15%;
         margin-top: 2%;
@@ -162,4 +233,7 @@ a {
     .LI { 
         margin-left: -35%;
     }
+
+
+      
 }
