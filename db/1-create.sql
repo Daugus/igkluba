@@ -2,6 +2,7 @@ drop database if exists igkluba;
 -- ----------------------------------------------------------------
 create database igkluba default character set utf8 default collate utf8_general_ci;
 use igkluba;
+SET GLOBAL event_scheduler=ON;
 -- ----------------------------------------------------------------
 -- create
 create table if not exists centro (

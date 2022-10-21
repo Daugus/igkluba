@@ -64,3 +64,10 @@ where id = OLD.id_libro;
 end;
 //
 delimiter ;
+-- ----------------------------------------------------------------
+-- eventos
+create event desactivar_cuentas
+  on schedule
+  every 1 year
+  starts '2023-06-22 00:00'
+  do update cuenta set activo = false where rol = 'Ikasle' AND activo = true;
