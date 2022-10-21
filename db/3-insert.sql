@@ -14,6 +14,7 @@ insert into cuenta (
     activo,
     pass,
     fecha_nacimiento,
+    correo,
     tel,
     cod_clase,
     id_centro
@@ -27,6 +28,7 @@ values (
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
+    'leireirakas21@gmail.com',
     null,
     null,
     1
@@ -40,6 +42,7 @@ values (
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2002-12-26',
+    'augustodelacamara@gmail.com',
     null,
     null,
     1
@@ -53,6 +56,7 @@ values (
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
+    'ejemplo@gmail.com',
     '987654321',
     null,
     1
@@ -66,6 +70,7 @@ values (
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
+    'ejemplo@gmail.com',
     null,
     '1234abcd',
     1
@@ -79,6 +84,7 @@ values (
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
     '2000-1-1',
+    'ejemplo@gmail.com',
     null,
     '1234abcd',
     1
