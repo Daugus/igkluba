@@ -18,7 +18,7 @@ function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', St
 function agregarLibros(array $libros)
 {
   foreach ($libros as $libro) {
-    $url = '/liburu/' . $libro['id'] . '-' . str_replace(' ', '_', strtolower($libro['titulo']));
+    $url = '/liburua/' . $libro['id'] . '-' . str_replace(' ', '_', strtolower($libro['titulo']));
 ?>
     <article class="flex-center-col libro">
       <a href="<?php echo $url ?>" class="libro__portada">

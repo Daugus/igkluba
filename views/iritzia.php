@@ -5,108 +5,92 @@
 include_once '../modules/session.php';
 checkSession();
 
+if (!isset($busqueda)) header('Location: /nagusia');
+$id_review = $busqueda;
+
 include_once '../modules/db-config.php';
-$libro = $pdo->prepare('SELECT l.id, il.titulo_alternativo AS titulo, l.autor FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro WHERE l.id = :id AND il.nombre_idioma = "Gaztelania"');
-$libro->execute(['id' => $id]);
-$libro = $libro->fetch();
-if (empty($libro)) header('Location: /nagusia');
-$comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
-$comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
-$comprobarReview = $comprobarReview->fetch();
-if (!empty($comprobarReview)) header('Location: /liburu/' . $id);
+$review = $pdo->prepare('SELECT * FROM review WHERE id = :id;');
+$review->execute(['id' => $id_review]);
+$review = $review->fetch();
+if (empty($review)) header('Location: /liburua/' . $review['id']);
+if (empty($review['texto'])) header('Location: /nagusia');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  include_once '../modules/db-config.php';
-  $insert = $pdo->prepare('INSERT INTO review (nota, texto, edad_lector, nombre_idioma, id_libro, id_cuenta)
-    VALUES (:nota, :texto, :edad_lector, :nombre_idioma, :id_libro, :id_cuenta)');
-  $insert->execute([
-    'nota' => $_REQUEST['nota'],
-    'texto' => isset($_REQUEST['texto']) ? $_REQUEST['texto'] : null,
-    'edad_lector' => $_REQUEST['edad'],
-    'nombre_idioma' => $_REQUEST['idioma'],
-    'id_libro' => $id,
-    'id_cuenta' => $_SESSION['usr']['id']
-  ]);
-
-  if ($_SESSION['usr']['rol'] === 'Ikasle') {
-    header('Location: /erantzunak/' . $pdo->lastInsertId());
-  } else {
-    header('Location: /liburu/' . $id);
-  }
-}
+$respuestas = $pdo->prepare('SELECT * FROM respuesta where id_review = :id_review;');
+$respuestas->execute(['id_review' => $review['id']]);
+$respuestas = $respuestas->fetchAll();
 
 include_once '../templates/head.php';
-include_once '../templates/header.php';
-agregarHead('Iritzia eman | IGKluba', __FILE__);
-headerGeneral();
+agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '... | IGKluba');
 ?>
 
 <body>
-  <main class="flex-center-row">
-    <div class="form-container">
-      <h1>Iritzia eman</h1>
+  <?php
+  include_once '../templates/header.php';
+  headerGeneral();
+  ?>
 
-      <form action="" method="post" class="flex-stretch-col" id="form-iritzia">
-        <div class="campo-predefinido">
-          <p>Izenburua:</p>
-          <p><?php echo $libro['titulo'] ?></p>
-        </div>
+  <main class="flex-center-col" id="main-respuestas">
+    <section class="flex-center-col">
+      <h1>Iritzia:</h1>
+      <?php
+      if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+      ?>
+        <h3 id="reviewer">
+          <?php
+          $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
+          $cuenta->execute(['id' => $review['id_cuenta']]);
+          $cuenta = $cuenta->fetch();
+          echo $cuenta['apodo'];
+          ?>:
+        </h3>
+      <?php
+      }
+      ?>
 
-        <div class="campo-predefinido">
-          <p>Egilea:</p>
-          <p><?php echo $libro['autor'] ?></p>
-        </div>
+      <p><?php echo $review['texto'] ?></p>
 
-        <div class="campo">
-          <label for="nota">Nota:</label>
-          <div>
-            <select name="nota" id="nota">
-              <option disabled selected>-</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <i class="fa-solid fa-star"></i>
-          </div>
-        </div>
+      <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
+    </section>
 
-        <div class="campo">
-          <label for="idioma">Irakurritako hizkuntza:</label>
-          <select name="idioma" id="idioma">
-            <option disabled selected>-</option>
+    <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
+
+    <section>
+      <h2>Erantzunak</h2>
+
+      <div class="flex-stretch-col" id="respuestas">
+        <?php
+        foreach ($respuestas as $respuesta) {
+        ?>
+          <article class="repuesta">
             <?php
-            include_once '../modules/db-config.php';
-            $idiomasLibro = $pdo->prepare('SELECT nombre_idioma AS nombre FROM idiomas_libro WHERE id_libro = :id;');
-            $idiomasLibro->execute(['id' => $id]);
-            $idiomasLibro = $idiomasLibro->fetchAll();
-            foreach ($idiomasLibro as $idioma) {
-              print_r($idioma);
+            if ($_SESSION['usr']['rol'] !== 'Ikasle') {
             ?>
-              <option value="<?php echo $idioma['nombre'] ?>"><?php echo $idioma['nombre'] ?></option>
+              <h3 id="reviewer">
+                <?php
+                $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
+                $cuenta->execute(['id' => $review['id_cuenta']]);
+                $cuenta = $cuenta->fetch();
+                echo $cuenta['apodo'];
+                ?>:
+              </h3>
+            <?php
+            }
+
+            if (isset($respuesta['texto'])) {
+            ?>
+              <p><?php echo $respuesta['texto'] ?></p>
             <?php
             }
             ?>
-          </select>
-        </div>
 
-        <?php
-        if ($_SESSION['usr']['rol'] === 'Ikasle') {
-        ?>
-          <div class="campo">
-            <label for="texto">Iritzia:</label>
-            <textarea name="texto" id="texto" minlength="1" maxlength="2295"></textarea>
-          </div>
+          </article>
         <?php
         }
         ?>
+      </div>
+    </section>
 
-        <input type="hidden" value="<?php echo $_SESSION['usr']['fecha_nacimiento'] ?>" name="edad" id="edad">
-
-        <button id="enviar">Bidali</button>
-      </form>
-    </div>
+    <a href="/liburua/<?php echo $review['id_libro'] ?>" id="volver">Itzuli liburura</a>
   </main>
 
   <?php

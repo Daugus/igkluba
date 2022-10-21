@@ -14,7 +14,7 @@ $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
 if (empty($libro)) header('Location: ../nagusia');
 
-$reviews = $pdo->prepare('SELECT * FROM review WHERE id_libro = :id_libro;');
+$reviews = $pdo->prepare('SELECT * FROM review WHERE id_libro = :id_libro AND texto <> "";');
 $reviews->execute(['id_libro' => $id]);
 $reviews = $reviews->fetchAll();
 
@@ -97,19 +97,19 @@ agregarHead($titulo_castellano . ' | IGKluba');
     $comprobarReview = $comprobarReview->fetch();
     if (empty($comprobarReview)) {
     ?>
-      <a href="/liburu/<?php echo $libro['id'] ?>/iritzia" class="btn">Iritzia eman</a>
+      <a href="/liburua/<?php echo $libro['id'] ?>/iritzi" class="btn">Iritzia eman</a>
     <?php
     }
+
+    if (count($reviews) > 0) {
     ?>
+      <section id="inferior">
+        <h2 id="iritziak">Iritziak:</h2>
 
-    <section id="inferior">
-      <h2 id="iritziak">Iritziak:</h2>
-
-      <div class="flex-stretch-col" id="reviews">
-        <?php
-        foreach ($reviews as $review) {
-          if (!empty($review['texto'])) {
-        ?>
+        <div class="flex-stretch-col" id="reviews">
+          <?php
+          foreach ($reviews as $review) {
+          ?>
             <article class="review">
               <h3 id="reviewer">
                 <?php
@@ -140,19 +140,24 @@ agregarHead($titulo_castellano . ' | IGKluba');
               $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
               if ($cantidadRespuestas > 0) {
               ?>
-                <a href="/erantzunak/<?php echo $review['id'] ?>" class="ver-respuestas">
+                <a href="/iritzia/<?php echo $review['id'] ?>" class="ver-respuestas">
                   Erantzunak (<?php echo $cantidadRespuestas ?>)
                 </a>
               <?php
               }
               ?>
+
+              <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
             </article>
-        <?php
+          <?php
           }
-        }
-        ?>
-      </div>
-    </section>
+          ?>
+        </div>
+      </section>
+
+    <?php
+    }
+    ?>
   </main>
 
   <?php

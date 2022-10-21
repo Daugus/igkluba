@@ -320,7 +320,7 @@ nav {
 #nav-general li {
   text-align: center;
   white-space: nowrap;
-  opacity: 0.8;
+  opacity: 0.7;
   font-size: 1.25rem;
   text-shadow: none;
   transition: all var(--transicion);
@@ -328,6 +328,10 @@ nav {
 
 #nav-general li:hover {
   opacity: 1;
+}
+
+#nav-general:hover li:not(:hover, .active) {
+  opacity: 0.8;
 }
 
 #nav-general li.active {
@@ -358,7 +362,7 @@ main {
 #main-nagusia-bilaketa {
   --gap: 8rem;
   --columnas: 4;
-  --min-width: 8rem;
+  --min-width: 12rem;
 
   --total-gap-width: calc((var(--columnas) - 1) * var(--gap));
   --libro-max-width: calc((100% - var(--total-gap-width)) / var(--columnas));
