@@ -168,14 +168,92 @@ insert into review (
     id_libro,
     id_cuenta
   )
-values (1, 4, 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa quasi ipsum veritatis suscipit aperiam unde at modi officia accusantium porro?', 20, 'Gaztelania', 1, 3),
-  (2, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Non facilis modi repellat. Voluptas, amet? Minima.', 10, 'Euskara', 1, 4),
-  (3, 2, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam nam voluptate provident, alias culpa cupiditate, animi obcaecati error autem aperiam nobis, iure temporibus blanditiis repudiandae fugit necessitatibus nostrum aliquid officiis incidunt eos laboriosam pariatur nulla? Lorem ipsum dolor sit amet consectetur adipisicing elit. Non facilis modi repellat. Voluptas, amet? Minima.', 20, 'Gaztelania', 2, 3),
-  (4, 5, 'Lorem ipsum dolor sit amet.', 10, 'Euskara', 2, 4),
-  (5, 5, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam aperiam alias quos odit dicta fugiat similique dolorum adipisci laudantium eum cupiditate et praesentium, repudiandae repellat maiores debitis numquam iusto ut! Eum, tempore, sunt veritatis quas animi culpa debitis nesciunt doloremque repudiandae quasi tenetur fugit eaque repellendus esse illo molestias nisi ipsa facilis, quo explicabo possimus magni delectus. Facilis quos recusandae ipsam delectus earum totam veniam perferendis, fugiat molestiae saepe voluptatem officiis excepturi esse dolor explicabo.', 20, 'Gaztelania', 3, 3),
-  (6, 5, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit officiis itaque adipisci, officia magni fugiat quam. Assumenda sequi expedita commodi saepe debitis rem eum totam obcaecati corporis at cumque eligendi quis minus adipisci dolor, in, porro explicabo aliquam modi similique! Atque, sapiente consequuntur.', 10, 'Euskara', 3, 4),
+values (
+    1,
+    4,
+    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa quasi ipsum veritatis suscipit aperiam unde at modi officia accusantium porro?',
+    20,
+    'Gaztelania',
+    1,
+    3
+  ),
+  (
+    2,
+    1,
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Non facilis modi repellat. Voluptas, amet? Minima.',
+    10,
+    'Euskara',
+    1,
+    4
+  ),
+  (
+    3,
+    2,
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam nam voluptate provident, alias culpa cupiditate, animi obcaecati error autem aperiam nobis, iure temporibus blanditiis repudiandae fugit necessitatibus nostrum aliquid officiis incidunt eos laboriosam pariatur nulla? Lorem ipsum dolor sit amet consectetur adipisicing elit. Non facilis modi repellat. Voluptas, amet? Minima.',
+    20,
+    'Gaztelania',
+    2,
+    3
+  ),
+  (
+    4,
+    5,
+    'Lorem ipsum dolor sit amet.',
+    10,
+    'Euskara',
+    2,
+    4
+  ),
+  (
+    5,
+    5,
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam aperiam alias quos odit dicta fugiat similique dolorum adipisci laudantium eum cupiditate et praesentium, repudiandae repellat maiores debitis numquam iusto ut! Eum, tempore, sunt veritatis quas animi culpa debitis nesciunt doloremque repudiandae quasi tenetur fugit eaque repellendus esse illo molestias nisi ipsa facilis, quo explicabo possimus magni delectus. Facilis quos recusandae ipsam delectus earum totam veniam perferendis, fugiat molestiae saepe voluptatem officiis excepturi esse dolor explicabo.',
+    20,
+    'Gaztelania',
+    3,
+    3
+  ),
+  (
+    6,
+    5,
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit officiis itaque adipisci, officia magni fugiat quam. Assumenda sequi expedita commodi saepe debitis rem eum totam obcaecati corporis at cumque eligendi quis minus adipisci dolor, in, porro explicabo aliquam modi similique! Atque, sapiente consequuntur.',
+    10,
+    'Euskara',
+    3,
+    4
+  ),
   (7, 4, 'Lorem.', 20, 'Gaztelania', 4, 3),
-  (8, 5, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos molestiae enim dolorem veniam labore, magni officiis doloribus illo odit est, quaerat exercitationem dolore perferendis, quae repudiandae eum mollitia. Quos exercitationem, est expedita accusantium voluptates obcaecati ex inventore laborum nisi provident? Maxime harum unde nobis! Veniam minima accusamus quis omnis laudantium.', 10, 'Euskara', 4, 4);
-insert into respuesta
-values (1, 'respuesta a bien', 1, 5),
-  (2, 'respuesta a mal', 2, 5);
+  (
+    8,
+    5,
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos molestiae enim dolorem veniam labore, magni officiis doloribus illo odit est, quaerat exercitationem dolore perferendis, quae repudiandae eum mollitia. Quos exercitationem, est expedita accusantium voluptates obcaecati ex inventore laborum nisi provident? Maxime harum unde nobis! Veniam minima accusamus quis omnis laudantium.',
+    10,
+    'Euskara',
+    4,
+    4
+  );
+insert into respuesta (id, texto, id_review, id_cuenta)
+values (
+    1,
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit accusamus aut nemo quas qui ipsa',
+    1,
+    5
+  ),
+  (
+    2,
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea numquam quis, facilis pariatur qui facere exercitationem dolores repudiandae sapiente, nemo eum sequi amet',
+    2,
+    5
+  ),
+  (
+    3,
+    'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi saepe culpa ratione',
+    8,
+    2
+  ),
+  (
+    4,
+    'Lorem, ipsum dolor',
+    8,
+    4
+  );
