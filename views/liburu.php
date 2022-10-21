@@ -91,13 +91,16 @@ agregarHead($titulo_castellano . ' | IGKluba');
       <p id="sinopsis"><?php echo $libro['sinopsis'] ?></p>
     </section>
 
+    <a href="/iritzia" class="btn">Iritzia eman</a>
+
     <section id="inferior">
       <h2 id="iritziak">Iritziak:</h2>
+
       <div class="flex-stretch-col" id="reviews">
         <?php
         foreach ($reviews as $review) {
         ?>
-          <div class="review">
+          <article class="review">
             <?php
             if ($_SESSION['usr']['rol'] !== 'Ikasle') {
             ?>
@@ -133,7 +136,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
             <?php
             }
             ?>
-          </div>
+          </article>
         <?php
         }
         ?>

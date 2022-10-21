@@ -75,7 +75,7 @@ headerLogin();
 
 <body class="flex-stretch-col">
   <main class="flex-center-row">
-    <form action="" method="post" enctype="multipart/form-data" class="flex-stretch-col form-hasi-sortu">
+    <form action="" method="post" enctype="multipart/form-data" class="flex-stretch-col">
       <div class="campo">
         <label for="nombre">Izena:</label>
         <input type="text" id="nombre" name="nombre" maxlength="50">

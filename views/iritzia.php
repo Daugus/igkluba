@@ -3,7 +3,7 @@
 
 <?php
 include_once '../modules/session.php';
-checkLogin();
+checkSession();
 
 include_once '../templates/head.php';
 
@@ -27,21 +27,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 include_once '../templates/header.php';
-agregarHead('Saioa hasi | IGKluba', __FILE__, false);
-headerLogin();
+agregarHead('Iritzia eman | IGKluba', __FILE__);
+headerGeneral();
 ?>
 
 <body class="flex-stretch-col">
   <main class="flex-center-row">
     <form action="" method="post" class="flex-stretch-col">
       <div class="campo">
-        <label for="apodo">Ezizena:</label>
-        <input type="text" id="apodo" name="apodo" minlength="1" maxlength="20" required>
+        <label for="nota">Nota:</label>
+        <div>
+          <select name="nota" id="nota">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <i class="fa-solid fa-star"></i>
+        </div>
       </div>
 
       <div class="campo">
-        <label for="pass">Pasahitza:</label>
-        <input type="password" id="pass" name="pass" minlength="1" maxlength="30" required>
+        <label for="texto">Iritzia:</label>
+        <textarea name="texto" id="texto" minlength="1" maxlength="2295"></textarea>
       </div>
 
       <button id="login">Saioa hasi</button>
