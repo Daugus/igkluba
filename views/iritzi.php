@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     'id_cuenta' => $_SESSION['usr']['id']
   ]);
 
-  if ($_SESSION['usr']['rol'] === 'Ikasle') {
+  if (isset($_REQUEST['texto'])) {
     header('Location: /iritzia/' . $pdo->lastInsertId());
   } else {
     header('Location: /liburua/' . $id);
@@ -42,7 +42,7 @@ headerGeneral();
 ?>
 
 <body>
-  <main class="flex-center-row">
+  <main class="flex-center-col" id="main-review">
     <div class="form-container">
       <h1>Iritzia eman</h1>
 
@@ -91,22 +91,18 @@ headerGeneral();
           </select>
         </div>
 
-        <?php
-        if ($_SESSION['usr']['rol'] === 'Ikasle') {
-        ?>
-          <div class="campo">
-            <label for="texto">Iritzia:</label>
-            <textarea name="texto" id="texto" minlength="1" maxlength="2295"></textarea>
-          </div>
-        <?php
-        }
-        ?>
+        <div class="campo">
+          <label for="texto">Iritzia:</label>
+          <textarea name="texto" id="texto" maxlength="2295" placeholder="Zure iritzia (300 hitz gehienez)..."></textarea>
+        </div>
 
         <input type="hidden" value="<?php echo $_SESSION['usr']['fecha_nacimiento'] ?>" name="edad" id="edad">
 
         <button id="enviar">Bidali</button>
       </form>
     </div>
+
+    <a href="/liburua/<?php echo $id ?>" class="volver">Itzuli liburura</a>
   </main>
 
   <?php

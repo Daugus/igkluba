@@ -41,6 +41,10 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
           $cuenta->execute(['id' => $review['id_cuenta']]);
           $cuenta = $cuenta->fetch();
           echo $cuenta['apodo'];
+
+          if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+            echo ' (' . $cuenta['nombre'] . ' ' . $cuenta['apellido'] . ')';
+          }
           ?>:
         </h3>
       <?php
@@ -54,43 +58,44 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
 
     <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
 
-    <section>
-      <h2>Erantzunak</h2>
+    <?php
+    if (count($respuestas) > 0) {
+    ?>
+      <section>
+        <h2>Erantzunak</h2>
 
-      <div class="flex-stretch-col" id="respuestas">
-        <?php
-        foreach ($respuestas as $respuesta) {
-        ?>
-          <article class="repuesta">
-            <?php
-            if ($_SESSION['usr']['rol'] !== 'Ikasle') {
-            ?>
-              <h3 id="reviewer">
-                <?php
-                $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
-                $cuenta->execute(['id' => $review['id_cuenta']]);
-                $cuenta = $cuenta->fetch();
-                echo $cuenta['apodo'];
-                ?>:
-              </h3>
-            <?php
-            }
+        <ol class="flex-stretch-col" id="respuestas">
+          <?php
+          foreach ($respuestas as $respuesta) {
+          ?>
+            <li>
+              <article class="repuesta">
+                <h3 id="reviewer">
+                  <?php
+                  $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
+                  $cuenta->execute(['id' => $respuesta['id_cuenta']]);
+                  $cuenta = $cuenta->fetch();
+                  echo $cuenta['apodo'];
 
-            if (isset($respuesta['texto'])) {
-            ?>
-              <p><?php echo $respuesta['texto'] ?></p>
-            <?php
-            }
-            ?>
+                  if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+                    echo ' (' . $cuenta['nombre'] . ' ' . $cuenta['apellido'] . ')';
+                  }
+                  ?>:
+                </h3>
 
-          </article>
-        <?php
-        }
-        ?>
-      </div>
-    </section>
+                <p><?php echo $respuesta['texto'] ?></p>
+              </article>
+            </li>
+          <?php
+          }
+          ?>
+        </ol>
+      </section>
+    <?php
+    }
+    ?>
 
-    <a href="/liburua/<?php echo $review['id_libro'] ?>" id="volver">Itzuli liburura</a>
+    <a href="/liburua/<?php echo $review['id_libro'] ?>" class="volver">Itzuli liburura</a>
   </main>
 
   <?php

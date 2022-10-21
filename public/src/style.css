@@ -415,7 +415,9 @@ main {
 
 /* --- libro --- */
 #main-libro,
-#main-respuestas {
+#main-respuestas,
+#main-review,
+#main-responder {
   gap: 2.5rem;
 }
 
@@ -483,11 +485,32 @@ main {
   gap: 1.5rem;
 }
 
+#main-libro .review {
+  gap: 0.75rem;
+}
+
+#main-libro #reviews .btn {
+  align-self: start;
+}
+
 .ver-respuestas {
   font-size: 1.15rem;
 }
 
 /* - respuestas -  */
+#main-respuestas ol {
+  list-style-type: decimal;
+}
+
+#main-respuestas ol li,
+#main-respuestas h3 {
+  font-weight: 600;
+}
+
+#main-respuestas ol p {
+  font-weight: 400;
+}
+
 #main-libro :is(#central, #inferior),
 #main-respuestas > section {
   width: 70ch;
@@ -496,10 +519,6 @@ main {
 
 #main-respuestas > section {
   align-items: stretch;
-}
-
-#main-respuestas #volver {
-  font-size: 1.2rem;
 }
 
 /* ===== footer ===== */
@@ -571,7 +590,6 @@ a.btn {
 
   font-weight: 600;
 
-  align-self: center;
   padding: 0.5rem 1rem;
 
   border: 3px solid transparent;
@@ -582,7 +600,7 @@ a.btn {
   white-space: nowrap;
 }
 
-a.btn::before {
+/* a.btn::before {
   content: '';
 
   position: absolute;
@@ -598,7 +616,7 @@ a.btn::before {
 
 a.btn:hover::before {
   left: 100%;
-}
+} */
 
 .error {
   background-color: var(--clr-error);
@@ -610,4 +628,13 @@ a.btn:hover::before {
 
 .hidden {
   display: none;
+}
+
+.volver {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.grupo-volver {
+  gap: 0.5rem;
 }

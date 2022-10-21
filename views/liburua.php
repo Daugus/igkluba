@@ -110,42 +110,34 @@ agregarHead($titulo_castellano . ' | IGKluba');
           <?php
           foreach ($reviews as $review) {
           ?>
-            <article class="review">
-              <h3 id="reviewer">
-                <?php
-                $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
-                $cuenta->execute(['id' => $review['id_cuenta']]);
-                $cuenta = $cuenta->fetch();
-                echo $cuenta['apodo'];
-
-                if ($_SESSION['usr']['rol'] !== 'Ikasle') {
-                  echo ' (' . $cuenta['nombre'] . ' ' . $cuenta['apellido'] . ')';
-                }
-                ?>:
-              </h3>
-              <?php
-
-              if (isset($review['texto'])) {
-              ?>
+            <article class="flex-stretch-col review">
+              <div>
+                <h3 id="reviewer">
+                  <?php
+                  $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
+                  $cuenta->execute(['id' => $review['id_cuenta']]);
+                  $cuenta = $cuenta->fetch();
+                  echo $cuenta['apodo'];
+                  if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+                    echo ' (' . $cuenta['nombre'] . ' ' . $cuenta['apellido'] . ')';
+                  }
+                  ?>:
+                </h3>
                 <p><?php echo $review['texto'] ?></p>
-              <?php
-              }
-              ?>
-
-              <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
-
-              <?php
-              $cantidadRespuestas = $pdo->prepare('SELECT count(id) AS cantidad_respuestas FROM respuesta WHERE id_review = :id_review;');
-              $cantidadRespuestas->execute(['id_review' => $review['id']]);
-              $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
-              if ($cantidadRespuestas > 0) {
-              ?>
-                <a href="/iritzia/<?php echo $review['id'] ?>" class="ver-respuestas">
-                  Erantzunak (<?php echo $cantidadRespuestas ?>)
-                </a>
-              <?php
-              }
-              ?>
+                <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
+                <?php
+                $cantidadRespuestas = $pdo->prepare('SELECT count(id) AS cantidad_respuestas FROM respuesta WHERE id_review = :id_review;');
+                $cantidadRespuestas->execute(['id_review' => $review['id']]);
+                $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
+                if ($cantidadRespuestas > 0) {
+                ?>
+                  <a href="/iritzia/<?php echo $review['id'] ?>" class="ver-respuestas">
+                    Erantzunak (<?php echo $cantidadRespuestas ?>)
+                  </a>
+                <?php
+                }
+                ?>
+              </div>
 
               <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
             </article>

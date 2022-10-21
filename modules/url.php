@@ -7,5 +7,5 @@ function getUrl(): string
 function getPage(): array
 {
   $url = parse_url($_SERVER['REQUEST_URI']);
-  return array_slice(array_filter(explode('/', $url['path'])), 0);
+  return array_slice(array_filter(explode('/', strtolower($url['path']))), 0);
 }
