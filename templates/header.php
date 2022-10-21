@@ -53,7 +53,17 @@ function headerGeneral(String $valueBusqueda = ''): void
     <ul class="flex-center-row">
       <li><a href="/nagusia">Hasiera</a></li>
       <li><a href="/gune-pertsonala">Gune pertsonala</a></li>
-      <li><a href="#">Liburua eskatu</a></li>
+      <?php
+      if ($_SESSION['usr']['rol'] === 'Admin') {
+      ?>
+        <li><a href="/liburua-igo">Liburua igo</a></li>
+      <?php
+      } else {
+      ?>
+        <li><a href="/liburua-eskatu">Liburua eskatu</a></li>
+      <?php
+      }
+      ?>
       <li><a href="/itxi" id="logout">Saioa itxi</a></li>
     </ul>
   </nav>

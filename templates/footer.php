@@ -29,7 +29,17 @@ function footerGeneral(): void
       <div class="footer-col">
         <p>Liburak eta hizkuntzak</p>
         <ul>
-          <li><a href=""><?php echo $_SESSION['usr']['rol'] === 'Admin' ? 'Liburua erantsi' : 'Liburua eskatu' ?></a></li>
+          <?php
+          if ($_SESSION['usr']['rol'] === 'Admin') {
+          ?>
+            <li><a href="/liburua-igo">Liburua igo</a></li>
+          <?php
+          } else {
+          ?>
+            <li><a href="/liburua-eskatu">Liburua eskatu</a></li>
+          <?php
+          }
+          ?>
           <li><a href="">Hizkuntza eskatu</a></li>
         </ul>
       </div>
