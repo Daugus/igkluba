@@ -247,8 +247,8 @@ main {
   padding: 0.5rem 1rem;
   position: relative;
   overflow: hidden;
-
 }
+
 
 .form-hasi-sortu button::before {
   content: "";
@@ -263,6 +263,45 @@ main {
 
 .form-hasi-sortu button:hover::before {
   left: 100%;
+}
+#itzuli {
+  color: var(--clr-negro);
+  margin-bottom: 1rem;
+  align-self: center;
+  border: 3px solid transparent;
+  border-radius: 1rem;
+  background: var(--borde-gradiente-radius);
+  padding: 0.5rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+
+#itzuli::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradiente-transparente);
+  transition: all 650ms;
+}
+
+#itzuli:hover::before {
+  left: 100%;
+}
+
+.registro-volver-hasi{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+#registro-hasi:hover{
+  text-decoration: underline;
 }
 
 /* --- nagusia --- */
@@ -320,6 +359,8 @@ footer {
   border-image-slice: 1;
   border-image-source: var(--gradiente);
   box-shadow: var(--sombra-superior);
+  margin-top: 3rem;
+  
 }
 
 /* --- hasiera --- */
@@ -438,17 +479,44 @@ footer {
   justify-content: center;
   align-items: stretch;
 }
-
-a.btn {
+/*
+a.btn{
   color: var(--clr-negro);
   background-color: var(--clr-gris-claro);
-
   font-weight: 600;
   padding: 0.5rem 1rem;
   border-radius: 10px;
-
-  white-space: nowrap;
+  white-space: nowrap; 
 }
+*/
+
+ a.btn {
+  color: var(--clr-negro);
+  align-self: center;
+  border: 3px solid transparent;
+  border-radius: 1rem;
+  background: var(--borde-gradiente-radius);
+  padding: 0.5rem 1rem;
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+a.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradiente-transparente);
+  transition: all 650ms;
+}
+
+a.btn:hover:before {
+  left: 100%;
+}
+
 
 .error {
   background-color: var(--clr-error);
@@ -460,4 +528,12 @@ a.btn {
 
 .hidden {
   display: none;
+}
+
+#titulo-añadir-libro{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top: 2rem;
+  font-weight: 600;
 }

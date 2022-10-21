@@ -8,8 +8,8 @@ function headerInicio(): void
     </div>
     <nav>
       <ul class="flex-center-row">
-        <li><a href="/sortu" class="btn">Sortu kontua</a></li>
-        <li><a href="/hasi" class="btn">Saioa hasi</a></li>
+        <a href="/sortu" class="btn">Sortu kontua</a>
+        <a href="/hasi" class="btn">Saioa hasi</a>
       </ul>
     </nav>
   </header>
@@ -53,7 +53,7 @@ function headerGeneral(): void
     <ul class="flex-center-row">
       <li><a href="/nagusia">Hasiera</a></li>
       <li><a href="/gune-pertsonala">Gune pertsonala</a></li>
-      <li><a href="#">Liburua eskatu</a></li>
+      <li><a href="/liburua-sortu">Liburua eskatu</a></li>
       <li><a href="/itxi" id="logout">Saioa itxi</a></li>
     </ul>
   </nav>

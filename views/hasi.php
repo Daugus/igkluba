@@ -45,8 +45,10 @@ headerLogin();
       </div>
 
       <button id="login">Saioa hasi</button>
+      <a href="/sortu" id="registro-hasi">ez daukazu kontua? sesioa sortu</a>
     </form>
   </main>
+  <a href="/hasiera" id="itzuli">Itzuli</a>
 
   <?php
   include_once '../templates/footer.php';

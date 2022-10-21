@@ -26,7 +26,11 @@ btnRegistro.addEventListener('click', (e) => {
   if (!/^[A-Za-zÀ-ÖØ-öø-ÿ ]{1,50}$/.test(valoresEnviados.apellido))
     return mostrarMensajeError('error, apellido inválido', form.querySelector('#apellido'));
   if (!/^[A-Za-z0-9_-]{1,20}$/.test(valoresEnviados.apodo)) return mostrarMensajeError('error, apodo inválido', form.querySelector('#apodo'));
-  if (!/^[A-Za-z0-9]{8,8}$/.test(valoresEnviados.clase)) return mostrarMensajeError('error, clase inválido', form.querySelector('#clase'));
+  if (!/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/.test(valoresEnviados.clase)) return mostrarMensajeError('error, clase inválido', form.querySelector('#clase'));
+
+
+
+  if (!/^[A-Za-z0-9]{8,8}$/.test(valoresEnviados.email)) return mostrarMensajeError('error, email inválido', form.querySelector('#email'));
 
   if (!esMayorDe10(valoresEnviados.fecha)) return mostrarMensajeError('error, el usr no es mayor de diez años', form.querySelector('#fecha'));
 
@@ -60,3 +64,16 @@ const mostrarMensajeError = (texto, campo) => {
   div.appendChild(p);
   campo.insertAdjacentElement('afterend', div);
 };
+
+
+
+
+
+
+var dialog = document.querySelector("dialog");
+dialogPolyfill.registerDialog(dialog);
+
+
+document.getElementById('#registro-hasi').addEventListener('click', () =>  dialog.show());
+
+document.getElementById('#btn-dialog').addEventListener('click', () =>   dialog.close());

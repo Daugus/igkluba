@@ -69,8 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include_once '../templates/head.php';
 agregarHead('Sortu kontua | IGKluba', __FILE__, false);
 
-include_once '../templates/header.php';
-headerLogin();
+
 ?>
 
 <body class="flex-stretch-col">
@@ -78,17 +77,17 @@ headerLogin();
     <form action="" method="post" enctype="multipart/form-data" class="flex-stretch-col form-hasi-sortu">
       <div class="campo">
         <label for="nombre">Izena:</label>
-        <input type="text" id="nombre" name="nombre" maxlength="50">
+        <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Zure izena...">
       </div>
 
       <div class="campo">
         <label for="apellido">Abizena:</label>
-        <input type="text" id="apellido" name="apellido" maxlength="50">
+        <input type="text" id="apellido" name="apellido" maxlength="50" placeholder="Zure abizena...">
       </div>
 
       <div class="campo">
         <label for="apodo">Ezizena:</label>
-        <input type="text" id="apodo" name="apodo" maxlength="20">
+        <input type="text" id="apodo" name="apodo" maxlength="20" placeholder="Zure ezizena...">
 
         <?php
         if ($apodoInvalido) {
@@ -121,7 +120,7 @@ headerLogin();
 
       <div class="campo">
         <label for="clase">Klasea:</label>
-        <input type="text" id="clase" name="clase" maxlength="8">
+        <input type="text" id="clase" name="clase" maxlength="8" placeholder="Zure klasea...">
 
         <?php
         if ($claseInvalida) {
@@ -135,8 +134,13 @@ headerLogin();
       </div>
 
       <div class="campo">
+        <label for="fecha">Email:</label>
+        <input type="text" id="emaik" name="email" placeholder="Zure email-a...">
+      </div>
+
+      <div class="campo">
         <label for="fecha">Jaiotze data:</label>
-        <input type="date" id="fecha" name="fecha">
+        <input type="date" id="fecha" name="fecha" placeholder="Zure jaiotze data...">
       </div>
 
       <div class="campo">
@@ -159,18 +163,35 @@ headerLogin();
 
       <div class="campo">
         <label for="pwd">Pasahitza:</label>
-        <input type="password" id="pwd" name="pwd" maxlength="30">
+        <input type="password" id="pwd" name="pwd" maxlength="30" placeholder="Zure pasahitza...">
       </div>
 
       <div class="campo">
         <label for="pwdConf">Pasahitza berridatzi:</label>
-        <input type="password" id="pwdConf" name="pwdConf" maxlength="30">
+        <input type="password" id="pwdConf" name="pwdConf" maxlength="30" placeholder="Berridatzi pasahitza">
       </div>
 
+      <label><input type="checkbox" id="cbox"><a href="#" id=registro-hasi >Baldintzak</a> onartzen ditut</label>
       <button type="submit" id="registrarse">Sortu kontua</button>
-    </form>
-  </main>
+      <a href="/hasi" id="registrohasi">kontua daukazu? sesioa hasi</a>
 
+    <dialog id="this-dialog">
+  <p> Baldintzak </p>
+  <button id="btn-dialog">Itxi! </button>
+<dialog>   
+
+
+      
+      
+    </form>
+    
+  </main>
+   
+     
+      <a href="/hasiera" class="btn">Itzuli</a>
+      
+  
+    
   <?php
   include_once '../templates/footer.php';
   footerInicio();
