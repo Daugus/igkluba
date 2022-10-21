@@ -2,7 +2,7 @@ drop database if exists igkluba;
 -- ----------------------------------------------------------------
 create database igkluba default character set utf8 default collate utf8_general_ci;
 use igkluba;
-SET GLOBAL event_scheduler=ON;
+SET GLOBAL event_scheduler = ON;
 -- ----------------------------------------------------------------
 -- create
 create table if not exists centro (
@@ -82,31 +82,17 @@ create table if not exists review (
 );
 create table if not exists respuesta (
   id int unsigned auto_increment primary key,
-  texto varchar(500) not null,
-  id_review int unsigned,
+  texto varchar(765) not null,
+  id_review int unsigned not null,
   id_cuenta int unsigned not null,
   foreign key (id_review) references review(id),
   foreign key (id_cuenta) references cuenta(id)
 );
-create table if not exists solicitud_registro (
-  id int unsigned auto_increment primary key,
-  nombre varchar(50) not null,
-  apellido varchar(50) not null,
-  apodo varchar(30) not null,
-  fecha_nacimiento date not null,
-  cod_clase char(8) not null,
-  foreign key (cod_clase) references clase(cod)
-);
 create table if not exists solicitud_libro (
-  id int unsigned auto_increment primary key,
-  titulo varchar(100) not null,
-  autor varchar(100) not null,
-  nombre_idioma varchar(30),
-  sinopsis varchar(2550) not null,
-  formato enum('Nobela', 'Komikia', 'Nobela Grafikoa', 'Manga') not null,
-  etiqueta varchar(15),
+  id_libro int unsigned not null,
   id_alumno int unsigned not null,
-  foreign key (nombre_idioma) references idioma(nombre),
+  primary key (id_libro, id_alumno),
+  foreign key (id_libro) references libro(id),
   foreign key (id_alumno) references cuenta(id)
 );
 create table if not exists solicitud_idioma (
