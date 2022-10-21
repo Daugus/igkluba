@@ -46,7 +46,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
       </a>
 
       <div class="flex-center-col" id="datos">
-        <div class="flex-center-col" id="titulo-serie">
+        <div class="flex-center-col" id="datos-importantes">
           <h1><?php echo $titulo_castellano ?></h1>
 
           <?php
@@ -91,7 +91,16 @@ agregarHead($titulo_castellano . ' | IGKluba');
       <p id="sinopsis"><?php echo $libro['sinopsis'] ?></p>
     </section>
 
-    <a href="/iritzia" class="btn">Iritzia eman</a>
+    <?php
+    $comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
+    $comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
+    $comprobarReview = $comprobarReview->fetch();
+    if (empty($comprobarReview)) {
+    ?>
+      <a href="/liburu/<?php echo $libro['id'] ?>/iritzia" class="btn">Iritzia eman</a>
+    <?php
+    }
+    ?>
 
     <section id="inferior">
       <h2 id="iritziak">Iritziak:</h2>
@@ -99,45 +108,47 @@ agregarHead($titulo_castellano . ' | IGKluba');
       <div class="flex-stretch-col" id="reviews">
         <?php
         foreach ($reviews as $review) {
+          if (!empty($review['texto'])) {
         ?>
-          <article class="review">
-            <?php
-            if ($_SESSION['usr']['rol'] !== 'Ikasle') {
-            ?>
+            <article class="review">
               <h3 id="reviewer">
                 <?php
                 $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
                 $cuenta->execute(['id' => $review['id_cuenta']]);
                 $cuenta = $cuenta->fetch();
                 echo $cuenta['apodo'];
+
+                if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+                  echo ' (' . $cuenta['nombre'] . ' ' . $cuenta['apellido'] . ')';
+                }
                 ?>:
               </h3>
-            <?php
-            }
+              <?php
 
-            if (isset($review['texto'])) {
-            ?>
-              <p><?php echo $review['texto'] ?></p>
-            <?php
-            }
-            ?>
+              if (isset($review['texto'])) {
+              ?>
+                <p><?php echo $review['texto'] ?></p>
+              <?php
+              }
+              ?>
 
-            <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
+              <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
 
-            <?php
-            $cantidadRespuestas = $pdo->prepare('SELECT count(id) AS cantidad_respuestas FROM respuesta WHERE id_review = :id_review;');
-            $cantidadRespuestas->execute(['id_review' => $review['id']]);
-            $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
-            if ($cantidadRespuestas > 0) {
-            ?>
-              <a href="/erantzunak/<?php echo $review['id'] ?>" class="ver-respuestas">
-                Erantzunak (<?php echo $cantidadRespuestas ?>)
-              </a>
-            <?php
-            }
-            ?>
-          </article>
+              <?php
+              $cantidadRespuestas = $pdo->prepare('SELECT count(id) AS cantidad_respuestas FROM respuesta WHERE id_review = :id_review;');
+              $cantidadRespuestas->execute(['id_review' => $review['id']]);
+              $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
+              if ($cantidadRespuestas > 0) {
+              ?>
+                <a href="/erantzunak/<?php echo $review['id'] ?>" class="ver-respuestas">
+                  Erantzunak (<?php echo $cantidadRespuestas ?>)
+                </a>
+              <?php
+              }
+              ?>
+            </article>
         <?php
+          }
         }
         ?>
       </div>

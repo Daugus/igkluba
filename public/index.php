@@ -9,6 +9,9 @@ if (count($page) === 1) {
 } else if (count($page) === 2 && in_array($page[0], ['liburu', 'bilaketa', 'erantzunak'])) {
   $ruta_elegida = '../views/' . $page[0] . '.php';
   $busqueda = $page[1];
+} else if (count($page) === 3 && $page[0] === 'liburu' && $page[2] === 'iritzia') {
+  $ruta_elegida = '../views/' . $page[2] . '.php';
+  $id = $page[1];
 }
 
 if (empty($ruta_elegida) || !file_exists($ruta_elegida)) {

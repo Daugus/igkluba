@@ -33,6 +33,7 @@
 
   --borde-gradiente-radius: linear-gradient(var(--clr-blanco), var(--clr-blanco)) padding-box, var(--gradiente) border-box;
 
+  --sombra-alrededor: 0 0rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
   --sombra-superior: 0 -0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
   --sombra-inferior: 0 0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
 
@@ -50,8 +51,15 @@
 
 /* ===== general ===== */
 body {
+  font-size: 1.1rem;
   background-color: var(--clr-fondo);
   overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: stretch;
 }
 
 h1 {
@@ -69,6 +77,10 @@ h2 {
 p {
   font-size: 1.25rem;
   line-height: 1.6;
+}
+
+.nota :is(a, a:visited) {
+  color: var(--clr-negro);
 }
 
 .nota i {
@@ -96,36 +108,46 @@ a:hover {
   margin-top: 3%;
 }
 
-form:not(#buscador) {
+.form-container {
   background-color: var(--clr-blanco);
   padding: 1.75rem 2.75rem;
+
+  box-shadow: var(--sombra-alrededor);
 
   border: 3px solid transparent;
   border-radius: 2rem;
   background: var(--borde-gradiente-radius);
+}
 
+.form-container form {
   gap: 1rem;
 }
 
-form .campo {
+form :is(.campo, .campo-predefinido) {
   display: flex;
   flex-direction: row;
 
   justify-content: space-between;
   align-items: center;
 
+  font-size: 1.1rem;
   gap: 1rem;
 }
 
+form .campo-predefinido p {
+  cursor: default;
+}
+
 form .campo label[for='texto'] {
+  margin-top: 0.5775rem;
   align-self: start;
 }
 
-form:not(#buscador) :is(select, [type='file'], [type='date']) {
+.form-container :is(select, [type='file'], [type='date']) {
   justify-self: stretch;
 }
 
-form:not(#buscador) button {
+.form-container button {
   margin-top: 1rem;
   align-self: center;
   border: 3px solid transparent;
@@ -136,7 +158,7 @@ form:not(#buscador) button {
   overflow: hidden;
 }
 
-form:not(#buscador) button::before {
+.form-container button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -147,7 +169,7 @@ form:not(#buscador) button::before {
   transition: all 650ms;
 }
 
-form:not(#buscador) button:hover::before {
+.form-container button:hover::before {
   left: 100%;
 }
 
@@ -206,7 +228,7 @@ textarea {
   width: 35ch;
   min-height: 4rem;
   height: 8rem;
-  max-height: 12rem;
+  max-height: 16rem;
 }
 
 /* ===== header ===== */
@@ -272,6 +294,7 @@ header {
 nav {
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 
 #header-inicio,
@@ -298,7 +321,7 @@ nav {
   text-align: center;
   white-space: nowrap;
   opacity: 0.8;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   text-shadow: none;
   transition: all var(--transicion);
 }
@@ -334,10 +357,11 @@ main {
 /* --- nagusia --- */
 #main-nagusia-bilaketa {
   --gap: 8rem;
+  --columnas: 4;
   --min-width: 8rem;
 
-  --total-gap-width: calc(3 * var(--gap));
-  --libro-max-width: calc((100% - var(--total-gap-width)) / 4);
+  --total-gap-width: calc((var(--columnas) - 1) * var(--gap));
+  --libro-max-width: calc((100% - var(--total-gap-width)) / var(--columnas));
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(max(var(--min-width), var(--libro-max-width)), 1fr));
@@ -405,18 +429,20 @@ main {
   gap: 1rem;
 }
 
-#main-libro #titulo-serie {
+#main-libro #datos-importantes {
   align-items: start;
   gap: 0.5rem;
 }
 
-#main-libro #titulo-serie h1 {
+#main-libro h1 {
   margin-bottom: 0;
   font-size: 2.5rem;
+  font-weight: 700;
 }
 
-#main-libro #titulo-serie > * {
+#main-libro #datos-importantes > * {
   line-height: 1.1;
+  font-weight: 500;
 }
 
 #main-libro #serie {
@@ -474,28 +500,22 @@ main {
 
 /* ===== footer ===== */
 footer {
-  color: var(--clr-blanco);
   background-color: var(--clr-gris-oscuro);
+
   padding: 2rem 15rem;
   width: 100%;
+
   border-top: 3px solid;
   border-image-slice: 1;
   border-image-source: var(--gradiente);
   box-shadow: var(--sombra-superior);
+
+  gap: 1.25rem;
 }
 
-/* --- hasiera --- */
-#footer-inicio {
-  text-align: center;
-}
-
-/* --- general --- */
-#footer-general {
-  gap: 1.75rem;
-}
-
-#footer-general * {
+footer * {
   color: var(--clr-blanco);
+  font-size: 1.15rem;
 }
 
 /* ===== responsive ===== */
@@ -581,7 +601,7 @@ a.btn:hover::before {
 }
 
 .fa-star {
-  color: #fadb5f;
+  color: var(--clr-acento);
 }
 
 .hidden {

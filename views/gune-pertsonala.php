@@ -9,7 +9,7 @@ include_once '../templates/head.php';
 agregarHead('Gune pertsonala | IGKluba');
 ?>
 
-<body class="flex-stretch-col">
+<body>
   <?php
   include_once '../templates/header.php';
   headerGeneral();

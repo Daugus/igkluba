@@ -11,7 +11,7 @@ include_once '../templates/footer.php';
 agregarHead('IGKluba', '', false);
 ?>
 
-<body class="flex-stretch-col">
+<body>
   <?php headerInicio() ?>
 
   <main id="hasiera">
