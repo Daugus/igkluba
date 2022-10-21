@@ -59,7 +59,7 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
         <?php
         foreach ($respuestas as $respuesta) {
         ?>
-          <div class="repuesta">
+          <article class="repuesta">
             <?php
             if ($_SESSION['usr']['rol'] !== 'Ikasle') {
             ?>
@@ -81,7 +81,7 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
             }
             ?>
 
-          </div>
+          </article>
         <?php
         }
         ?>
