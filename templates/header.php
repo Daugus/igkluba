@@ -25,7 +25,7 @@ function headerLogin(): void
 <?php
 }
 
-function headerGeneral(): void
+function headerGeneral(String $valueBusqueda = ''): void
 {
 ?>
   <header class="flex-space-between-row" id="header-general">
@@ -34,7 +34,7 @@ function headerGeneral(): void
     </div>
 
     <form id="buscador" action="/bilaketa" method="POST" class="flex-center-row">
-      <input id="busqueda" type="search" name="busqueda" placeholder="Bilatu liburua edo egilea...">
+      <input id="busqueda" type="search" name="busqueda" placeholder="Bilatu liburua edo egilea..." value="<?php echo $valueBusqueda ?>">
       <button id="buscar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
     </form>
 

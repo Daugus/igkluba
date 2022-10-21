@@ -20,16 +20,63 @@ agregarHead($busqueda . ' | IGKluba');
 <body class="flex-stretch-col">
   <?php
   include_once '../templates/header.php';
-  headerGeneral();
+  headerGeneral($busqueda);
   ?>
 
-  <main class="flex-center-col">
-    <p>bilaketa: <?php echo $busqueda ?></p>
+  <main>
     <?php
     $busqueda = strtolower($busqueda);
     include_once '../modules/libros.php';
-    buscarLibros("LOWER(il.titulo_alternativo) like '%$busqueda%'", 'il.titulo_alternativo ASC');
     ?>
+
+    <?php
+    $librosPorTitulo = buscarLibros(
+      "LOWER(il.titulo_alternativo) like '%$busqueda%'",
+      'il.titulo_alternativo ASC',
+      'GROUP BY l.id'
+    );
+    $librosPorAutor = buscarLibros(
+      "LOWER(l.autor) like '%$busqueda%'",
+      'l.autor ASC',
+      'GROUP BY l.id'
+    );
+
+    $cantidadPorLibro = count($librosPorTitulo);
+    $cantidadPorAutor = count($librosPorAutor);
+    ?>
+
+    <h1>"<?php echo $busqueda ?>" bilaketa <?php echo $cantidadPorLibro + $cantidadPorAutor ?> erantzunak eman ditu:</h1>
+
+    <?php
+    if ($cantidadPorLibro > 0) {
+    ?>
+      <section>
+        <h2>Titulo bidez <span>(<?php echo $cantidadPorLibro ?>)</span>:</h2>
+
+        <div id="main-nagusia-bilaketa">
+          <?php agregarLibros($librosPorTitulo) ?>
+        </div>
+      </section>
+    <?php
+    }
+
+    if ($cantidadPorAutor > 0) {
+    ?>
+      <section>
+        <h2>Egile bidez <span>(<?php echo $cantidadPorAutor ?>)</span>:</h2>
+
+        <div id="main-nagusia-bilaketa">
+          <?php agregarLibros($librosPorAutor) ?>
+        </div>
+      </section>
+    <?php
+    }
+
+    if ($cantidadPorLibro === 0 && $cantidadPorAutor === 0) {
+      echo '<p>nada</p>';
+    }
+    ?>
+
   </main>
 
   <?php

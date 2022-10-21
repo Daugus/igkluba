@@ -14,12 +14,19 @@ agregarHead('IGKluba');
   include_once '../templates/header.php';
   headerGeneral();
   ?>
-  <main id="main-nagusia" class="flex-center-row">
-    <?php
-    include_once '../modules/libros.php';
-    buscarLibros('il.nombre_idioma = "Gaztelania"');
-    ?>
+
+  <main>
+    <h1>Gehien irakurritako liburuak</h1>
+
+    <section id="main-nagusia-bilaketa">
+      <?php
+      include_once '../modules/libros.php';
+      $librosPopulares = buscarLibros('il.nombre_idioma = "Gaztelania"');
+      agregarLibros($librosPopulares);
+      ?>
+    </section>
   </main>
+
   <?php
   include_once '../templates/footer.php';
   footerGeneral();

@@ -54,6 +54,18 @@ body {
   overflow-y: scroll;
 }
 
+h1 {
+  margin-bottom: 1rem;
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+}
+
+:is(h1, h2) span {
+  font-weight: 500;
+}
+
 p {
   font-size: 1.25rem;
   line-height: 1.6;
@@ -301,7 +313,7 @@ main {
 }
 
 /* --- nagusia --- */
-#main-nagusia {
+#main-nagusia-bilaketa {
   --gap: 8rem;
   --min-width: 8rem;
 
@@ -324,11 +336,10 @@ main {
 }
 
 .libro__portada {
-  transition: scale var(--transicion), outline var(--transicion-rapida);
+  transition: outline var(--transicion-rapida);
 }
 
 .libro__portada:hover {
-  scale: 1.01;
   outline: var(--outline);
   outline-offset: 0.25rem;
 }
@@ -381,6 +392,7 @@ main {
 }
 
 #main-libro #titulo-serie h1 {
+  margin-bottom: 0;
   font-size: 2.5rem;
 }
 
