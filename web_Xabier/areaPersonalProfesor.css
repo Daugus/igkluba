@@ -1,3 +1,9 @@
+/* oculto los contenedores de cada seccion por defecto solo se mostraran al darle button los botones */
+#contenedorReviews, #contenedorClase, #contenedorIdioma, #contenedorAdmision {
+    display: none;
+}
+
+
 /* Global */
 
 body {
@@ -6,6 +12,7 @@ body {
     background-color: azure;
     margin: 0;
 }
+
 
 table  {
     border: 3px solid dodgerblue;
@@ -18,7 +25,7 @@ li {
     list-style: none;
 }
 
-a {
+button, .Enviar {
     background-color: black;
     border-radius: 5px;
     margin-right: 5%;

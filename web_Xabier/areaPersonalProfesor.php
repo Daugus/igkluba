@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="areaPersonalProfesor.css">
+    <script src="areaPersonalProfesor.js"></script>
     <title>Área Personal</title>
 </head>
 <?php
-/*
+    /*
     Al cargar la pagina el area personal toma los datos de la cuenta que ha iniciado sesion desde la base de datos.
     Con los datos obtenidos de la BD, se rellenan los campos del area personal.
 
@@ -21,6 +22,9 @@
 
     Para los alumnos uso una estructura repetitiva que van tomando los desde la BD en base al grupo seleccionado
     escribo cada alumno uno a uno hasta que no queden mas.
+
+    Para las solicitudes de idioma de los alumnos uso una estructura repetitiva que van tomando los desde la BD en base al grupo seleccionado
+    escribo cada solicitud una a una hasta que no queden mas.
     */
 
 
@@ -123,10 +127,10 @@ try {
     </div>
 
     <div id="botones">
-        <a href="" id="grupos">Mostrar grupos</a>
-        <a href="" id="reviews">Mostrar reviews</a>
-        <a href="" id="solicitudIdiomas">solicitudes idioma</a>
-        <a href="" id="solicitudAdmision">Solicitudes admisión</a>
+        <button id="grupos" onclick="grupos()">Mostrar grupos</button>
+        <button id="reviews" onclick="reviews()">Mostrar reviews</a>
+        <button id="solicitudIdiomas" onclick="solIdiomas()">solicitudes idioma</a>
+        <button id="solicitudAdmision" onclick="solAdmision()">Solicitudes admisión</a>
     </div>
 
     <!-- REVIEWS -->
@@ -150,7 +154,7 @@ try {
 
     <!-- CLASES Y ALUMNOS -->
     <div id="contenedorClase">
-        <form action="areaPersonalProfesor.php" method="POST">
+        <form action="areaPersonalProfesor.php" method="POST" onsubmit="grupos()">
             <label for="clase">Mostrar grupo </label>
             <select name="cod_clase" id="clase">
                 <?php
@@ -159,7 +163,7 @@ try {
                 }
                 ?>
             </select>
-            <input type="submit" id="Enviar" name="Enviar" value="Enviar">
+            <input type="submit" class="Enviar" name="Enviar" value="Enviar">
         </form>
         <?php 
             foreach ($resultadosAlumnos as $columna) {
@@ -175,7 +179,7 @@ try {
                 echo                "</ul>";
                 echo             "</div>";
                 echo            "<div class='BOTON'>";
-                echo                "<a href='' id='eliminar'>Eliminar</a>";
+                echo                "<button href='' id='eliminar'>Eliminar</button>";
                 echo            "</div>";
                 echo       "</div>";
             }
@@ -185,7 +189,7 @@ try {
 
     <!-- SOLICITUDES IDIOMA -->
     <div id="contenedorIdioma">
-        <form action="areaPersonalProfesor.php" method="POST">
+        <form action="areaPersonalProfesor.php" method="POST" onsubmit="solIdiomas()">
             <label for="clase">Mostrar grupo </label>
             <select name="cod_clase" id="clase">
                 <?php
@@ -194,7 +198,7 @@ try {
                 }
                 ?>
             </select>
-            <input type="submit" id="Enviar" name="Enviar" value="Enviar">
+            <input type="submit" class="Enviar" name="Enviar" value="Enviar">
         </form>
     <?php
     foreach ($resultadosSolIdioma as $columna) {
@@ -209,15 +213,17 @@ try {
         echo        "</div>";
         echo        "<div class='BOTONES'>";
         echo            "<ul>";
-        echo                "<a href='' id='aceptar'>Aceptar</a>";
-        echo                "<a href='' id='eliminar'>Eliminar</a>";
+        echo                "<button href='' id='aceptar'>Aceptar</button>";
+        echo                "<button href='' id='eliminar'>Eliminar</button>";
         echo            "</ul>";
         echo        "</div>";
         echo    "</div>";
     }
     ?>
     </div>
-    
+    <div id="contenedorAdmision">
+        contenedor admision
+    </div>
 
 </body>
 
