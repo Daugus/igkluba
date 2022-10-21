@@ -67,7 +67,6 @@ delimiter ;
 -- ----------------------------------------------------------------
 -- eventos
 create event desactivar_cuentas
-  on schedule
-  every 1 year
-  starts '2023-06-22 00:00'
+  on schedule every 1 year starts '2023-06-22 00:00'
+  on completion preserve enable
   do update cuenta set activo = false where rol = 'Ikasle' AND activo = true;
