@@ -81,7 +81,7 @@ agregarHead($busqueda . ' | IGKluba');
 
   <?php
   include_once '../templates/footer.php';
-  footerGeneral();
+  agregarFooter();
   ?>
 </body>
 

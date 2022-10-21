@@ -50,7 +50,7 @@ headerLogin();
 
   <?php
   include_once '../templates/footer.php';
-  footerInicio();
+  agregarFooter();
   ?>
 </body>
 

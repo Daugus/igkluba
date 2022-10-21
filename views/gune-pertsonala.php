@@ -21,7 +21,7 @@ agregarHead('Gune pertsonala | IGKluba');
 
   <?php
   include_once '../templates/footer.php';
-  footerGeneral();
+  agregarFooter();
   ?>
 </body>
 

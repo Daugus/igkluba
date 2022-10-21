@@ -93,7 +93,7 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
 
   <?php
   include_once '../templates/footer.php';
-  footerGeneral();
+  agregarFooter();
   ?>
 </body>
 

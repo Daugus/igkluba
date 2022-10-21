@@ -20,7 +20,7 @@ agregarHead('IGKluba', '', false);
     <img id="collage" src="/src/img/collage-Libros.png" alt="collage">
   </main>
 
-  <?php footerInicio() ?>
+  <?php agregarFooter() ?>
 
 </body>
 
