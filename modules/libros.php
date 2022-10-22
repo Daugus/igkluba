@@ -6,6 +6,7 @@ function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', St
   $libros = $pdo->prepare('SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
   FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
   WHERE ' . $condicion
+    . ' AND l.aceptado = 1'
     . ' ' . $agrupar
     . ' ORDER BY ' . $orden
     . ' LIMIT 24;');
@@ -35,7 +36,13 @@ function agregarLibros(array $libros)
         </a>
 
         <a href="<?php echo $url ?>#iritziak" class="nota libro__nota">
-          <?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i>
+          <?php
+          if ($libro['nota_media'] > 0) {
+            echo number_format((float)$libro['nota_media'], 2, '.', '');
+          } else {
+            echo '-';
+          }
+          ?><i class="fa-solid fa-star"></i>
         </a>
       </div>
     </article>

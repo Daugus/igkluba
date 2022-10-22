@@ -26,14 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include_once '../templates/head.php';
 include_once '../templates/header.php';
-agregarHead('Erantzuna eman | IGKluba', __FILE__);
+agregarHead('Erantzun | IGKluba', __FILE__);
 headerGeneral();
 ?>
 
 <body>
-  <main class="flex-center-col" id="main-responder">
+  <main class="flex-center-col main-form">
     <div class="form-container">
-      <h1>Iritzia eman</h1>
+      <h1>Erantzun</h1>
 
       <form action="" method="post" class="flex-stretch-col" id="form-iritzia">
         <div class="campo">

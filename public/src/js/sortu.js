@@ -3,7 +3,10 @@
 const fileInput = document.querySelector('#imagen');
 const labelFileInput = document.querySelector('.file-input-text');
 labelFileInput.addEventListener('keyup', (e) => {
-  if (['Enter', 'Space'].includes(e.code)) fileInput.click();
+  if (['Enter', 'Space'].includes(e.code)) {
+    e.preventDefault();
+    fileInput.click();
+  }
 });
 fileInput.addEventListener('input', () => (labelFileInput.querySelector('span').innerText = fileInput.files[0].name));
 
@@ -22,10 +25,14 @@ btnRegistro.addEventListener('click', (e) => {
     if (valor !== null) valoresEnviados[valor.name] = valor.type === 'file' ? valor.files[0] : valor.value;
   });
 
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ ]{1,50}$/.test(valoresEnviados.nombre)) return mostrarMensajeError('error, nombre inválido', form.querySelector('#nombre'));
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ ]{1,50}$/.test(valoresEnviados.apellido))
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,50}$/.test(valoresEnviados.nombre))
+    return mostrarMensajeError('error, nombre inválido', form.querySelector('#nombre'));
+
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,50}$/.test(valoresEnviados.apellido))
     return mostrarMensajeError('error, apellido inválido', form.querySelector('#apellido'));
+
   if (!/^[A-Za-z0-9_-]{1,20}$/.test(valoresEnviados.apodo)) return mostrarMensajeError('error, apodo inválido', form.querySelector('#apodo'));
+
   if (!/^[A-Za-z0-9]{8,8}$/.test(valoresEnviados.clase)) return mostrarMensajeError('error, clase inválido', form.querySelector('#clase'));
 
   if (!esMayorDe10(valoresEnviados.fecha)) return mostrarMensajeError('error, el usr no es mayor de diez años', form.querySelector('#fecha'));

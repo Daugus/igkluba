@@ -30,7 +30,7 @@ function headerGeneral(String $valueBusqueda = ''): void
 ?>
   <header class="flex-space-between-row" id="header-general">
     <div>
-      <a href="/"><img src="/src/img/logo.png" alt="Logo IGKluba"></a>
+      <a href="/naugusia"><img src="/src/img/logo.png" alt="Logo IGKluba"></a>
     </div>
 
     <form id="buscador" action="/bilaketa" method="POST" class="flex-center-row">
@@ -53,17 +53,7 @@ function headerGeneral(String $valueBusqueda = ''): void
     <ul class="flex-center-row">
       <li><a href="/nagusia">Hasiera</a></li>
       <li><a href="/gune-pertsonala">Gune pertsonala</a></li>
-      <?php
-      if ($_SESSION['usr']['rol'] === 'Admin') {
-      ?>
-        <li><a href="/liburua-igo">Liburua igo</a></li>
-      <?php
-      } else {
-      ?>
-        <li><a href="/liburua-eskatu">Liburua eskatu</a></li>
-      <?php
-      }
-      ?>
+      <li><a href="/liburua-igo">Liburua <?php echo $_SESSION['usr']['rol'] === 'Admin' ? 'igo' : 'eskatu' ?></a></li>
       <li><a href="/itxi" id="logout">Saioa itxi</a></li>
     </ul>
   </nav>

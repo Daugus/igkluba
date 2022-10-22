@@ -23,7 +23,7 @@ create table if not exists cuenta (
   apellido varchar(50) not null,
   apodo varchar(20) unique not null,
   rol enum('Admin', 'Irakasle', 'Ikasle') not null,
-  activo boolean not null,
+  activo boolean default false not null,
   pass varchar(100) not null,
   fecha_nacimiento date not null,
   correo varchar(100) not null,
@@ -43,7 +43,7 @@ create table if not exists profesor_clase (
 create table if not exists libro (
   id int unsigned auto_increment primary key,
   autor varchar(100) not null,
-  serie varchar(30),
+  serie varchar(50),
   serie_num float(4, 1),
   fecha_pub date not null,
   cantidad_reviews int unsigned not null default 0,
@@ -51,7 +51,8 @@ create table if not exists libro (
   edad_media tinyint(2) unsigned not null default 0,
   formato enum('Nobela', 'Komikia', 'Nobela Grafikoa', 'Manga') not null,
   sinopsis varchar(2550) not null,
-  enlace varchar(255) not null
+  enlace varchar(255) not null,
+  aceptado boolean default false not null
 );
 create table if not exists etiqueta (
   nombre varchar(15) not null,

@@ -17,6 +17,7 @@ btnEnviar.addEventListener('click', (e) => {
 
   if (valoresEnviados.nota === '-') return mostrarMensajeError('error, nota inválida', form.querySelector('#nota').parentElement);
   if (valoresEnviados.idioma === '-') return mostrarMensajeError('error, idioma inválido', form.querySelector('#idioma'));
+
   if ('texto' in valoresEnviados && valoresEnviados.texto.length > 0 && valoresEnviados.texto.trim().split(/[\n ]/).length > 300)
     return mostrarMensajeError('error, la review demasiado larga', form.querySelector('#texto'));
 

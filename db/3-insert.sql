@@ -104,7 +104,8 @@ insert into libro (
     fecha_pub,
     formato,
     sinopsis,
-    enlace
+    enlace,
+    aceptado
   )
 values (
     1,
@@ -114,7 +115,8 @@ values (
     '2010-8-31',
     'nobela',
     'Anhelo los días previos a la Última Desolación. Los días en que los Heraldos nos abandonaron y los Caballeros Radiantes se giraron en nuestra contra. Un tiempo en que aún había magia en el mundo y honor en el corazón de los hombres. El mundo fue nuestro, pero lo perdimos. Probablemente no hay nada más estimulante para las almas de los hombres que la victoria. ¿O tal vez fue la victoria una ilusión durante todo ese tiempo? ¿Comprendieron nuestros enemigos que cuanto más duramente luchaban, más resistíamos nosotros? Quizá vieron que el fuego y el martillo tan solo producían mejores espadas. Pero ignoraron el acero durante el tiempo suficiente para oxidarse. Hay cuatro personas a las que observamos. La primera es el médico, quien dejó de curar para convertirse en soldado durante la guerra más brutal de nuestro tiempo. La segunda es el asesino, un homicida que llora siempre que mata. La tercera es la mentirosa, una joven que viste un manto de erudita sobre un corazón de ladrona. Por último está el alto príncipe, un guerrero que mira al pasado mientras languidece su sed de guerra. El mundo puede cambiar. La potenciación y el uso de las esquirlas pueden aparecer de nuevo, la magia de los días pasados puede volver a ser nuestra. Esas cuatro personas son la clave.',
-    'https://www.todostuslibros.com/libros/el-camino-de-los-reyes-el-archivo-de-las-tormentas-1_978-84-1314-394-1'
+    'https://www.todostuslibros.com/libros/el-camino-de-los-reyes-el-archivo-de-las-tormentas-1_978-84-1314-394-1',
+    true
   ),
   (
     2,
@@ -124,7 +126,8 @@ values (
     '2014-3-4',
     'nobela',
     'Los Caballeros Radiantes deben volver a alzarse. Los antiguos juramentos por fin se han pronunciado. Los hombres buscan lo que se perdió. Temo que la búsqueda los destruya. Es la naturaleza de la magia. Un alma rota tiene grietas donde puede colarse algo más. Las potencias, los poderes de la creación misma, pueden abrazar un alma rota, pero también pueden ampliar sus fisuras. El Corredor del Viento está perdido en una tierra quebrada, en equilibro entre la venganza y el honor. La Tejedora de Luz, lentamente consumida por su pasado, busca la mentira en la que debe convertirse. El Forjador de Vínculos, nacido en la sangre y la muerte, se esfuerza ahora por reconstruir lo que fue destruido. La Exploradora, a caballo entre los destinos de dos pueblos, se ve obligada a elegir entre una muerte lenta y una terrible traición a todo en lo que cree. Ya es hora de despertarlos, pues acecha la eterna tormenta. Y el asesino ha llegado.',
-    'https://www.todostuslibros.com/libros/palabras-radiantes-el-archivo-de-las-tormentas-2_978-84-1314-395-8'
+    'https://www.todostuslibros.com/libros/palabras-radiantes-el-archivo-de-las-tormentas-2_978-84-1314-395-8',
+    true
   ),
   (
     3,
@@ -134,7 +137,8 @@ values (
     '2017-11-14',
     'nobela',
     'La humanidad se enfrenta a una nueva Desolación con el regreso de los Portadores del Vacío, un enemigo tan grande en número como en sed de venganza. La victoria fugaz de los ejércitos alezi de Dalinar Kholin ha tenido consecuencias: el enemigo parshendi ha convocado la violenta tormenta eterna, que arrasa el mundo y hace que los hasta ahora pacíficos parshmenios descubran con horror que llevan un milenio esclavizados por los humanos. Al mismo tiempo, en una desesperada huida para alertar a su familia de la amenaza, Kaladin se pregunta si la repentina ira de los parshmenios está justificada. Entretanto, en la torre de la ciudad de Urithiru, a salvo de la tormenta, Shallan Davar investiga las maravillas de la antigua fortaleza de los Caballeros Radiantes y desentierra oscuros secretos que acechan en las profundidades. Dalinar descubre entonces que su sagrada misión de unificar su tierra natal de Alezkar era corta de miras. A menos que todas las naciones sean capaces de unirse y dejar de lado el pasado sangriento de Dalinar, ni siquiera la restauración de los Caballeros Radiantes conseguirá impedir el fin de la civilización.',
-    'https://www.todostuslibros.com/libros/juramentada-el-archivo-de-las-tormentas-3_978-84-17347-00-0'
+    'https://www.todostuslibros.com/libros/juramentada-el-archivo-de-las-tormentas-3_978-84-17347-00-0',
+    true
   ),
   (
     4,
@@ -144,7 +148,8 @@ values (
     '2020-11-17',
     'nobela',
     'Hay secretos que hemos guardado mucho tiempo. Vigilantes. Insomnes. Eternos. Y pronto dejarán de ser nuestros. La Una que es Tres busca, sin saberlo, el alma capturada. El spren aprisionado, olvidado hace mucho tiempo. ¿Puede liberar su propia alma a tiempo de hallar el conocimiento que condena a todos los pueblos de Roshar? El Soldado Caído acaricia y ama la lanza, incluso mientras el arma hiende su propia carne. Camina siempre hacia delante, siempre hacia la oscuridad, sin luz. No puede llevar consigo a nadie, salvo aquello que él mismo puede avivar. La Hermana Derrumbada comprende sus errores y piensa que ella misma es un error. Parece muy alejada de sus antepasados, pero no comprende que son quienes la llevan a hombros. Hacia la victoria, y hacia ese silencio, el más importante de todos. Y la Madre de Máquinas, la más crucial de todos ellos, danza con mentirosos en un gran baile. Debe desenmascararlos, alcanzar sus verdades ocultas y entregarlas al mundo. Tiene que reconocer que las peores mentiras son las que se cuenta a sí misma. Si lo hace, nuestros secretos por fin se convertirán en verdades.',
-    'https://www.todostuslibros.com/libros/el-ritmo-de-la-guerra-el-archivo-de-las-tormentas-4_978-84-17347-93-2'
+    'https://www.todostuslibros.com/libros/el-ritmo-de-la-guerra-el-archivo-de-las-tormentas-4_978-84-17347-93-2',
+    true
   ),
   (
     5,
@@ -157,7 +162,8 @@ values (
 Así empieza Malaherba de Manuel Jabois. Un día Mr. Tamburino, Tambu, un niño de diez años, se encuentra a su padre tirado en la habitación y conoce a Elvis, un nuevo compañero de su clase. Descubrirá por primera vez el amor y la muerte, pero no de la forma que él cree. Y los dos, Tambu y Elvis, vivirán juntos los últimos días de la niñez, esos en los que aún pasan cosas que no se pueden explicar y sentimientos a los que todavía no se sabe poner nombre
 Esta es una historia de dos niños que viven una extraña y solitaria historia de amor. Un libro sobre las cosas terribles que se hacen con cariño, escrito con humor y una prosa rápida que avanza llevando a Tambu y su hermana Rebe, a Claudia y su hermano Elvis, a la frontera de un mundo nuevo.
 «Bien sabe Dios que es más peligrosa la pena que el odio, porque el odio puede destruir lo que odias, pero la pena lo destruye todo.»',
-    'https://www.todostuslibros.com/libros/malaherba_978-84-663-5338-0'
+    'https://www.todostuslibros.com/libros/malaherba_978-84-663-5338-0',
+    true
   ),
   (
     6,
@@ -167,7 +173,8 @@ Esta es una historia de dos niños que viven una extraña y solitaria historia d
     '2002-01-01',
     'nobela',
     'En cierta ocasión, hace ya mucho tiempo, vi un fantasma. Sí, un espectro, una aparición, un espíritu; lo puedes llamar como quieras, el caso es que lo vi. Ocurrió el mismo año en que el hombre llegó a la Luna y, aunque hubo momentos en los que pasé mucho miedo, esta historia no es lo que suele llamarse una novela de terror. -Todo comenzó con un enigma: el misterio de un objeto muy valioso que estuvo perdido durante siete décadas. Las Lágrimas de Shiva, así se llamaba ese objeto extraviado. A su alrededor tuvieron lugar venganzas cruzadas, y amores prohibidos, y extrañas desapariciones.-Hubo un fantasma, sí, y un viejo secreto oculto en las sombras, pero también hubo mucho más.',
-    'https://www.todostuslibros.com/libros/las-lagrimas-de-shiva_978-84-236-7510-4'
+    'https://www.todostuslibros.com/libros/las-lagrimas-de-shiva_978-84-236-7510-4',
+    false
   ),
   (
     7,
@@ -178,7 +185,8 @@ Esta es una historia de dos niños que viven una extraña y solitaria historia d
     'nobela',
     '«Con las manos temblorosas, Harry le dio la vuelta al sobre y vio un sello de lacre púrpura con un escudo de armas: un león, un águila, un tejón y una serpiente, que rodeaban una gran letra H.»
 Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas en el felpudo del número 4 de Privet Drive. Llevan la dirección escrita con tinta verde en un sobre de pergamino amarillento con un sello de lacre púrpura, y sus horripilantes tíos se apresuran a confiscarlas. Más tarde, el día que Harry cumple once años, Rubeus Hagrid, un hombre gigantesco cuyos ojos brillan como escarabajos negros, irrumpe con una noticia extraordinaria: Harry Potter es un mago, y le han concedido una plaza en el Colegio Hogwarts de Magia y Hechicería. ¡Está a punto de comenzar una aventura increíble!',
-    'https://www.todostuslibros.com/libros/harry-potter-y-la-piedra-filosofal-harry-potter-1_978-84-7888-445-2'
+    'https://www.todostuslibros.com/libros/harry-potter-y-la-piedra-filosofal-harry-potter-1_978-84-7888-445-2',
+    false
   ),
   (
     8,
@@ -188,7 +196,8 @@ Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas 
     '2013-05-16',
     'komikia',
     'El equipo de fútbol 7 Soto Alto no es solo el equipo de fútbol del colegio. Es mucho más. Nosotros hemos hecho un pacto: nada ni nadie nos separará nunca. Siempre jugaremos juntos. Pase lo que pase. Así que cuando pasó lo que pasó no tuvimos más remedio que actuar. Preparamos nuestro material de investigadores... y nos lanzamos a la aventura. Por algo somos los Futbolísimos.',
-    'https://www.todostuslibros.com/libros/los-futbolisimos-1-el-misterio-de-los-arbitros-dormidos_978-84-675-6135-7'
+    'https://www.todostuslibros.com/libros/los-futbolisimos-1-el-misterio-de-los-arbitros-dormidos_978-84-675-6135-7',
+    false
   ),
   (
     9,
@@ -198,7 +207,8 @@ Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas 
     '1973-01-01',
     'nobela',
     'Una emocionante novela de aventuras ambientada en la Edad Media. Imagina que la máquina del tiempo en la que viajas te transporta a un lugar que no deseas.Y que cuando estás a punto de conseguir volver a casa, una cruzada de niños se interpone en tu camino. Es exactamente lo que le sucede a Rudolf Hefting. Perdido en una época que no es la suya, no le queda más remedio que unirse a la expedición. En vaqueros, por supuesto.',
-    'https://www.todostuslibros.com/libros/cruzada-en-jeans_978-84-9107-451-9'
+    'https://www.todostuslibros.com/libros/cruzada-en-jeans_978-84-9107-451-9',
+    false
   ),
   (
     10,
@@ -209,7 +219,8 @@ Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas 
     'manga',
     'Estamos en un mundo donde abundan los superhéroes (y los supervillanos). Los mejores humanos son entrenados en la Academia de Héroes para optimizar sus poderes.
 Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto a ser una excepción y formarse en la Academia.',
-    'https://www.todostuslibros.com/libros/my-hero-academia-no-01_978-84-16693-50-4'
+    'https://www.todostuslibros.com/libros/my-hero-academia-no-01_978-84-16693-50-4',
+    false
   ),
   (
     11,
@@ -219,7 +230,8 @@ Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto
     '2015-10-10',
     'nobela',
     'Eireren gurasoek Irlandan ezagutu zuten elkar, izugarri maite dute herrialde hura, eta hara bidaliko dute alaba udan, bere ingelesa hobetu dezan. Eirek ez du ingelesa maite, ordea, eta gogoz kontra ekingo dio bidaiari. Dena dela, uda luzean era guztietako esperientziak ezagutuko ditu Eirek: maitasuna, jeloskortasuna, porrotak eta arrakasta, baita poliziaren egoitzak ere...',
-    'https://www.todostuslibros.com/libros/eireren-egunerokoa_978-84-9027-410-1'
+    'https://www.todostuslibros.com/libros/eireren-egunerokoa_978-84-9027-410-1',
+    false
   ),
   (
     12,
@@ -229,7 +241,8 @@ Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto
     '1964-01-17',
     'nobela',
     'Charlie y la fábrica de chocolate es una historia de Roald Dahl, el gran autor de literatura infantil. El señor Wonka, dueño de la magnífica fábrica de chocolate, ha escondido cinco billetes de oro en sus chocolatinas. Quienes los encuentren serán los elegidos para visitar la fábrica. Charlie tiene la fortuna de encontrar uno de esos billetes y, a partir de ese momento, su vida cambiará para siempre.',
-    'https://www.todostuslibros.com/libros/charlie-y-la-fabrica-de-chocolate-coleccion-alfaguara-clasicos_978-84-204-8288-0'
+    'https://www.todostuslibros.com/libros/charlie-y-la-fabrica-de-chocolate-coleccion-alfaguara-clasicos_978-84-204-8288-0',
+    false
   ),
   (
     13,
@@ -239,7 +252,8 @@ Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto
     '1947-6-25',
     'nobela',
     'Tras la invasión de Holanda, los Frank, comerciantes judíos alemanes emigrados a Amsterdam en 1933, se ocultaron de la Gestapo en una buhardilla anexa al edificio donde el padre de Anne tenía sus oficinas. Ocho personas permanecieron recluidas desde junio de 1942 hasta agosto de 1944, fecha en que fueron detenidas y enviadas a campos de concentración. Desde su escondite y en las más precarias condiciones, Anne, una niña de trece años, escribió su estremecedor Diario: un testimonio único en su género sobre el horror y la barbarie nazi, y sobre los sentimientos y experiencias de la propia Anne y sus acompañantes. Anne murió en el campo de Bergen-Belsen en marzo de 1945. Su Diario nunca morirá.',
-    'https://www.todostuslibros.com/libros/diario-de-anne-frank_978-84-663-5953-5'
+    'https://www.todostuslibros.com/libros/diario-de-anne-frank_978-84-663-5953-5',
+    false
   ),
   (
     14,
@@ -249,7 +263,8 @@ Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto
     '1937-09-21',
     'nobela',
     'Smaug parecía profundamente dormido cuando Bilbo espió una vez más desde la entrada. ¡Pero fingía! ¡Estaba vigilando la entrada del túnel!... Sacado de su cómodo agujero-hobbit por Gandalf y una banda de enanos, Bilbo se encuentra de pronto en medio de una conspiración que pretende apoderarse del tesoro de Smaug el Magnífico, un enorme y muy peligroso dragón...',
-    'https://www.todostuslibros.com/libros/el-hobbit_978-84-450-1394-6'
+    'https://www.todostuslibros.com/libros/el-hobbit_978-84-450-1394-6',
+    false
   );
 insert into etiqueta
 values ('Fantasia', 1),

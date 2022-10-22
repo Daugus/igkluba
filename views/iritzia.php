@@ -29,7 +29,7 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
   headerGeneral();
   ?>
 
-  <main class="flex-center-col" id="main-respuestas">
+  <main class="flex-center-col main-form">
     <section class="flex-center-col">
       <h1>Iritzia:</h1>
       <?php

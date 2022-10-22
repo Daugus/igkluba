@@ -138,8 +138,7 @@ form .campo-predefinido p {
   cursor: default;
 }
 
-form .campo label[for='texto'] {
-  margin-top: 0.5775rem;
+form .campo label:is([for='texto'], [for='sinopsis']) {
   align-self: start;
 }
 
@@ -415,9 +414,7 @@ main {
 
 /* --- libro --- */
 #main-libro,
-#main-respuestas,
-#main-review,
-#main-responder {
+.main-form {
   gap: 2.5rem;
 }
 
@@ -640,7 +637,7 @@ a.btn:hover::before {
 
 .volver {
   font-size: 1.3rem;
-  font-weight: 400;
+  font-weight: 450;
 }
 
 .grupo-volver {

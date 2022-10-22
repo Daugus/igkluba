@@ -10,6 +10,7 @@ $libro = $pdo->prepare('SELECT l.id, il.titulo_alternativo AS titulo, l.autor FR
 $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
 if (empty($libro)) header('Location: /nagusia');
+// TODO: comprobar fecha de pub
 $comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
 $comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
 $comprobarReview = $comprobarReview->fetch();
@@ -42,7 +43,7 @@ headerGeneral();
 ?>
 
 <body>
-  <main class="flex-center-col" id="main-review">
+  <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Iritzia eman</h1>
 

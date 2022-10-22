@@ -12,7 +12,7 @@ include_once '../modules/db-config.php';
 $libro = $pdo->prepare('SELECT * FROM libro WHERE id = :id;');
 $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
-if (empty($libro)) header('Location: ../nagusia');
+if (empty($libro) || $libro['aceptado'] === 0) header('Location: /nagusia');
 
 $reviews = $pdo->prepare('SELECT * FROM review WHERE id_libro = :id_libro AND texto <> "";');
 $reviews->execute(['id_libro' => $id]);
@@ -42,7 +42,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
   <main class="flex-center-col" id="main-libro">
     <section class="flex-center-row" id="superior">
       <a href="<?php echo $libro['enlace'] ?>" target="_blank" rel="noopener noreferrer" id="portada">
-        <img src="../src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada">
+        <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada">
       </a>
 
       <div class="flex-center-col" id="datos">
@@ -60,7 +60,13 @@ agregarHead($titulo_castellano . ' | IGKluba');
           <p id="autor"><?php echo $libro['autor'] ?></p>
           <p class="nota">
             <a href="#iritziak">
-              <?php echo number_format((float)$libro['nota_media'], 2, '.', '') ?><i class="fa-solid fa-star"></i>
+              <?php
+              if ($libro['nota_media'] > 0) {
+                echo number_format((float)$libro['nota_media'], 2, '.', '');
+              } else {
+                echo '-';
+              }
+              ?><i class="fa-solid fa-star"></i>
             </a>
           </p>
         </div>
@@ -73,8 +79,8 @@ agregarHead($titulo_castellano . ' | IGKluba');
         }
         ?>
         <p><span>Hizkuntza<?php if (count($idiomas) > 1) echo 'k' ?>:</span> <?php echo implode(', ', $idiomas) ?></p>
-        <p><span>Batez besteko adina:</span> <?php echo $libro['edad_media'] ?></p>
-        <p><span>Irakurle kopurua:</span> <?php echo $libro['cantidad_reviews'] ?></p>
+        <p><span>Batez besteko adina:</span> <?php echo $libro['edad_media'] > 0 ? $libro['edad_media'] : '-' ?></p>
+        <p><span>Irakurle kopurua:</span> <?php echo $libro['cantidad_reviews'] > 0 ? $libro['cantidad_reviews'] : '-' ?></p>
         <p><span>Formatua:</span> <?php echo $libro['formato'] ?></p>
         <?php
         $etiquetas = [];
@@ -92,6 +98,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
     </section>
 
     <?php
+    // TODO: comprobar fecha de pub
     $comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
     $comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
     $comprobarReview = $comprobarReview->fetch();
