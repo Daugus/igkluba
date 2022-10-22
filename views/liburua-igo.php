@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $esImagen = getimagesize($archivo['tmp_name']);
   if (!$esImagen) {
     $imgInvalida = 'El archivo no es una imagen';
-  } else if ($archivo['size'] > 3000000) {
-    // >3MB
+  } else if ($archivo['size'] > 5000000) {
+    // >5MB
     $imgInvalida = 'La imagen no puede ser mayor de 3MB';
   } else if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
     $imgInvalida = 'La imagen solo puede ser de tipo JPG o PNG';
@@ -67,7 +67,7 @@ headerGeneral();
 ?>
 
 <body>
-  <main class="flex-center-row">
+  <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Liburua <?php echo $accion ?></h1>
 
@@ -138,6 +138,14 @@ headerGeneral();
         <button id="enviar"><?php echo ucfirst($accion) ?></button>
       </form>
     </div>
+
+    <?php
+    if ($_SESSION['usr']['rol'] === 'Admin') {
+    ?>
+      <a href="/csv-igo" class="volver">CSV igo</a>
+    <?php
+    }
+    ?>
   </main>
 
   <?php

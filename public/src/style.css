@@ -355,7 +355,7 @@ main {
   margin-top: 2rem;
 }
 
-/* --- nagusia --- */
+/* --- nagusia / bilaketa --- */
 #main-nagusia-bilaketa {
   --gap: 8rem;
   --columnas: 4;
@@ -516,6 +516,11 @@ main {
 
 #main-respuestas > section {
   align-items: stretch;
+}
+
+/* --- subir csv --- */
+#form-subir-csv .campo {
+  justify-content: start;
 }
 
 /* ===== footer ===== */

@@ -18,13 +18,13 @@ labelFileInput.addEventListener('keydown', (e) => {
 });
 fileInput.addEventListener('input', () => (labelFileInput.querySelector('span').innerText = fileInput.files[0].name));
 
+const form = document.querySelector('#form-subir-libro');
 const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {
   e.preventDefault();
 
   document.querySelectorAll('.error').forEach((mensaje) => mensaje.remove());
 
-  const form = document.querySelector('#form-subir-libro');
   const campos = [...form.querySelectorAll('.campo')];
 
   let valoresEnviados = {};

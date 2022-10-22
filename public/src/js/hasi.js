@@ -1,12 +1,12 @@
 'use strict';
 
+const form = document.querySelector('form');
 const btnLogin = document.querySelector('#login');
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
 
   document.querySelectorAll('.error').forEach((mensaje) => mensaje.remove());
 
-  const form = document.querySelector('form');
   const campos = [...form.querySelectorAll('.campo')];
 
   let valoresEnviados = {};

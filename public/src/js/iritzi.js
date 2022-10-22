@@ -1,12 +1,12 @@
 'use strict';
 
+const form = document.querySelector('#form-iritzia');
 const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {
   e.preventDefault();
 
   document.querySelectorAll('.error').forEach((mensaje) => mensaje.remove());
 
-  const form = document.querySelector('#form-iritzia');
   const campos = [...form.querySelectorAll('.campo')];
 
   let valoresEnviados = {};
