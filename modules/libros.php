@@ -6,7 +6,7 @@ function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', St
   $libros = $pdo->prepare('SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
   FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
   WHERE ' . $condicion
-    . ' AND l.aceptado = 1'
+    . ' AND l.aceptado = true'
     . ' ' . $agrupar
     . ' ORDER BY ' . $orden
     . ' LIMIT 24;');
