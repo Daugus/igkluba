@@ -356,8 +356,6 @@ main {
   margin-top: 2rem;
 }
 
-/* --- hasi y sortu --- */
-
 /* --- nagusia --- */
 #main-nagusia-bilaketa {
   --gap: 8rem;
@@ -369,6 +367,7 @@ main {
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(max(var(--min-width), var(--libro-max-width)), 1fr));
+  grid-auto-rows: 1fr;
   grid-gap: 2rem var(--gap);
   align-items: start;
 }
@@ -376,6 +375,7 @@ main {
 .libro {
   text-align: center;
   gap: 0.5rem;
+  align-self: stretch;
 }
 
 .libro a {
@@ -563,6 +563,14 @@ footer * {
 .flex-space-between-row {
   display: flex;
   flex-direction: row;
+
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-space-between-col {
+  display: flex;
+  flex-direction: column;
 
   justify-content: space-between;
   align-items: center;

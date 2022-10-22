@@ -20,7 +20,7 @@ function agregarLibros(array $libros)
   foreach ($libros as $libro) {
     $url = '/liburua/' . $libro['id'] . '-' . str_replace(' ', '_', strtolower($libro['titulo']));
 ?>
-    <article class="flex-center-col libro">
+    <article class="flex-space-between-col libro">
       <a href="<?php echo $url ?>" class="libro__portada">
         <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>">
       </a>
