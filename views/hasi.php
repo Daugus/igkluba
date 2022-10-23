@@ -50,7 +50,7 @@ headerLogin();
       </form>
     </div>
 
-    <div class="flex-center-col grupo-volver">
+    <div class="flex-center-col grupo-botones">
       <a href="/sortu" class="volver">Oraindik ez dut kontua sortu</a>
       <a href="/hasiera" class="volver">Itzuli</a>
     </div>

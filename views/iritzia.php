@@ -12,8 +12,7 @@ include_once '../modules/db-config.php';
 $review = $pdo->prepare('SELECT * FROM review WHERE id = :id;');
 $review->execute(['id' => $id_review]);
 $review = $review->fetch();
-if (empty($review)) header('Location: /liburua/' . $review['id']);
-if (empty($review['texto'])) header('Location: /nagusia');
+if (empty($review) || empty($review['texto'])) header('Location: /nagusia');
 
 $respuestas = $pdo->prepare('SELECT * FROM respuesta where id_review = :id_review;');
 $respuestas->execute(['id_review' => $review['id']]);
@@ -21,6 +20,10 @@ $respuestas = $respuestas->fetchAll();
 
 include_once '../templates/head.php';
 agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '... | IGKluba');
+
+$reviewer = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
+$reviewer->execute(['id' => $review['id_cuenta']]);
+$reviewer = $reviewer->fetch();
 ?>
 
 <body>
@@ -29,34 +32,35 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
   headerGeneral();
   ?>
 
-  <main class="flex-center-col main-form">
+  <main class="flex-center-col main-form" id="main-respuestas">
     <section class="flex-center-col">
       <h1>Iritzia:</h1>
-      <?php
-      if ($_SESSION['usr']['rol'] !== 'Ikasle') {
-      ?>
-        <h3 id="reviewer">
-          <?php
-          $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
-          $cuenta->execute(['id' => $review['id_cuenta']]);
-          $cuenta = $cuenta->fetch();
-          echo $cuenta['apodo'];
+      <h3 id="reviewer">
+        <?php
+        echo $reviewer['apodo'];
 
-          if ($_SESSION['usr']['rol'] !== 'Ikasle') {
-            echo ' (' . $cuenta['nombre'] . ' ' . $cuenta['apellido'] . ')';
-          }
-          ?>:
-        </h3>
-      <?php
-      }
-      ?>
+        if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+          echo ' (' . $reviewer['nombre'] . ' ' . $reviewer['apellido'] . ')';
+        }
+        ?>:
+      </h3>
 
       <p><?php echo $review['texto'] ?></p>
 
       <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
     </section>
 
-    <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
+    <div class="flex-stretch-row">
+      <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
+
+      <?php
+      if ($reviewer['id'] === $_SESSION['usr']['id']) {
+      ?>
+        <a href="/iritzi/<?php echo $review['id'] ?>/aldatu" class="btn">Iritzia aldatu</a>
+      <?php
+      }
+      ?>
+    </div>
 
     <?php
     if (count($respuestas) > 0) {

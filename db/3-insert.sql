@@ -353,7 +353,8 @@ insert into review (
     edad_lector,
     nombre_idioma,
     id_libro,
-    id_cuenta
+    id_cuenta,
+    aceptado
   )
 values (
     1,
@@ -362,7 +363,8 @@ values (
     20,
     'Gaztelania',
     1,
-    3
+    3,
+    true
   ),
   (
     2,
@@ -371,7 +373,8 @@ values (
     10,
     'Euskara',
     1,
-    4
+    4,
+    true
   ),
   (
     3,
@@ -380,7 +383,8 @@ values (
     20,
     'Gaztelania',
     2,
-    3
+    3,
+    true
   ),
   (
     4,
@@ -389,7 +393,8 @@ values (
     10,
     'Euskara',
     2,
-    4
+    4,
+    true
   ),
   (
     5,
@@ -398,7 +403,8 @@ values (
     20,
     'Gaztelania',
     3,
-    3
+    3,
+    true
   ),
   (
     6,
@@ -407,7 +413,8 @@ values (
     10,
     'Euskara',
     3,
-    4
+    4,
+    true
   ),
   (7, 4, 'Lorem.', 20, 'Gaztelania', 4, 3),
   (
@@ -417,30 +424,35 @@ values (
     10,
     'Euskara',
     4,
-    4
+    4,
+    true
   );
-insert into respuesta (id, texto, id_review, id_cuenta)
+insert into respuesta (id, texto, id_review, id_cuenta, aceptado)
 values (
     1,
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit accusamus aut nemo quas qui ipsa',
     1,
-    5
+    5,
+    true
   ),
   (
     2,
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea numquam quis, facilis pariatur qui facere exercitationem dolores repudiandae sapiente, nemo eum sequi amet',
     2,
-    5
+    5,
+    true
   ),
   (
     3,
     'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi saepe culpa ratione',
     8,
-    2
+    2,
+    true
   ),
   (
     4,
     'Lorem, ipsum dolor',
     8,
-    4
+    4,
+    true
   );

@@ -15,7 +15,7 @@ create table if not exists clase (
   nivel tinyint(1) not null,
   curso char(9) not null,
   id_centro int unsigned not null,
-  foreign key (id_centro) references centro(id)
+  foreign key (id_centro) references centro(id) on delete restrict
 );
 create table if not exists cuenta (
   id int unsigned auto_increment primary key,
@@ -30,15 +30,15 @@ create table if not exists cuenta (
   tel char(9),
   cod_clase char(8),
   id_centro int unsigned not null,
-  foreign key (cod_clase) references clase(cod),
-  foreign key (id_centro) references centro(id)
+  foreign key (cod_clase) references clase(cod) on delete restrict,
+  foreign key (id_centro) references centro(id) on delete restrict
 );
 create table if not exists profesor_clase (
   id_profesor int unsigned not null,
   cod_clase char(8) not null,
   primary key (id_profesor, cod_clase),
-  foreign key (id_profesor) references cuenta(id),
-  foreign key (cod_clase) references clase(cod)
+  foreign key (id_profesor) references cuenta(id) on delete cascade,
+  foreign key (cod_clase) references clase(cod) on delete cascade
 );
 create table if not exists libro (
   id int unsigned auto_increment primary key,
@@ -58,7 +58,7 @@ create table if not exists etiqueta (
   nombre varchar(15) not null,
   id_libro int unsigned,
   primary key (nombre, id_libro),
-  foreign key (id_libro) references libro(id)
+  foreign key (id_libro) references libro(id) on delete cascade
 );
 create table if not exists idioma (nombre varchar(30) primary key);
 create table if not exists idiomas_libro (
@@ -66,35 +66,37 @@ create table if not exists idiomas_libro (
   nombre_idioma varchar(30),
   titulo_alternativo varchar(100),
   primary key (id_libro, nombre_idioma),
-  foreign key (id_libro) references libro(id),
-  foreign key (nombre_idioma) references idioma(nombre)
+  foreign key (id_libro) references libro(id) on delete cascade,
+  foreign key (nombre_idioma) references idioma(nombre) on delete cascade
 );
 create table if not exists review (
   id int unsigned auto_increment primary key,
   nota tinyint(1) unsigned not null,
   texto varchar(2295),
   edad_lector tinyint(2) unsigned not null,
+  aceptado boolean default false not null
   nombre_idioma varchar(30) not null,
   id_libro int unsigned not null,
   id_cuenta int unsigned not null,
-  foreign key (nombre_idioma) references idioma(nombre),
-  foreign key (id_libro) references libro(id),
-  foreign key (id_cuenta) references cuenta(id)
+  foreign key (nombre_idioma) references idioma(nombre) on delete restrict,
+  foreign key (id_libro) references libro(id) on delete cascade,
+  foreign key (id_cuenta) references cuenta(id) on delete cascade
 );
 create table if not exists respuesta (
   id int unsigned auto_increment primary key,
   texto varchar(765) not null,
+  aceptado boolean default false not null
   id_review int unsigned not null,
   id_cuenta int unsigned not null,
-  foreign key (id_review) references review(id),
-  foreign key (id_cuenta) references cuenta(id)
+  foreign key (id_review) references review(id) on delete cascade,
+  foreign key (id_cuenta) references cuenta(id) on delete cascade
 );
 create table if not exists solicitud_libro (
+  id int unsigned auto_increment primary key,
   id_libro int unsigned not null,
   id_alumno int unsigned not null,
-  primary key (id_libro, id_alumno),
-  foreign key (id_libro) references libro(id),
-  foreign key (id_alumno) references cuenta(id)
+  foreign key (id_libro) references libro(id) on delete cascade,
+  foreign key (id_alumno) references cuenta(id) on delete cascade
 );
 create table if not exists solicitud_idioma (
   id_libro int unsigned not null,
@@ -102,7 +104,7 @@ create table if not exists solicitud_idioma (
   nombre_idioma varchar(30),
   titulo_alternativo varchar(100),
   primary key (id_libro, id_alumno, nombre_idioma),
-  foreign key (id_libro) references libro(id),
-  foreign key (id_alumno) references cuenta(id),
-  foreign key (nombre_idioma) references idioma(nombre)
+  foreign key (id_libro) references libro(id) on delete cascade,
+  foreign key (id_alumno) references cuenta(id) on delete cascade,
+  foreign key (nombre_idioma) references idioma(nombre) on delete cascade
 );

@@ -509,18 +509,13 @@ main {
 }
 
 #main-libro :is(#central, #inferior),
-#main-respuestas > section {
+:is(#main-respuestas) > section {
   width: 70ch;
   text-align: justify;
 }
 
 #main-respuestas > section {
   align-items: stretch;
-}
-
-/* --- subir csv --- */
-#form-subir-csv .campo {
-  justify-content: start;
 }
 
 /* ===== footer ===== */
@@ -601,6 +596,7 @@ a.btn {
   font-weight: 600;
 
   padding: 0.5rem 1rem;
+  align-self: center;
 
   border: 3px solid transparent;
   border-radius: 1rem;
@@ -645,6 +641,7 @@ a.btn:hover::before {
   font-weight: 450;
 }
 
-.grupo-volver {
+.grupo-volver,
+.grupo-botones {
   gap: 0.5rem;
 }

@@ -146,7 +146,18 @@ agregarHead($titulo_castellano . ' | IGKluba');
                 ?>
               </div>
 
-              <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
+              <div class="flex-stretch-row">
+                <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
+
+                <?php
+                if ($cuenta['id'] === $_SESSION['usr']['id']) {
+                ?>
+                  <a href="/iritzi/<?php echo $review['id'] ?>/aldatu" class="btn">Iritzia aldatu</a>
+                  <a href="/iritzi/<?php echo $review['id'] ?>/ezabatu" class="btn">Iritzia ezabatu</a>
+                <?php
+                }
+                ?>
+              </div>
             </article>
           <?php
           }
