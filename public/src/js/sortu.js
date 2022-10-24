@@ -33,6 +33,13 @@ btnRegistro.addEventListener('click', (e) => {
 
   if (!/^[A-Za-z0-9_-]{1,20}$/.test(valoresEnviados.apodo)) return mostrarMensajeError('error, apodo inválido', form.querySelector('#apodo'));
 
+  if (
+    !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,100})$/.test(
+      valoresEnviados.correo
+    )
+  )
+    return mostrarMensajeError('error, correo inválido', form.querySelector('#correo'));
+
   if (!/^[A-Za-z0-9]{8,8}$/.test(valoresEnviados.clase)) return mostrarMensajeError('error, clase inválido', form.querySelector('#clase'));
 
   if (!esMayorDe10(valoresEnviados.fecha)) return mostrarMensajeError('error, el usr no es mayor de diez años', form.querySelector('#fecha'));

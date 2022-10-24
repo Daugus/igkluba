@@ -112,11 +112,6 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
         </div>
 
         <div class="campo">
-          <label for="enlace">Esteka:</label>
-          <input type="text" id="enlace" name="enlace" maxlength="255" placeholder="https://todostuslibros.com/...">
-        </div>
-
-        <div class="campo">
           <label for="imagen">Azala:</label>
           <label for="imagen" class="file-input-text" tabindex="0"><i class="fa-solid fa-file-image"></i> <span>Aukeratu azal bat...</span></label>
           <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" class="hidden">

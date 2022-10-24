@@ -21,8 +21,7 @@ agregarHead('IGKluba');
     <section id="main-nagusia-bilaketa">
       <?php
       include_once '../modules/libros.php';
-      $librosPopulares = buscarLibros('il.nombre_idioma = "Gaztelania"');
-      agregarLibros($librosPopulares);
+      agregarLibros(buscarLibros('il.nombre_idioma = "Gaztelania"'));
       ?>
     </section>
   </main>

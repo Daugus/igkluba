@@ -205,7 +205,7 @@ button,
 select,
 textarea,
 .file-input-text,
-#perfil img {
+#header-perfil img {
   transition: outline var(--transicion-rapida);
 }
 
@@ -214,7 +214,7 @@ button:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 .file-input-text:focus-visible,
-#perfil img:hover {
+#header-perfil img:hover {
   outline: var(--outline);
   outline-offset: 0.1875rem;
 }
@@ -281,11 +281,11 @@ header {
   border: none;
 }
 
-#perfil img {
+#header-perfil img {
   height: 5vw;
 }
 
-#perfil img[src$='png'] {
+#header-perfil img[src$='png'] {
   border-radius: 100%;
 }
 

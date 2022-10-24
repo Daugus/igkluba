@@ -38,7 +38,7 @@ function headerGeneral(String $valueBusqueda = ''): void
       <button id="buscar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
     </form>
 
-    <div id="perfil">
+    <div id="header-perfil">
       <a href="/gune-pertsonala">
         <?php
         $rutaImagen = '/src/img/profila/' . $_SESSION['usr']['id'] .  '.png';

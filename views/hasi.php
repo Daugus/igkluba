@@ -10,15 +10,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $passEnviado = $_REQUEST['pass'];
 
   include_once '../modules/db-config.php';
-  $usrCorrecto = $pdo->prepare('SELECT * FROM cuenta WHERE apodo = :apodo;');
+  $usrCorrecto = $pdo->prepare('
+  SELECT cu.id, cu.nombre, cu.apellido, cu.apodo, cu.rol, cu.activo, cu.pass,
+    cu.fecha_nacimiento, cu.correo, cu.tel, cu.cod_clase, ce.nombre AS nombre_centro
+    FROM cuenta cu JOIN centro ce ON cu.id_centro = ce.id
+    WHERE apodo = :apodo;
+  ');
   $usrCorrecto->execute(['apodo' => $apodoEnviado]);
   $usrCorrecto = $usrCorrecto->fetch();
 
   if (!empty($usrCorrecto) && password_verify($passEnviado, $usrCorrecto['pass'])) {
     include_once '../modules/session.php';
     saveSession($usrCorrecto);
-    $destino = isset($_SESSION['url']) ? $_SESSION['url'] : 'nagusia';
-    header("Location: /$destino");
+    $destino = isset($_SESSION['url']) ? $_SESSION['url'] : '/nagusia';
+    header("Location: $destino");
   }
 
   echo 'Ezizena edo pasahitza txarto sartu egin da. Saiatu berriz.';

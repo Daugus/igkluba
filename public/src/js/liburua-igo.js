@@ -51,9 +51,6 @@ btnEnviar.addEventListener('click', (e) => {
 
   if (valoresEnviados.formato === '-') return mostrarMensajeError('error, formato inválido', form.querySelector('#formato').parentElement);
 
-  if (!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(valoresEnviados.enlace))
-    return mostrarMensajeError('error, enlace inválido', form.querySelector('#enlace'));
-
   if (valoresEnviados.imagen === undefined) return mostrarMensajeError('error, elige un archivo', form.querySelector('#imagen'));
   if (valoresEnviados.imagen['type'].split('/')[0] !== 'image')
     return mostrarMensajeError('error, el archivo no es una imagen', form.querySelector('#imagen'));

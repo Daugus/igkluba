@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if (!empty($buscarApodo)) {
         $apodoInvalido = true;
       } else {
-        $insert = $pdo->prepare('INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, id_centro)
-          VALUES (:nombre, :apellido, :apodo, :rol, :activo, :pass, :fecha_nacimiento, :cod_clase, :id_centro)');
+        $insert = $pdo->prepare('INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, id_centro, correo)
+          VALUES (:nombre, :apellido, :apodo, :rol, :activo, :pass, :fecha_nacimiento, :cod_clase, :id_centro, :correo)');
         $insert->execute([
           'nombre' => $_REQUEST['nombre'],
           'apellido' => $_REQUEST['apellido'],
@@ -55,7 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           'pass' => password_hash($_REQUEST['pwd'], PASSWORD_DEFAULT),
           'fecha_nacimiento' => $_REQUEST['fecha'],
           'cod_clase' => $_REQUEST['clase'],
-          'id_centro' => $_REQUEST['centro']
+          'id_centro' => $_REQUEST['centro'],
+          'correo' => $_REQUEST['correo']
         ]);
 
         $rutaArchivo = $directorio . $pdo->lastInsertId() . '.png';
@@ -104,6 +105,11 @@ agregarHead('Sortu kontua | IGKluba', __FILE__, false);
           <?php
           }
           ?>
+        </div>
+
+        <div class="campo">
+          <label for="correo">Email-a:</label>
+          <input type="email" id="correo" name="correo" maxlength="100" placeholder="Zure email-a">
         </div>
 
         <div class="campo">
