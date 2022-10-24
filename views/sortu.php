@@ -108,12 +108,12 @@ agregarHead('Sortu kontua | IGKluba', __FILE__, false);
         </div>
 
         <div class="campo">
-          <label for="correo">Email-a:</label>
-          <input type="email" id="correo" name="correo" maxlength="100" placeholder="Zure email-a">
+          <label for="correo">E-maila:</label>
+          <input type="email" id="correo" name="correo" maxlength="100" placeholder="Zure e-maila">
         </div>
 
         <div class="campo">
-          <label for="centro">Zentroa:</label>
+          <label for="centro">Ikastetxea:</label>
           <select name="centro" id="centro">
             <?php
             include_once '../modules/db-config.php';

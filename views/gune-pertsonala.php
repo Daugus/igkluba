@@ -25,34 +25,40 @@ agregarHead($_SESSION['usr']['apodo'] . ' | IGKluba');
   ?>
 
   <main class="flex-center-col" id="main-personal">
-    <section class="flex-center-row" id="superior">
-
+    <section class="flex-center-row" id="informacion">
       <div id="perfil">
-        <a href="/gune-pertsonala">
-          <?php
-          $rutaImagen = '/src/img/profila/' . $usuario['id'] .  '.png';
-          if (!file_exists('../public' . $rutaImagen)) $rutaImagen = '/src/img/profila/default.svg';
-          ?>
-          <img src="<?php echo $rutaImagen ?>" alt="Profileko argazkia">
-        </a>
+        <?php
+        $rutaImagen = '../public/src/img/profila/' . $usuario['id'] .  '.png';
+        if (!file_exists($rutaImagen)) $rutaImagen = '/src/img/profila/default.svg';
+        ?>
+        <img src="<?php echo str_replace('../public', '', $rutaImagen) ?>" alt="Profileko argazkia" width="100">
       </div>
 
       <div class="flex-center-col" id="datos">
-        <h1><?php echo $usuario['nombre'] . ' ' . $usuario['apellido'] ?></h1>
-        <p id="apodo"><?php echo $usuario['apodo'] ?></p>
+        <div class="flex-center-col" id="datos-importantes">
+          <h1><?php echo $usuario['nombre'] . ' ' . $usuario['apellido'] ?></h1>
+          <p id="apodo"><?php echo $usuario['apodo'] ?></p>
+        </div>
 
         <p><span>Jaiotze data:</span> <?php echo $usuario['fecha_nacimiento'] ?></p>
-        <p><span>Zentroa:</span> <?php echo $usuario['nombre_centro'] ?></p>
-        <p><span>Emaila:</span> <?php echo $usuario['nombre_centro'] ?></p>
+        <p><span>E-maila:</span> <?php echo $usuario['correo'] ?></p>
 
-        <?php if ($usuario['rol'] === 'Ikasle') : ?>
-          <p><span>Clase:</span> <?php echo $clase['nombre'] ?></p>
-        <?php endif ?>
-
-        <?php
-        ?>
+        <p><span>Ikastetxea:</span> <?php echo $usuario['nombre_centro'] ?></p>
+        <?php if ($usuario['rol'] === 'Ikasle') { ?>
+          <p><span>Ikasturtea:</span> <?php echo $clase['curso'] ?></p>
+          <p><span>Maila:</span> <?php echo $clase['nivel'] ?></p>
+          <p><span>Klasea:</span> <?php echo $clase['nombre'] ?></p>
+        <?php } else if ($usuario['rol'] === 'Irakasle') { ?>
+          <p><span>Telefonoa:</span> <?php echo $usuario['tel'] ?></p>
+        <?php } ?>
       </div>
     </section>
+
+    <?php
+    include_once '../modules/reviews.php';
+    $reviews = buscarReviews($usuario['id'], ['r.id_cuenta = :id']);
+    if (count($reviews) > 0) agregarReviews($reviews, true);
+    ?>
   </main>
 
   <?php

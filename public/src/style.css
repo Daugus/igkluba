@@ -414,11 +414,12 @@ main {
 
 /* --- libro --- */
 #main-libro,
+#main-personal,
 .main-form {
   gap: 2.5rem;
 }
 
-#main-libro #superior {
+#main-libro #informacion {
   gap: 12.5rem;
 }
 
@@ -426,29 +427,30 @@ main {
   flex: 0 1 30%;
 }
 
-#main-libro #datos {
+#datos {
   align-items: start;
   font-size: 1.25rem;
   gap: 1rem;
 }
 
-#main-libro #datos-importantes {
+#datos-importantes {
   align-items: start;
   gap: 0.5rem;
 }
 
-#main-libro h1 {
+:is(#main-libro, #main-personal) h1 {
   margin-bottom: 0;
   font-size: 2.5rem;
   font-weight: 700;
 }
 
-#main-libro #datos-importantes > * {
+#datos-importantes > * {
   line-height: 1.1;
   font-weight: 500;
 }
 
-#main-libro #serie {
+#main-libro #serie,
+#main-personal #apodo {
   font-size: 1.75rem;
 }
 
@@ -460,9 +462,9 @@ main {
   font-size: 1.35rem;
 }
 
-#main-libro #datos span,
-#main-libro h2,
-#main-libro h3 {
+span,
+#main-libro :is(h2, h3),
+#main-personal #apodo {
   font-weight: 500;
 }
 
@@ -478,15 +480,15 @@ main {
   visibility: hidden;
 }
 
-#main-libro #reviews {
+#reviews {
   gap: 1.5rem;
 }
 
-#main-libro .review {
+.review {
   gap: 0.75rem;
 }
 
-#main-libro #reviews .btn {
+#reviews .btn {
   align-self: start;
 }
 
@@ -508,7 +510,8 @@ main {
   font-weight: 400;
 }
 
-#main-libro :is(#central, #inferior),
+#main-libro #sinopsis,
+#opiniones,
 :is(#main-respuestas) > section {
   width: 70ch;
   text-align: justify;
@@ -516,6 +519,23 @@ main {
 
 #main-respuestas > section {
   align-items: stretch;
+}
+
+/* - área personal - */
+#main-personal #informacion {
+  column-gap: 8rem;
+}
+
+#main-personal #perfil {
+  flex: 0 1 20%;
+}
+
+#main-personal #perfil img {
+  width: 100%;
+}
+
+#main-personal .titulo-libro a {
+  color: inherit;
 }
 
 /* ===== footer ===== */

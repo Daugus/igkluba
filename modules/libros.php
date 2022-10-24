@@ -16,7 +16,7 @@ function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', St
   return $libros;
 }
 
-function agregarLibros(array $libros)
+function agregarLibros(array $libros): void
 {
   foreach ($libros as $libro) {
     $url = '/liburua/' . $libro['id'] . '-' . str_replace(' ', '_', strtolower($libro['titulo']));

@@ -14,10 +14,6 @@ $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
 if (empty($libro) || $libro['aceptado'] === 0) header('Location: /nagusia');
 
-$reviews = $pdo->prepare('SELECT * FROM review WHERE id_libro = :id_libro AND texto <> "";');
-$reviews->execute(['id_libro' => $id]);
-$reviews = $reviews->fetchAll();
-
 $titulos = $pdo->prepare('SELECT * FROM idiomas_libro WHERE id_libro = :id_libro');
 $titulos->execute(['id_libro' => $id]);
 $titulos = $titulos->fetchAll();
@@ -40,10 +36,10 @@ agregarHead($titulo_castellano . ' | IGKluba');
   ?>
 
   <main class="flex-center-col" id="main-libro">
-    <section class="flex-center-row" id="superior">
-      <a href="<?php echo $libro['enlace'] ?>" target="_blank" rel="noopener noreferrer" id="portada">
-        <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada">
-      </a>
+    <section class="flex-center-row" id="informacion">
+      <div id="portada">
+        <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada" id="portada">
+      </div>
 
       <div class="flex-center-col" id="datos">
         <div class="flex-center-col" id="datos-importantes">
@@ -92,81 +88,30 @@ agregarHead($titulo_castellano . ' | IGKluba');
       </div>
     </section>
 
-    <section id="central">
+    <section id="sinopsis">
       <h2>Sinopsia:</h2>
-      <p id="sinopsis"><?php echo $libro['sinopsis'] ?></p>
+      <p><?php echo $libro['sinopsis'] ?></p>
+    </section>
+
+    <section>
+      <?php
+      // TODO: comprobar fecha de pub
+      $comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
+      $comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
+      $comprobarReview = $comprobarReview->fetch();
+      if (empty($comprobarReview)) {
+      ?>
+        <a href="/liburua/<?php echo $libro['id'] ?>/iritzi" class="btn">Iritzia eman</a>
+
+      <?php
+      }
+      ?>
     </section>
 
     <?php
-    // TODO: comprobar fecha de pub
-    $comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
-    $comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
-    $comprobarReview = $comprobarReview->fetch();
-    if (empty($comprobarReview)) {
-    ?>
-      <a href="/liburua/<?php echo $libro['id'] ?>/iritzi" class="btn">Iritzia eman</a>
-    <?php
-    }
-
-    if (count($reviews) > 0) {
-    ?>
-      <section id="inferior">
-        <h2 id="iritziak">Iritziak:</h2>
-
-        <div class="flex-stretch-col" id="reviews">
-          <?php
-          foreach ($reviews as $review) {
-          ?>
-            <article class="flex-stretch-col review">
-              <div>
-                <h3 id="reviewer">
-                  <?php
-                  $cuenta = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
-                  $cuenta->execute(['id' => $review['id_cuenta']]);
-                  $cuenta = $cuenta->fetch();
-                  echo $cuenta['apodo'];
-                  if ($_SESSION['usr']['rol'] !== 'Ikasle') {
-                    echo ' (' . $cuenta['nombre'] . ' ' . $cuenta['apellido'] . ')';
-                  }
-                  ?>:
-                </h3>
-                <p><?php echo $review['texto'] ?></p>
-                <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
-                <?php
-                $cantidadRespuestas = $pdo->prepare('SELECT count(id) AS cantidad_respuestas FROM respuesta WHERE id_review = :id_review;');
-                $cantidadRespuestas->execute(['id_review' => $review['id']]);
-                $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
-                if ($cantidadRespuestas > 0) {
-                ?>
-                  <a href="/iritzia/<?php echo $review['id'] ?>" class="ver-respuestas">
-                    Erantzunak (<?php echo $cantidadRespuestas ?>)
-                  </a>
-                <?php
-                }
-                ?>
-              </div>
-
-              <div class="flex-stretch-row">
-                <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
-
-                <?php
-                if ($cuenta['id'] === $_SESSION['usr']['id']) {
-                ?>
-                  <a href="/iritzi/<?php echo $review['id'] ?>/aldatu" class="btn">Iritzia aldatu</a>
-                  <a href="/iritzi/<?php echo $review['id'] ?>/ezabatu" class="btn">Iritzia ezabatu</a>
-                <?php
-                }
-                ?>
-              </div>
-            </article>
-          <?php
-          }
-          ?>
-        </div>
-      </section>
-
-    <?php
-    }
+    include_once '../modules/reviews.php';
+    $reviews = buscarReviews($libro['id'], ['r.id_libro = :id', 'r.texto <> ""']);
+    if (count($reviews) > 0) agregarReviews($reviews);
     ?>
   </main>
 

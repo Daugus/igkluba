@@ -14,7 +14,7 @@ if (empty($review)) header('Location: /nagusia');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   include_once '../modules/db-config.php';
   $insert = $pdo->prepare('INSERT INTO respuesta (texto, id_review, id_cuenta, aceptado)
-    VALUES (:texto, :id_review, :id_cuenta, aceptado)');
+    VALUES (:texto, :id_review, :id_cuenta, :aceptado)');
   $insert->execute([
     'texto' => $_REQUEST['texto'],
     'id_review' => $id,
