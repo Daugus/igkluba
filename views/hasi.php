@@ -25,12 +25,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 include_once '../templates/head.php';
-include_once '../templates/header.php';
 agregarHead('Saioa hasi | IGKluba', __FILE__, false);
-headerLogin();
 ?>
 
 <body>
+  <?php
+  include_once '../templates/header.php';
+  headerLogin();
+  ?>
+
   <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Saioa hasi</h1>

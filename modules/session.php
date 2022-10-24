@@ -5,7 +5,7 @@ function checkSession(): void
   $_SESSION['url'] = $_SERVER['REQUEST_URI'];
   ob_start();
   if (!isset($_SESSION['usr'])) {
-    header('Location: hasi');
+    header('Location: /hasi');
   }
 }
 
@@ -13,7 +13,7 @@ function checkLogin(): void
 {
   session_start();
   if (isset($_SESSION['usr'])) {
-    header('Location: nagusia');
+    header('Location: /nagusia');
   }
 }
 
@@ -27,5 +27,5 @@ function closeSession(): void
 {
   session_start();
   session_unset();
-  header('Location: hasiera');
+  header('Location: /hasiera');
 }

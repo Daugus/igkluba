@@ -18,12 +18,12 @@ $respuestas = $pdo->prepare('SELECT * FROM respuesta where id_review = :id_revie
 $respuestas->execute(['id_review' => $review['id']]);
 $respuestas = $respuestas->fetchAll();
 
-include_once '../templates/head.php';
-agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '... | IGKluba');
-
 $reviewer = $pdo->prepare('SELECT id, apodo, nombre, apellido FROM cuenta WHERE id = :id;');
 $reviewer->execute(['id' => $review['id_cuenta']]);
 $reviewer = $reviewer->fetch();
+
+include_once '../templates/head.php';
+agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '... | IGKluba');
 ?>
 
 <body>

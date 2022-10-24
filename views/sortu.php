@@ -69,12 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include_once '../templates/head.php';
 agregarHead('Sortu kontua | IGKluba', __FILE__, false);
-
-include_once '../templates/header.php';
-headerLogin();
 ?>
 
 <body>
+  <?php
+  include_once '../templates/header.php';
+  headerLogin();
+  ?>
+
   <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Sortu kontua</h1>

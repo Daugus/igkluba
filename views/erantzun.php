@@ -26,12 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 include_once '../templates/head.php';
-include_once '../templates/header.php';
 agregarHead('Erantzun | IGKluba', __FILE__);
-headerGeneral();
 ?>
 
 <body>
+  <?php
+  include_once '../templates/header.php';
+  headerGeneral();
+  ?>
+
   <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Erantzun</h1>

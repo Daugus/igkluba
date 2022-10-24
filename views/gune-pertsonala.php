@@ -6,7 +6,7 @@ include_once '../modules/session.php';
 checkSession();
 
 include_once '../templates/head.php';
-agregarHead('Gune pertsonala | IGKluba');
+agregarHead($_SESSION['usr']['apodo'] . ' | IGKluba');
 ?>
 
 <body>
@@ -16,7 +16,7 @@ agregarHead('Gune pertsonala | IGKluba');
   ?>
 
   <main class="flex-center-col">
-    <p>gune pertsonala</p>
+    <p>Gune pertsonala</p>
   </main>
 
   <?php
