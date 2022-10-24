@@ -416,7 +416,7 @@ values (
     4,
     true
   ),
-  (7, 4, 'Lorem.', 20, 'Gaztelania', 4, 3),
+  (7, 4, 'Lorem.', 20, 'Gaztelania', 4, 3, true),
   (
     8,
     5,

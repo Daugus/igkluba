@@ -74,7 +74,7 @@ create table if not exists review (
   nota tinyint(1) unsigned not null,
   texto varchar(2295),
   edad_lector tinyint(2) unsigned not null,
-  aceptado boolean default false not null
+  aceptado boolean default false not null,
   nombre_idioma varchar(30) not null,
   id_libro int unsigned not null,
   id_cuenta int unsigned not null,
@@ -85,7 +85,7 @@ create table if not exists review (
 create table if not exists respuesta (
   id int unsigned auto_increment primary key,
   texto varchar(765) not null,
-  aceptado boolean default false not null
+  aceptado boolean default false not null,
   id_review int unsigned not null,
   id_cuenta int unsigned not null,
   foreign key (id_review) references review(id) on delete cascade,
