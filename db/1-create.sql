@@ -59,14 +59,17 @@ create table if not exists etiqueta (
   primary key (nombre, id_libro),
   foreign key (id_libro) references libro(id) on delete cascade
 );
-create table if not exists idioma (nombre varchar(30) primary key);
+create table if not exists idioma (
+  id int unsigned auto_increment primary key,
+  nombre varchar(30) unique
+);
 create table if not exists idiomas_libro (
   id_libro int unsigned,
-  nombre_idioma varchar(30),
+  id_idioma int unsigned,
   titulo_alternativo varchar(100),
-  primary key (id_libro, nombre_idioma),
+  primary key (id_libro, id_idioma),
   foreign key (id_libro) references libro(id) on delete cascade,
-  foreign key (nombre_idioma) references idioma(nombre) on delete cascade
+  foreign key (id_idioma) references idioma(id) on delete cascade
 );
 create table if not exists review (
   id int unsigned auto_increment primary key,

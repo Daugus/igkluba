@@ -14,6 +14,8 @@ if ($usuario['rol'] === 'Ikasle') {
   $clase = $clase->fetch();
 }
 
+include_once '../modules/select.php';
+
 include_once '../templates/head.php';
 agregarHead($_SESSION['usr']['apodo'] . ' | IGKluba');
 ?>
@@ -40,7 +42,7 @@ agregarHead($_SESSION['usr']['apodo'] . ' | IGKluba');
           <p id="apodo"><?php echo $usuario['apodo'] ?></p>
         </div>
 
-        <p><span>Jaiotze data:</span> <?php echo $usuario['fecha_nacimiento'] ?></p>
+        <p><span>Jaiotze data:</span> <?php echo date_format(date_create($usuario['fecha_nacimiento']), 'd/m/Y') ?></p>
         <p><span>E-maila:</span> <?php echo $usuario['correo'] ?></p>
 
         <p><span>Ikastetxea:</span> <?php echo $usuario['nombre_centro'] ?></p>
@@ -54,8 +56,33 @@ agregarHead($_SESSION['usr']['apodo'] . ' | IGKluba');
       </div>
     </section>
 
+    <?php if ($usuario['rol'] === 'Admin') { ?>
+      <section class="grid-libros">
+        <?php
+        $solicitudesLibros = buscarLibros('1', 'il.id_idioma ASC, titulo ASC', false);
+        if (count($solicitudesLibros)) {
+          foreach ($solicitudesLibros as $libro) {
+        ?>
+            <article class="flex-space-between-col libro">
+              <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>">
+
+              <div class="flex-center-col libro__texto">
+                <p class="libro__titulo" title="<?php echo $libro['titulo'] ?>">
+                  <?php echo $libro['titulo'] ?>
+                </p>
+
+                <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor">
+                  <?php echo $libro['autor'] ?>
+                </a>
+              </div>
+            </article>
+        <?php
+          }
+        }
+        ?>
+      </section>
+    <?php } ?>
     <?php
-    include_once '../modules/reviews.php';
     $reviews = buscarReviews($usuario['id'], ['r.id_cuenta = :id']);
     if (count($reviews) > 0) agregarReviews($reviews, true);
     ?>

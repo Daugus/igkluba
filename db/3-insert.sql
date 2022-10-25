@@ -92,10 +92,10 @@ values (
 insert into profesor_clase
 values (3, '1234abcd');
 insert into idioma
-values ('Ingelesa'),
-  ('Euskara'),
-  ('Gaztelania'),
-  ('Frantsesa');
+values(1, 'Gaztelania'),
+  (2, 'Euskara'),
+  (3, 'Ingelesa'),
+  (4, 'Frantsesa');
 insert into libro (
     id,
     autor,
@@ -273,64 +273,36 @@ values ('Fantasia', 1),
   ('Historikoa', 13),
   ('Fantasia', 14);
 insert into idiomas_libro
-values (1, 'Gaztelania', 'El Camino de los Reyes'),
-  (1, 'Ingelesa', 'The Way of Kings'),
-  (2, 'Gaztelania', 'Palabras Radiantes'),
-  (2, 'Ingelesa', 'Words of Radiance'),
-  (3, 'Gaztelania', 'Juramentada'),
-  (3, 'Ingelesa', 'Oathbringer'),
-  (4, 'Gaztelania', 'El Ritmo de la Guerra'),
-  (4, 'Ingelesa', 'Rhythm of War'),
-  (5, 'Gaztelania', 'Malaherba'),
-  (6, 'Gaztelania', 'Las Lágrimas de Shiva'),
-  (
-    7,
-    'Gaztelania',
-    'Harry Potter y la Piedra Filosofal'
-  ),
-  (
-    7,
-    'Ingelesa',
-    "Harry Potter and the Philosopher's Stone"
-  ),
-  (
-    8,
-    'Gaztelania',
-    'El Misterio de los Árbitros Dormidos'
-  ),
-  (9, 'Gaztelania', 'Cruzada en Jeans'),
-  (9, 'Ingelesa', 'Crusade in Jeans'),
-  (
-    10,
-    'Gaztelania',
-    'My Hero Academia: Izuku Midoriya: Origen'
-  ),
-  (
-    10,
-    'Ingelesa',
-    'My Hero Academia: Izuku Midoriya: Origin'
-  ),
-  (11, 'Euskara', 'Eireren Egunerokoa'),
-  (
-    12,
-    'Gaztelania',
-    'Charlie y la Fábrica de Chocolate'
-  ),
-  (12, 'Euskara', 'Charlie eta Txokolate-lantegia'),
-  (
-    12,
-    'Ingelesa',
-    'Charlie and the Chocolate Factory'
-  ),
-  (12, 'Frantsesa', 'Charlie et la Chocolaterie'),
-  (13, 'Gaztelania', 'El Diario de Ana Frank'),
-  (13, 'Euskara', 'Anne Franken Egunkaria'),
-  (13, 'Ingelesa', 'The Diary of a Young Girl'),
-  (13, 'Frantsesa', "Le Journal d'Anne Frank"),
-  (14, 'Gaztelania', 'El Hobbit'),
-  (14, 'Euskara', 'Hobbita'),
-  (14, 'Ingelesa', 'The Hobbit'),
-  (14, 'Frantsesa', 'Le Hobbit');
+values (1, 1, 'El Camino de los Reyes'),
+  (1, 3, 'The Way of Kings'),
+  (2, 1, 'Palabras Radiantes'),
+  (2, 3, 'Words of Radiance'),
+  (3, 1, 'Juramentada'),
+  (3, 3, 'Oathbringer'),
+  (4, 1, 'El Ritmo de la Guerra'),
+  (4, 3, 'Rhythm of War'),
+  (5, 1, 'Malaherba'),
+  (6, 1, 'Las Lágrimas de Shiva'),
+  (7, 1, 'Harry Potter y la Piedra Filosofal'),
+  (7, 3, "Harry Potter and the Philosopher's Stone"),
+  (8, 1, 'El Misterio de los Árbitros Dormidos'),
+  (9, 1, 'Cruzada en Jeans'),
+  (9, 3, 'Crusade in Jeans'),
+  (10, 1, 'My Hero Academia: Izuku Midoriya: Origen'),
+  (10, 3, 'My Hero Academia: Izuku Midoriya: Origin'),
+  (11, 2, 'Eireren Egunerokoa'),
+  (12, 1, 'Charlie y la Fábrica de Chocolate'),
+  (12, 2, 'Charlie eta Txokolate-lantegia'),
+  (12, 3, 'Charlie and the Chocolate Factory'),
+  (12, 4, 'Charlie et la Chocolaterie'),
+  (13, 1, 'El Diario de Ana Frank'),
+  (13, 2, 'Anne Franken Egunkaria'),
+  (13, 3, 'The Diary of a Young Girl'),
+  (13, 4, "Le Journal d'Anne Frank"),
+  (14, 1, 'El Hobbit'),
+  (14, 2, 'Hobbita'),
+  (14, 3, 'The Hobbit'),
+  (14, 4, 'Le Hobbit');
 insert into review (
     id,
     nota,

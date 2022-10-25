@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'serie_num' => $tieneSerie ? $_REQUEST['serie_num'] : null,
       'fecha_pub' => $_REQUEST['fecha'],
       'formato' => $_REQUEST['formato'],
-      'sinopsis' => $_REQUEST['sinopsis'],
+      'sinopsis' => nl2br($_REQUEST['sinopsis']),
       'enlace' => $_REQUEST['enlace'],
       'aceptado' => $aceptado
     ]);

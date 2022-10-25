@@ -125,10 +125,10 @@ a:hover {
 
 form :is(.campo, .campo-predefinido) {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 
   font-size: 1.1rem;
   gap: 1rem;
@@ -356,7 +356,7 @@ main {
 }
 
 /* --- nagusia / bilaketa --- */
-#main-nagusia-bilaketa {
+.grid-libros {
   --gap: 8rem;
   --columnas: 4;
   --min-width: 12rem;
@@ -366,7 +366,7 @@ main {
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(max(var(--min-width), var(--libro-max-width)), 1fr));
-  grid-auto-rows: 1fr;
+  /* grid-auto-rows: 1fr; */
   grid-gap: 2rem var(--gap);
   align-items: start;
 }

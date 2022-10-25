@@ -26,19 +26,17 @@ agregarHead($busqueda . ' | IGKluba');
   <main>
     <?php
     $busqueda = strtolower($busqueda);
-    include_once '../modules/libros.php';
+    include_once '../modules/select.php';
     ?>
 
     <?php
     $librosPorTitulo = buscarLibros(
       "LOWER(il.titulo_alternativo) like '%$busqueda%'",
-      'il.titulo_alternativo ASC',
-      'GROUP BY l.id'
+      'il.id_idioma ASC, l.nota_media DESC'
     );
     $librosPorAutor = buscarLibros(
       "LOWER(l.autor) like '%$busqueda%'",
-      'l.autor ASC',
-      'GROUP BY l.id'
+      'l.autor ASC, l.nota_media DESC'
     );
 
     $cantidadPorLibro = count($librosPorTitulo);
@@ -53,7 +51,7 @@ agregarHead($busqueda . ' | IGKluba');
       <section>
         <h2>Titulo bidez <span>(<?php echo $cantidadPorLibro ?>)</span>:</h2>
 
-        <div id="main-nagusia-bilaketa">
+        <div class="grid-libros">
           <?php agregarLibros($librosPorTitulo) ?>
         </div>
       </section>
@@ -65,7 +63,7 @@ agregarHead($busqueda . ' | IGKluba');
       <section>
         <h2>Egile bidez <span>(<?php echo $cantidadPorAutor ?>)</span>:</h2>
 
-        <div id="main-nagusia-bilaketa">
+        <div class="grid-libros">
           <?php agregarLibros($librosPorAutor) ?>
         </div>
       </section>

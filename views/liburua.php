@@ -14,7 +14,12 @@ $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
 if (empty($libro) || $libro['aceptado'] === 0) header('Location: /nagusia');
 
-$titulos = $pdo->prepare('SELECT * FROM idiomas_libro WHERE id_libro = :id_libro');
+$titulos = $pdo->prepare(
+  'SELECT i.nombre AS nombre_idioma, il.titulo_alternativo AS titulo
+    FROM idiomas_libro il JOIN idioma i ON il.id_idioma = i.id
+    WHERE id_libro = :id_libro
+    ORDER BY i.id ASC;'
+);
 $titulos->execute(['id_libro' => $id]);
 $titulos = $titulos->fetchAll();
 
@@ -22,11 +27,8 @@ $consultaEtiquetas = $pdo->prepare('SELECT nombre FROM etiqueta WHERE id_libro =
 $consultaEtiquetas->execute(['id_libro' => $id]);
 $consultaEtiquetas = $consultaEtiquetas->fetchAll();
 
-include_once '../modules/arrays.php';
-$titulo_castellano = buscarEnArray($titulos, 'nombre_idioma', 'Gaztelania')['titulo_alternativo'];
-
 include_once '../templates/head.php';
-agregarHead($titulo_castellano . ' | IGKluba');
+agregarHead($titulos[0]['titulo'] . ' | IGKluba');
 ?>
 
 <body>
@@ -43,7 +45,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
 
       <div class="flex-center-col" id="datos">
         <div class="flex-center-col" id="datos-importantes">
-          <h1><?php echo $titulo_castellano ?></h1>
+          <h1><?php echo $titulos[0]['titulo'] ?></h1>
 
           <?php
           if (isset($libro['serie'])) {
@@ -67,7 +69,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
           </p>
         </div>
 
-        <p><span>Argitaratze data:</span> <?php echo $libro['fecha_pub'] ?></p>
+        <p><span>Argitaratze data:</span> <?php echo date_format(date_create($libro['fecha_pub']), 'd/m/Y') ?></p>
         <?php
         $idiomas = [];
         foreach ($titulos as $titulo) {
@@ -109,7 +111,7 @@ agregarHead($titulo_castellano . ' | IGKluba');
     </section>
 
     <?php
-    include_once '../modules/reviews.php';
+    include_once '../modules/select.php';
     $reviews = buscarReviews($libro['id'], ['r.id_libro = :id', 'r.texto <> ""']);
     if (count($reviews) > 0) agregarReviews($reviews);
     ?>

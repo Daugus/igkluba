@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
     $insert->execute([
       'nota' => $_REQUEST['nota'],
-      'texto' => isset($_REQUEST['texto']) ? $_REQUEST['texto'] : null,
+      'texto' => isset($_REQUEST['texto']) ? nl2br($_REQUEST['texto']) : null,
       'edad_lector' => $_REQUEST['edad'],
       'nombre_idioma' => $_REQUEST['idioma'],
       'id_libro' => $id,

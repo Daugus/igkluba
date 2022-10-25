@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $insert = $pdo->prepare('INSERT INTO respuesta (texto, id_review, id_cuenta, aceptado)
     VALUES (:texto, :id_review, :id_cuenta, :aceptado)');
   $insert->execute([
-    'texto' => $_REQUEST['texto'],
+    'texto' => nl2br($_REQUEST['texto']),
     'id_review' => $id,
     'id_cuenta' => $_SESSION['usr']['id'],
     'aceptado' => $_SESSION['usr']['rol'] === 'Ikasle' ? 0 : 1
@@ -41,7 +41,7 @@ agregarHead('Erantzun | IGKluba', __FILE__);
 
       <form action="" method="post" class="flex-stretch-col" id="form-iritzia">
         <div class="campo">
-          <label for="texto">Iritzia:</label>
+          <label for="texto">Erantzuna:</label>
           <textarea name="texto" id="texto" minlength="1" maxlength="2295" placeholder="Zure erantzuna (100 hitz gehienez)..."></textarea>
         </div>
 
