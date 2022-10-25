@@ -1,5 +1,5 @@
 /* oculto los contenedores de cada seccion por defecto solo se mostraran al darle button los botones */
-#contenedorReviews, #contenedorClase, #contenedorIdioma, #contenedorAdmision {
+#contenedorReviews, #contenedorClase, #contenedorIdioma {
     display: none;
 }
 

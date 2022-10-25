@@ -27,7 +27,7 @@
     escribo cada solicitud una a una hasta que no queden mas.
     */
 
-
+// consultas
 try {
 
     $usuario = "root";
@@ -75,7 +75,7 @@ try {
     // obtencion de alumnos
     // preparo la consulta usando la clase obtenida del desplegable de clases
     $codigoClase = $_REQUEST['cod_clase'];
-    $consulta = $conexion->prepare("SELECT nombre, apellidos, apodo, fecha_nac from cuenta where rol = 'alumno' and cod_clase = '".$codigoClase."';");
+    $consulta = $conexion->prepare("SELECT ID_cuenta, nombre, apellidos, apodo, fecha_nac from cuenta where rol = 'alumno' and cod_clase = '".$codigoClase."';");
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
@@ -179,10 +179,17 @@ try {
                 echo                "</ul>";
                 echo             "</div>";
                 echo            "<div class='BOTON'>";
-                echo                "<button href='' id='eliminar'>Eliminar</button>";
+                echo                "<button name='eliminar' id='eliminar'>Eliminar</button>";
                 echo            "</div>";
                 echo       "</div>";
             }
+            if(isset($_REQUEST["eliminar"])) {
+
+                // preparo el borrado
+                $borrado = $conexion->prepare("UPDATE cuenta SET cod_clase = 'null' WHERE ID_cuenta = ".$columna['ID_cuenta'].";");
+                // ejecuto el borrado
+                $borrado->execute();              
+                }
         ?>
 
     </div>
@@ -217,8 +224,9 @@ try {
         echo                "<button href='' id='eliminar'>Eliminar</button>";
         echo            "</ul>";
         echo        "</div>";
-        echo    "</div>";
+        echo    "</div>";    
     }
+  
     ?>
     </div>
     <div id="contenedorAdmision">
