@@ -12,7 +12,19 @@ include_once '../modules/db-config.php';
 $libro = $pdo->prepare('SELECT * FROM libro WHERE id = :id;');
 $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
-if (empty($libro) || $libro['aceptado'] === 0) header('Location: /nagusia');
+
+if (empty($libro) || ($accion === '' && $libro['aceptado'] === 0)) header('Location: /nagusia');
+if ($accion === 'onartu') {
+  $update = $pdo->prepare('UPDATE libro SET aceptado = 1 where id = :id;');
+  $update->execute(['id' => $id]);
+  $delete = $pdo->prepare('DELETE FROM solicitud_libro WHERE id_libro = :id_libro;');
+  $delete->execute(['id_libro' => $id]);
+  header('Location: /gune-pertsonala#eskaerak');
+} else if ($accion === 'ukatu') {
+  $delete = $pdo->prepare('DELETE FROM libro where id = :id;');
+  $delete->execute(['id' => $id]);
+  header('Location: /gune-pertsonala#eskaerak');
+}
 
 $titulos = $pdo->prepare(
   'SELECT i.nombre AS nombre_idioma, il.titulo_alternativo AS titulo
@@ -23,9 +35,11 @@ $titulos = $pdo->prepare(
 $titulos->execute(['id_libro' => $id]);
 $titulos = $titulos->fetchAll();
 
-$consultaEtiquetas = $pdo->prepare('SELECT nombre FROM etiqueta WHERE id_libro = :id_libro');
-$consultaEtiquetas->execute(['id_libro' => $id]);
-$consultaEtiquetas = $consultaEtiquetas->fetchAll();
+if ($accion !== 'eskaera') {
+  $consultaEtiquetas = $pdo->prepare('SELECT nombre FROM etiqueta WHERE id_libro = :id_libro');
+  $consultaEtiquetas->execute(['id_libro' => $id]);
+  $consultaEtiquetas = $consultaEtiquetas->fetchAll();
+}
 
 include_once '../templates/head.php';
 agregarHead($titulos[0]['titulo'] . ' | IGKluba');
@@ -47,26 +61,28 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
         <div class="flex-center-col" id="datos-importantes">
           <h1><?php echo $titulos[0]['titulo'] ?></h1>
 
-          <?php
-          if (isset($libro['serie'])) {
-          ?>
+          <?php if (isset($libro['serie'])) { ?>
             <p id="serie"><?php echo $libro['serie'] . ' #' . $libro['serie_num'] ?></p>
           <?php
           }
           ?>
 
           <p id="autor"><?php echo $libro['autor'] ?></p>
-          <p class="nota">
-            <a href="#iritziak">
-              <?php
-              if ($libro['nota_media'] > 0) {
-                echo number_format((float)$libro['nota_media'], 2, '.', '');
-              } else {
-                echo '-';
-              }
-              ?><i class="fa-solid fa-star"></i>
-            </a>
-          </p>
+          <?php if ($accion !== 'eskaera') { ?>
+            <p class="nota">
+              <a href="#iritziak">
+                <?php
+                if ($libro['nota_media'] > 0) {
+                  echo number_format((float)$libro['nota_media'], 2, '.', '');
+                } else {
+                  echo '-';
+                }
+                ?><i class="fa-solid fa-star"></i>
+              </a>
+            </p>
+          <?php
+          }
+          ?>
         </div>
 
         <p><span>Argitaratze data:</span> <?php echo date_format(date_create($libro['fecha_pub']), 'd/m/Y') ?></p>
@@ -77,16 +93,20 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
         }
         ?>
         <p><span>Hizkuntza<?php if (count($idiomas) > 1) echo 'k' ?>:</span> <?php echo implode(', ', $idiomas) ?></p>
-        <p><span>Batez besteko adina:</span> <?php echo $libro['edad_media'] > 0 ? $libro['edad_media'] : '-' ?></p>
-        <p><span>Irakurle kopurua:</span> <?php echo $libro['cantidad_reviews'] > 0 ? $libro['cantidad_reviews'] : '-' ?></p>
-        <p><span>Formatua:</span> <?php echo $libro['formato'] ?></p>
+        <?php if ($accion !== 'eskaera') { ?>
+          <p><span>Batez besteko adina:</span> <?php echo $libro['edad_media'] > 0 ? $libro['edad_media'] : '-' ?></p>
+          <p><span>Irakurle kopurua:</span> <?php echo $libro['cantidad_reviews'] > 0 ? $libro['cantidad_reviews'] : '-' ?></p>
+          <?php
+          $etiquetas = [];
+          foreach ($consultaEtiquetas as $etiqueta) {
+            $etiquetas[] = $etiqueta['nombre'];
+          }
+          ?>
+          <p><span>Etiketa<?php if (count($etiquetas) > 1) echo 'k' ?>:</span> <?php echo implode(', ', $etiquetas) ?></p>
         <?php
-        $etiquetas = [];
-        foreach ($consultaEtiquetas as $etiqueta) {
-          $etiquetas[] = $etiqueta['nombre'];
         }
         ?>
-        <p><span>Etiketa<?php if (count($etiquetas) > 1) echo 'k' ?>:</span> <?php echo implode(', ', $etiquetas) ?></p>
+        <p><span>Formatua:</span> <?php echo $libro['formato'] ?></p>
       </div>
     </section>
 
@@ -97,23 +117,32 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
 
     <section>
       <?php
-      // TODO: comprobar fecha de pub
-      $comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
-      $comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
-      $comprobarReview = $comprobarReview->fetch();
-      if (empty($comprobarReview)) {
-      ?>
-        <a href="/liburua/<?php echo $libro['id'] ?>/iritzi" class="btn">Iritzia eman</a>
+      if ($accion !== 'eskaera') {
+        // TODO: comprobar fecha de pub
+        $comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
+        $comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
+        $comprobarReview = $comprobarReview->fetch();
 
+        if (empty($comprobarReview)) {
+      ?>
+          <a href="/liburua/<?php echo $libro['id'] ?>/iritzi" class="btn">Iritzia eman</a>
+        <?php
+        }
+      } else {
+        ?>
+        <a href="/liburua/<?php echo $libro['id'] ?>/onartu" class="btn">Eskaera onartu</a>
+        <a href="/liburua/<?php echo $libro['id'] ?>/ukatu" class="btn">Eskaera ukatu</a>
       <?php
       }
       ?>
     </section>
 
     <?php
-    include_once '../modules/select.php';
-    $reviews = buscarReviews($libro['id'], ['r.id_libro = :id', 'r.texto <> ""']);
-    if (count($reviews) > 0) agregarReviews($reviews);
+    if ($accion !== 'eskaera') {
+      include_once '../modules/select.php';
+      $reviews = buscarReviews($libro['id'], ['r.id_libro = :id', 'r.texto <> ""']);
+      if (count($reviews) > 0) agregarReviews($reviews);
+    }
     ?>
   </main>
 

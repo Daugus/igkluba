@@ -3,8 +3,9 @@ use igkluba;
 -- insert
 insert into centro
 values (1, 'Unamuno');
-insert into clase
-values ('1234abcd', '2dw3', 3, '2022-2023', 1);
+insert into clase (cod, nombre, nivel, curso, id_centro)
+  values ('1234abcd', '2dw3', 3, '2022-2023', 1),
+  ('5678efgh', 'otra clase', 4, '2022-2023', 1);
 insert into cuenta (
     id,
     nombre,
@@ -88,9 +89,24 @@ values (
     null,
     '1234abcd',
     1
+  ),
+  (
+    6,
+    'Iker',
+    'González',
+    'igl',
+    'irakasle',
+    true,
+    '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
+    '2000-1-1',
+    'ejemplo@gmail.com',
+    '987654321',
+    null,
+    1
   );
 insert into profesor_clase
-values (3, '1234abcd');
+values (3, '1234abcd'),
+  (6, '5678efgh');
 insert into idioma
 values(1, 'Gaztelania'),
   (2, 'Euskara'),
@@ -167,7 +183,7 @@ Esta es una historia de dos niños que viven una extraña y solitaria historia d
     '2002-01-01',
     'nobela',
     'En cierta ocasión, hace ya mucho tiempo, vi un fantasma. Sí, un espectro, una aparición, un espíritu; lo puedes llamar como quieras, el caso es que lo vi. Ocurrió el mismo año en que el hombre llegó a la Luna y, aunque hubo momentos en los que pasé mucho miedo, esta historia no es lo que suele llamarse una novela de terror. -Todo comenzó con un enigma: el misterio de un objeto muy valioso que estuvo perdido durante siete décadas. Las Lágrimas de Shiva, así se llamaba ese objeto extraviado. A su alrededor tuvieron lugar venganzas cruzadas, y amores prohibidos, y extrañas desapariciones.-Hubo un fantasma, sí, y un viejo secreto oculto en las sombras, pero también hubo mucho más.',
-    false
+    true
   ),
   (
     7,
@@ -178,7 +194,7 @@ Esta es una historia de dos niños que viven una extraña y solitaria historia d
     'nobela',
     '«Con las manos temblorosas, Harry le dio la vuelta al sobre y vio un sello de lacre púrpura con un escudo de armas: un león, un águila, un tejón y una serpiente, que rodeaban una gran letra H.»
 Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas en el felpudo del número 4 de Privet Drive. Llevan la dirección escrita con tinta verde en un sobre de pergamino amarillento con un sello de lacre púrpura, y sus horripilantes tíos se apresuran a confiscarlas. Más tarde, el día que Harry cumple once años, Rubeus Hagrid, un hombre gigantesco cuyos ojos brillan como escarabajos negros, irrumpe con una noticia extraordinaria: Harry Potter es un mago, y le han concedido una plaza en el Colegio Hogwarts de Magia y Hechicería. ¡Está a punto de comenzar una aventura increíble!',
-    false
+    true
   ),
   (
     8,
@@ -188,7 +204,7 @@ Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas 
     '2013-05-16',
     'komikia',
     'El equipo de fútbol 7 Soto Alto no es solo el equipo de fútbol del colegio. Es mucho más. Nosotros hemos hecho un pacto: nada ni nadie nos separará nunca. Siempre jugaremos juntos. Pase lo que pase. Así que cuando pasó lo que pasó no tuvimos más remedio que actuar. Preparamos nuestro material de investigadores... y nos lanzamos a la aventura. Por algo somos los Futbolísimos.',
-    false
+    true
   ),
   (
     9,
@@ -198,7 +214,7 @@ Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas 
     '1973-01-01',
     'nobela',
     'Una emocionante novela de aventuras ambientada en la Edad Media. Imagina que la máquina del tiempo en la que viajas te transporta a un lugar que no deseas.Y que cuando estás a punto de conseguir volver a casa, una cruzada de niños se interpone en tu camino. Es exactamente lo que le sucede a Rudolf Hefting. Perdido en una época que no es la suya, no le queda más remedio que unirse a la expedición. En vaqueros, por supuesto.',
-    false
+    true
   ),
   (
     10,
@@ -209,7 +225,7 @@ Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas 
     'manga',
     'Estamos en un mundo donde abundan los superhéroes (y los supervillanos). Los mejores humanos son entrenados en la Academia de Héroes para optimizar sus poderes.
 Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto a ser una excepción y formarse en la Academia.',
-    false
+    true
   ),
   (
     11,
@@ -219,7 +235,7 @@ Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto
     '2015-10-10',
     'nobela',
     'Eireren gurasoek Irlandan ezagutu zuten elkar, izugarri maite dute herrialde hura, eta hara bidaliko dute alaba udan, bere ingelesa hobetu dezan. Eirek ez du ingelesa maite, ordea, eta gogoz kontra ekingo dio bidaiari. Dena dela, uda luzean era guztietako esperientziak ezagutuko ditu Eirek: maitasuna, jeloskortasuna, porrotak eta arrakasta, baita poliziaren egoitzak ere...',
-    false
+    true
   ),
   (
     12,
@@ -229,7 +245,7 @@ Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto
     '1964-01-17',
     'nobela',
     'Charlie y la fábrica de chocolate es una historia de Roald Dahl, el gran autor de literatura infantil. El señor Wonka, dueño de la magnífica fábrica de chocolate, ha escondido cinco billetes de oro en sus chocolatinas. Quienes los encuentren serán los elegidos para visitar la fábrica. Charlie tiene la fortuna de encontrar uno de esos billetes y, a partir de ese momento, su vida cambiará para siempre.',
-    false
+    true
   ),
   (
     13,
@@ -413,3 +429,5 @@ values (
     4,
     true
   );
+insert into solicitud_libro (id, id_libro, id_alumno)
+  values (1, 13, 4), (2, 14, 5);

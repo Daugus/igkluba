@@ -1,6 +1,6 @@
 <?php
 
-function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', bool $aceptado = true): array
+function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', bool $aceptado = true, bool $esProfesor = true): array
 {
   $aceptado = $aceptado ? 1 : 0;
   include '../modules/db-config.php';
@@ -50,22 +50,73 @@ function agregarLibros(array $libros): void
   }
 }
 
-function buscarSolicitudes(string $tabla, array $condiciones = []): array
+function buscarSolicitudesLibros(array $usuario): array
 {
   include '../modules/db-config.php';
-  $solicitudes = $pdo->prepare(
-    'SELECT *
-      FROM ' . $tabla
-      . ' WHERE aceptado = false'
-      . implode(' AND ', $condiciones) . ';'
-  );
-  $solicitudes->execute();
+  if ($usuario['rol'] === 'Admin') {
+    $libros = $pdo->prepare(
+      'SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
+        FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
+        WHERE l.aceptado = 0
+        GROUP BY l.id
+        ORDER BY il.id_idioma ASC, titulo ASC
+        LIMIT 24;'
+    );
+  } else {
+    $clases = $pdo->prepare('SELECT * FROM profesor_clase WHERE id_profesor = :id');
+    $clases->execute(['id' => $usuario['id']]);
+    $clases = array_column($clases->fetchAll(), 'cod_clase');
 
-  return $solicitudes->fetchAll();
+    $clases = implode(', ', array_map(function ($clase) {
+      return "'$clase'";
+    }, $clases));
+
+    $libros = $pdo->prepare(
+      "SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
+        FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
+        WHERE l.aceptado = 0
+          AND l.id in (SELECT sl.id_libro
+                        FROM solicitud_libro sl JOIN cuenta c ON sl.id_alumno = c.id
+                        WHERE c.cod_clase IN ($clases))
+        GROUP BY l.id
+        ORDER BY il.id_idioma ASC, titulo ASC
+        LIMIT 24;"
+    );
+  }
+
+  $libros->execute();
+  return $libros->fetchAll();
 }
 
-function agregarSolicitudesLibros(array $reviews, bool $seccionPersonal = false): void
+function agregarSolicitudesLibros(array $solicitudesLibros): void
 {
+  ?>
+  <section>
+    <h2 id="eskaerak">Liburu eskaerak</h2>
+    <div class="grid-libros">
+      <?php
+      foreach ($solicitudesLibros as $libro) {
+      ?>
+        <article class="flex-space-between-col libro">
+          <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>">
+
+          <div class="flex-center-col libro__texto">
+            <p class="libro__titulo" title="<?php echo $libro['titulo'] ?>">
+              <?php echo $libro['titulo'] ?>
+            </p>
+
+            <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor">
+              <?php echo $libro['autor'] ?>
+            </a>
+          </div>
+          <a href="/liburua/<?php echo $libro['id'] ?>/eskaera" class="btn">Eskaera ikusi</a>
+        </article>
+      <?php
+      }
+      ?>
+    </div>
+  </section>
+<?php
 }
 
 function buscarReviews(int $id, array $condiciones): array
@@ -84,7 +135,7 @@ function buscarReviews(int $id, array $condiciones): array
 function agregarReviews(array $reviews, bool $seccionPersonal = false): void
 {
   include '../modules/db-config.php';
-  ?>
+?>
   <section id="opiniones">
     <h2 id="iritziak">Iritziak:</h2>
 

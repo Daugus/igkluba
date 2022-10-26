@@ -57,6 +57,7 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
       if ($reviewer['id'] === $_SESSION['usr']['id']) {
       ?>
         <a href="/iritzi/<?php echo $review['id'] ?>/aldatu" class="btn">Iritzia aldatu</a>
+        <a href="/iritzi/<?php echo $review['id'] ?>/ezabatu" class="btn">Iritzia ezabatu</a>
       <?php
       }
       ?>

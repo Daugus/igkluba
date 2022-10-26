@@ -125,7 +125,7 @@ a:hover {
 
 form :is(.campo, .campo-predefinido) {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
   justify-content: space-between;
   align-items: start;
@@ -472,7 +472,7 @@ span,
   font-size: 1.25rem;
 }
 
-#main-libro #iritziak::before {
+:is(#iritziak, #eskaerak)::before {
   content: '';
   display: block;
   height: 4rem;

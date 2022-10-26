@@ -1,6 +1,6 @@
 <?php
-include_once '../modules/url.php';
-$page = getPage();
+$url = parse_url($_SERVER['REQUEST_URI']);
+$page =  array_slice(array_filter(explode('/', strtolower($url['path']))), 0);
 
 $ruta_elegida = '';
 $accion = '';
@@ -19,13 +19,16 @@ switch ($cantidadSecciones) {
     break;
 
   case 3:
-    if (in_array($page[0], ['liburua', 'iritzia', 'iritzi'])) {
+    if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun'])) {
       $id = $page[1];
 
       if (in_array($page[2], ['iritzi', 'erantzun'])) {
         $ruta_elegida = '../views/' . $page[2] . '.php';
-      } else if ($page[2] !== 'iritzia' && in_array($page[2], ['aldatu', 'ezabatu'])) {
+      } else if (($page[0] !== 'iritzia' && in_array($page[2], ['aldatu', 'ezabatu', 'eskaera']))
+        || $page[0] === 'liburua' && in_array($page[2], ['onartu', 'ukatu'])
+      ) {
         $ruta_elegida = '../views/' . $page[0] . '.php';
+        $busqueda = $page[1];
         $accion = $page[2];
       }
     }
@@ -33,9 +36,8 @@ switch ($cantidadSecciones) {
     break;
 }
 
-
 if (empty($ruta_elegida) || !file_exists($ruta_elegida)) {
-  header('Location: ' . getUrl() . '/hasiera');
+  header('Location: /hasiera');
 }
 
 include_once $ruta_elegida;

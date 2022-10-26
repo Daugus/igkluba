@@ -23,11 +23,23 @@ if ($editar) {
     header('Location: /liburua/' . $review['id_libro']);
   }
 
-  $libro = $pdo->prepare('SELECT l.id, il.titulo_alternativo AS titulo, l.autor FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro WHERE l.id = :id AND l.aceptado = true AND il.nombre_idioma = "Gaztelania"');
+  $libro = $pdo->prepare(
+    'SELECT l.id, il.titulo_alternativo AS titulo, l.autor
+      FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
+      WHERE l.id = :id
+        AND l.aceptado = true'
+    // AND il.nombre_idioma = "Gaztelania"'
+  );
   $libro->execute(['id' => $review['id_libro']]);
   $libro = $libro->fetch();
 } else {
-  $libro = $pdo->prepare('SELECT l.id, il.titulo_alternativo AS titulo, l.autor FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro WHERE l.id = :id AND l.aceptado = true AND il.nombre_idioma = "Gaztelania"');
+  $libro = $pdo->prepare(
+    'SELECT l.id, il.titulo_alternativo AS titulo, l.autor
+      FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
+      WHERE l.id = :id
+        AND l.aceptado = true'
+    //AND il.nombre_idioma = "Gaztelania"'
+  );
   $libro->execute(['id' => $id]);
   $libro = $libro->fetch();
 
@@ -58,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } else {
     $insert = $pdo->prepare(
       'INSERT INTO review (nota, texto, edad_lector, nombre_idioma, id_libro, id_cuenta, aceptado)
-      VALUES (:nota, :texto, :edad_lector, :nombre_idioma, :id_libro, :id_cuenta, :aceptado)'
+        VALUES (:nota, :texto, :edad_lector, :nombre_idioma, :id_libro, :id_cuenta, :aceptado)'
     );
     $insert->execute([
       'nota' => $_REQUEST['nota'],
@@ -128,13 +140,16 @@ agregarHead('Iritzia eman | IGKluba', __FILE__);
             <option disabled selected>-</option>
             <?php
             include_once '../modules/db-config.php';
-            $idiomasLibro = $pdo->prepare('SELECT nombre_idioma AS nombre FROM idiomas_libro WHERE id_libro = :id;');
+            $idiomasLibro = $pdo->prepare('SELECT i.id, i.nombre AS nombre
+                                            FROM idiomas_libro il JOIN idioma i ON il.id_idioma = i.id
+                                            WHERE id_libro = :id;');
             $idiomasLibro->execute(['id' => $id]);
             $idiomasLibro = $idiomasLibro->fetchAll();
             foreach ($idiomasLibro as $idioma) {
-              print_r($idioma);
             ?>
-              <option value="<?php echo $idioma['nombre'] ?>" <?php if ($editar && $idioma['nombre'] === $review['nombre_idioma']) echo 'selected' ?>><?php echo $idioma['nombre'] ?></option>
+              <option value="<?php echo $idioma['nombre'] ?>" <?php if ($editar && $idioma['nombre'] === $review['nombre_idioma']) echo 'selected' ?>>
+                <?php echo $idioma['nombre'] ?>
+              </option>
             <?php
             }
             ?>

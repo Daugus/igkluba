@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tieneSerie = !empty($_REQUEST['serie']);
 
     include_once '../modules/db-config.php';
-    $insert = $pdo->prepare('INSERT INTO libro (autor, serie, serie_num, fecha_pub, formato, sinopsis, enlace, aceptado)
-          VALUES (:autor, :serie, :serie_num, :fecha_pub, :formato, :sinopsis, :enlace, :aceptado)');
+    $insert = $pdo->prepare('INSERT INTO libro (autor, serie, serie_num, fecha_pub, formato, sinopsis, aceptado)
+          VALUES (:autor, :serie, :serie_num, :fecha_pub, :formato, :sinopsis, :aceptado)');
     $insert->execute([
       'autor' => $_REQUEST['autor'],
       'serie' => $tieneSerie ? $_REQUEST['serie'] : null,
@@ -35,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'fecha_pub' => $_REQUEST['fecha'],
       'formato' => $_REQUEST['formato'],
       'sinopsis' => nl2br($_REQUEST['sinopsis']),
-      'enlace' => $_REQUEST['enlace'],
       'aceptado' => $aceptado
     ]);
 
