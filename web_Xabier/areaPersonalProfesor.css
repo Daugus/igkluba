@@ -25,7 +25,7 @@ li {
     list-style: none;
 }
 
-button, .Enviar {
+a,button, .Enviar {
     background-color: black;
     border-radius: 5px;
     margin-right: 5%;
@@ -217,11 +217,17 @@ button, .Enviar {
 /* PC */
 @media screen and (min-width: 1000px) {
 
-    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase, #contenedorSolicitudIdioma, #contenedorIdioma {
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase, #contenedorIdioma {
         margin-left: 15%;
         margin-right: 15%;
         margin-top: 2%;
     }
+
+    #contenedorSolicitudIdioma {
+        margin-left: 0%;
+    margin-right: 0%;
+    }
+    
 
     #contenedorUsuario {
         display: flex;

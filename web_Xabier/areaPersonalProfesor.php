@@ -33,7 +33,7 @@ try {
     $usuario = "root";
     $contrasena = "";
     $servidor = "localhost";
-    $database = "bdlibrosunamuno";
+    $database = "igkluba";
 
     // obtencion del perfil
     // creo la conexion
@@ -44,12 +44,12 @@ try {
     echo "<br>";
 
     // preparo la consulta
-    $consulta = $conexion->prepare('SELECT * FROM cuenta where ID_cuenta = 1');
+    $consulta = $conexion->prepare('SELECT cuenta.nombre AS "nombreCuenta", apellido, apodo, fecha_nacimiento, rol, clase.nombre AS "nombreClase" FROM cuenta, clase where clase.cod = cuenta.cod_clase AND id = 1');
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
     $resultadosPerfil = $consulta->fetch();
-
+    //print_r($resultadosPerfil);
 
     // calculo de la fecha de caducidad
     $fechaActual = date('10-06-y');
@@ -58,7 +58,7 @@ try {
 
     // obtencion de reviews
     // preparo la consulta
-    $consulta = $conexion->prepare('SELECT nota,texto,nombre_idioma,titulo FROM review, libro where ID_cuenta = 1 and review.ID_libro = libro.ID_libro;');
+    $consulta = $conexion->prepare('SELECT nota,texto,nombre_idioma,serie FROM review, libro WHERE review.id_libro = libro.id and id_cuenta = 1;');
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
@@ -66,16 +66,16 @@ try {
 
     // obtencion de la clase
     // preparo la consulta
-    $consulta = $conexion->prepare('SELECT cod_clase, nombre from clase;');
+    $consulta = $conexion->prepare('SELECT cod, nombre from clase;');
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
     $resultadosClase = $consulta->fetchAll();
-    
+    /*
     // obtencion de alumnos
     // preparo la consulta usando la clase obtenida del desplegable de clases
-    $codigoClase = $_REQUEST['cod_clase'];
-    $consulta = $conexion->prepare("SELECT ID_cuenta, nombre, apellidos, apodo, fecha_nac from cuenta where rol = 'alumno' and cod_clase = '".$codigoClase."';");
+    $codigoClase = $_REQUEST['cod'];
+    $consulta = $conexion->prepare("SELECT id, nombre, apellido, apodo, fecha_nacimiento from cuenta where rol = 'alumno' and cod_clase = '".$codigoClase."';");
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
@@ -83,16 +83,16 @@ try {
     // la consulta de los alumnos utiliza la clase obtenida
     
     // mantengo la seleccion de la clase despues de darle a enviar
-    
-    
+    */
+    /*
     // obtencion de solicitudes de idioma
     // preparo la consulta
-    $consulta = $conexion->prepare('SELECT titulo, nombre_idioma, nombre, apellidos, apodo FROM cuenta, solicitudidioma WHERE cuenta.ID_cuenta = solicitudidioma.ID_cuenta and cod_clase = "'.$codigoClase.'";');
+    $consulta = $conexion->prepare('SELECT id_libro, cuenta.ID_cuenta, titulo, nombre_idioma, nombre, apellidos, apodo FROM cuenta, solicitud_idioma WHERE cuenta.ID_cuenta = solicitudidioma.ID_cuenta and cod_clase = "'.$codigoClase.'";');
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo las solicitudes y las muestro en solicitudes de idioma
     $resultadosSolIdioma = $consulta->fetchAll();
-
+*/  
 } catch (PDOException $e) {
     echo "la conexion ha fallado: " . $e->getMessage();
 }
@@ -116,10 +116,10 @@ try {
         <img class="pfp" src="img_110805-1084281250.png" alt="Foto de perfil">
         <?php 
         echo "<ul>";
-        echo    "<li class='perfilLista'>". $resultadosPerfil['nombre'] ." ". $resultadosPerfil['apellidos'] ."</li>";
+        echo    "<li class='perfilLista'>". $resultadosPerfil['nombreCuenta'] ." ". $resultadosPerfil['apellido'] ."</li>";
         echo    "<li class='perfilLista'> Apodo: " . $resultadosPerfil['apodo'] . "</li>";
-        echo    "<li class='perfilLista'> Nacimiento: " . $resultadosPerfil['fecha_nac'] . "</li>";
-        echo    "<li class='perfilLista'> Clase: " . $resultadosPerfil['cod_clase'] . "</li>";
+        echo    "<li class='perfilLista'> Nacimiento: " . $resultadosPerfil['fecha_nacimiento'] . "</li>";
+        echo    "<li class='perfilLista'> Clase: " . $resultadosPerfil['nombreClase'] . "</li>";
         echo    "<li class='perfilLista'> Fecha caducidad: " . $fechaCaducida . "</li>";
         echo    "<li class='perfilLista'>  Rol: " . $resultadosPerfil['rol'] . "</li>";
         echo "</ul>";
@@ -140,7 +140,7 @@ try {
         foreach ($resultadosReview as $columna) {
             echo "<table>";
             echo    "<tr>";
-            echo        "<th id='titulo'>" . $columna['titulo'] . "</th>";
+            echo        "<th id='titulo'>" . $columna['serie'] . "</th>";
             echo        "<th id='nota'>NOTA: " . $columna['nota'] . "/5</th>";
             echo    "</tr>";
             echo    "<tr>";
@@ -159,7 +159,7 @@ try {
             <select name="cod_clase" id="clase">
                 <?php
                 foreach ($resultadosClase as $columna) {
-                    echo "<option class='cod_clase' value='" . $columna['cod_clase'] . "'>" . $columna['nombre'] . "</option>";
+                    echo "<option class='cod_clase' value='" . $columna['cod'] . "'>" . $columna['nombre'] . "</option>";
                 }
                 ?>
             </select>
@@ -179,17 +179,14 @@ try {
                 echo                "</ul>";
                 echo             "</div>";
                 echo            "<div class='BOTON'>";
-                echo                "<button name='eliminar' id='eliminar'>Eliminar</button>";
+                echo                "<a href='operacionConfirmacion.php?&ID_cuenta=". $columna['ID_cuenta']."&nombre=".$columna['nombre']."&apellidos=".$columna['apellidos']."&apodo=".$columna['apodo']."' name='eliminarAlumno' id='eliminar'>Eliminar</a>";
                 echo            "</div>";
                 echo       "</div>";
+                // tomo id cuenta desde la url
+                // voy a una nueva pagina
+                // hago la operacion
             }
-            if(isset($_REQUEST["eliminar"])) {
-
-                // preparo el borrado
-                $borrado = $conexion->prepare("UPDATE cuenta SET cod_clase = 'null' WHERE ID_cuenta = ".$columna['ID_cuenta'].";");
-                // ejecuto el borrado
-                $borrado->execute();              
-                }
+          
         ?>
 
     </div>
@@ -220,8 +217,8 @@ try {
         echo        "</div>";
         echo        "<div class='BOTONES'>";
         echo            "<ul>";
-        echo                "<button href='' id='aceptar'>Aceptar</button>";
-        echo                "<button href='' id='eliminar'>Eliminar</button>";
+        echo                "<a href='operacionConfirmacion.php?&ID_libro=".$columna['id_libro']."&ID_cuenta=".$columna['ID_cuenta']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo']."' id='aceptar' name='aceptar'>Aceptar</a>";
+        echo                "<a href='operacionConfirmacion.php?&ID_libro=".$columna['id_libro']."&ID_cuenta=".$columna['ID_cuenta']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo']."' id='eliminar' name='eliminar'>Eliminar</a>";
         echo            "</ul>";
         echo        "</div>";
         echo    "</div>";    
