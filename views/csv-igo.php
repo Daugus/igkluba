@@ -7,7 +7,8 @@ checkSession();
 
 if ($_SESSION['usr']['rol'] !== 'Admin') header('Location: naugusia');
 
-$csvInvalido = '';
+$error = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $csv = $_FILES['csv'];
   $delimeter = ',';
@@ -91,17 +92,6 @@ agregarHead('CSV igo | IGKluba', __FILE__);
           <label for="csv">CSV:</label>
           <label for="csv" class="file-input-text" tabindex="0"><i class="fa-solid fa-file-image"></i> <span>Aukeratu CSV bat...</span></label>
           <input type="file" id="csv" name="csv" accept="text/csv,.csv" class="hidden">
-          <?php
-          if ($csvInvalido !== '') {
-          ?>
-            <div class="error">
-              <p>
-                <?php echo $csvInvalido ?>
-              </p>
-            </div>
-          <?php
-          }
-          ?>
         </div>
 
         <button id="enviar">Igo</button>
@@ -114,6 +104,15 @@ agregarHead('CSV igo | IGKluba', __FILE__);
   <?php
   include_once '../templates/footer.php';
   agregarFooter();
+
+  if (!empty($error)) {
+  ?>
+    <div class="error"><i class="fa-solid fa-circle-exclamation"></i>
+      <p><?php echo $error ?></p>
+    </div>
+  <?php
+  }
+  ?>
   ?>
 </body>
 

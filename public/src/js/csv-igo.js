@@ -19,18 +19,9 @@ btnEnviar.addEventListener('click', (e) => {
   document.querySelectorAll('.error').forEach((mensaje) => mensaje.remove());
 
   const csv = fileInput.files[0];
-  if (csv === undefined) return mostrarMensajeError('error, elige un archivo', fileInput);
+  if (csv === undefined) return mostrarMensajeError('error, elige un archivo');
   const type = csv['name'].split('.');
-  if (type.splice(type.length - 1)[0].toLowerCase() !== 'csv') return mostrarMensajeError('error, el archivo no es una csv', fileInput);
+  if (type.splice(type.length - 1)[0].toLowerCase() !== 'csv') return mostrarMensajeError('error, el archivo no es una csv');
 
   form.submit();
 });
-
-const mostrarMensajeError = (texto, campo) => {
-  const div = document.createElement('div');
-  div.classList.add('error');
-  const p = document.createElement('p');
-  p.innerText = texto;
-  div.appendChild(p);
-  campo.insertAdjacentElement('afterend', div);
-};

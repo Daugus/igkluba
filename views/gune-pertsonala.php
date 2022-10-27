@@ -58,9 +58,14 @@ include_once '../modules/select.php';
 
     <?php if ($usuario['rol'] !== 'Ikasle') { ?>
     <?php
-      include_once '../modules/db-config.php';
       $solicitudesLibros = buscarSolicitudesLibros($usuario);
       if (count($solicitudesLibros) > 0) agregarSolicitudesLibros($solicitudesLibros);
+
+      if ($usuario['rol'] === 'Admin') {
+        $solicitudesProfesores = buscarCuentas(false, 'Irakasle', $usuario['id_centro']);
+      } else {
+        $solicitudesAlumnos = buscarCuentas(false, 'Ikasle', $usuario['id_centro']);
+      }
     }
 
     $reviews = buscarReviews($usuario['id'], ['r.id_cuenta = :id']);

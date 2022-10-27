@@ -17,8 +17,6 @@ if (empty($libro) || ($accion === '' && $libro['aceptado'] === 0)) header('Locat
 if ($accion === 'onartu') {
   $update = $pdo->prepare('UPDATE libro SET aceptado = 1 where id = :id;');
   $update->execute(['id' => $id]);
-  $delete = $pdo->prepare('DELETE FROM solicitud_libro WHERE id_libro = :id_libro;');
-  $delete->execute(['id_libro' => $id]);
   header('Location: /gune-pertsonala#eskaerak');
 } else if ($accion === 'ukatu') {
   $delete = $pdo->prepare('DELETE FROM libro where id = :id;');

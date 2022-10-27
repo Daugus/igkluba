@@ -16,19 +16,10 @@ btnEnviar.addEventListener('click', (e) => {
     if (valor !== null) valoresEnviados[valor.name] = valor.value;
   });
 
-  if (valoresEnviados.texto.length === 0) return mostrarMensajeError('error, la respuesta no puede estar vacía', form.querySelector('#texto'));
+  if (valoresEnviados.texto.length === 0) return mostrarMensajeError('error, la respuesta no puede estar vacía');
 
   if (valoresEnviados.texto.trim().split(/[\n ]/).length > 100 || valoresEnviados.texto.length > 765)
-    return mostrarMensajeError('error, la respuesta es demasiado larga', form.querySelector('#texto'));
+    return mostrarMensajeError('error, la respuesta es demasiado larga');
 
   form.submit();
 });
-
-const mostrarMensajeError = (texto, campo) => {
-  const div = document.createElement('div');
-  div.classList.add('error');
-  const p = document.createElement('p');
-  p.innerText = texto;
-  div.appendChild(p);
-  campo.insertAdjacentElement('afterend', div);
-};

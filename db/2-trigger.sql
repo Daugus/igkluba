@@ -1,6 +1,6 @@
 use igkluba;
 -- ----------------------------------------------------------------
--- trigger
+-- trigger medias
 delimiter //
 create trigger recalcular_medias_insert
 after
@@ -64,9 +64,19 @@ after delete on review for each row begin
 end;
 //
 delimiter ;
+-- ------------------------------------------------------------------
+-- trigger aceptación de libro
+create trigger eliminar_solicitud_libro
+after update on libro for each row begin
+  if NEW.aceptado = 1 then
+    delete from solicitud_libro where id_libro = NEW.id;
+  end if
+end;
+//
+delimiter ;
 -- ----------------------------------------------------------------
--- eventos
+-- evento caducidad
 create event desactivar_cuentas
-  on schedule every 1 year starts '2023-06-22 00:00'
+  on schedule every 1 year starts '2023-06-25 00:00'
   on completion preserve enable
   do update cuenta set activo = false where rol = 'Ikasle' AND activo = true;

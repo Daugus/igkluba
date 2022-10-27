@@ -15,8 +15,8 @@ btnEnviar.addEventListener('click', (e) => {
     if (valor !== null) valoresEnviados[valor.name] = valor.value;
   });
 
-  if (valoresEnviados.nota === '-') return mostrarMensajeError('error, nota inválida', form.querySelector('#nota').parentElement);
-  if (valoresEnviados.idioma === '-') return mostrarMensajeError('error, idioma inválido', form.querySelector('#idioma'));
+  if (valoresEnviados.nota === '-') return mostrarMensajeError('error, nota inválida');
+  if (valoresEnviados.idioma === '-') return mostrarMensajeError('error, idioma inválido');
 
   if ('texto' in valoresEnviados && valoresEnviados.texto.length > 0 && valoresEnviados.texto.trim().split(/[\n ]/).length > 300)
     return mostrarMensajeError('error, la review demasiado larga', form.querySelector('#texto'));
@@ -26,23 +26,3 @@ btnEnviar.addEventListener('click', (e) => {
 
   form.submit();
 });
-
-const calcularEdad = (fecha) => {
-  const hoy = new Date();
-  const fechaNacimiento = new Date(fecha);
-
-  let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-  const m = hoy.getMonth() - fechaNacimiento.getMonth();
-  if (m < 0 || (m === 0 && hoy.getDate() < fechaNacimiento.getDate())) edad--;
-
-  return edad;
-};
-
-const mostrarMensajeError = (texto, campo) => {
-  const div = document.createElement('div');
-  div.classList.add('error');
-  const p = document.createElement('p');
-  p.innerText = texto;
-  div.appendChild(p);
-  campo.insertAdjacentElement('afterend', div);
-};

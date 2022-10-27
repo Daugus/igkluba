@@ -15,17 +15,8 @@ btnLogin.addEventListener('click', (e) => {
     valoresEnviados[valor.name] = valor.value;
   });
 
-  if (valoresEnviados.apodo === '') return mostrarMensajeError('error, el apodo no puede estar vacío', document.querySelector('#apodo'));
-  if (valoresEnviados.pass === '') return mostrarMensajeError('error, la contraseña no puede estar vacía', document.querySelector('#pass'));
+  if (valoresEnviados.apodo === '') return mostrarMensajeError('error, el apodo no puede estar vacío');
+  if (valoresEnviados.pass === '') return mostrarMensajeError('error, la contraseña no puede estar vacía');
 
   form.submit();
 });
-
-const mostrarMensajeError = (texto, campo) => {
-  const div = document.createElement('div');
-  div.classList.add('error');
-  const p = document.createElement('p');
-  p.innerText = texto;
-  div.appendChild(p);
-  campo.insertAdjacentElement('afterend', div);
-};

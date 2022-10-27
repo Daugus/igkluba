@@ -34,37 +34,25 @@ btnEnviar.addEventListener('click', (e) => {
   });
 
   if (!/^[A-Za-zÀ-ÖØ-öø-ÿ](?=.*[A-Za-zÀ-ÖØ-öø-ÿ\-])[A-Za-zÀ-ÖØ-öø-ÿ,. ]{1,100}[A-Za-zÀ-ÖØ-öø-ÿ]$/.test(valoresEnviados.titulo))
-    return mostrarMensajeError('error, titulo inválido', form.querySelector('#titulo'));
+    return mostrarMensajeError('error, titulo inválido');
 
   if (!/^[A-Za-zÀ-ÖØ-öø-ÿ](?=.*[A-Za-zÀ-ÖØ-öø-ÿ\-])[A-Za-zÀ-ÖØ-öø-ÿ,. ]{1,100}[A-Za-zÀ-ÖØ-öø-ÿ]$/.test(valoresEnviados.autor))
-    return mostrarMensajeError('error, autor inválido', form.querySelector('#autor'));
+    return mostrarMensajeError('error, autor inválido');
 
   if (valoresEnviados.serie !== '') {
-    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ,.\- ]{1,50}$/.test(valoresEnviados.serie))
-      return mostrarMensajeError('error, serie inválida', form.querySelector('#serie'));
+    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ,.\- ]{1,50}$/.test(valoresEnviados.serie)) return mostrarMensajeError('error, serie inválida');
 
-    if (!/^[\d,.]{1,5}$/.test(valoresEnviados.serie_num))
-      return mostrarMensajeError('error, número en serie inválida', form.querySelector('#serie_num'));
+    if (!/^[\d,.]{1,5}$/.test(valoresEnviados.serie_num)) return mostrarMensajeError('error, número en serie inválida');
   }
 
-  if (valoresEnviados.fecha === '') return mostrarMensajeError('error, la fecha es inválida', form.querySelector('#fecha'));
+  if (valoresEnviados.fecha === '') return mostrarMensajeError('error, la fecha es inválida');
 
-  if (valoresEnviados.formato === '-') return mostrarMensajeError('error, formato inválido', form.querySelector('#formato').parentElement);
+  if (valoresEnviados.formato === '-') return mostrarMensajeError('error, formato inválido'.parentElement);
 
-  if (valoresEnviados.imagen === undefined) return mostrarMensajeError('error, elige un archivo', form.querySelector('#imagen'));
-  if (valoresEnviados.imagen['type'].split('/')[0] !== 'image')
-    return mostrarMensajeError('error, el archivo no es una imagen', form.querySelector('#imagen'));
+  if (valoresEnviados.imagen === undefined) return mostrarMensajeError('error, elige un archivo');
+  if (valoresEnviados.imagen['type'].split('/')[0] !== 'image') return mostrarMensajeError('error, el archivo no es una imagen');
 
-  if (valoresEnviados.sinopsis.length === 0) return mostrarMensajeError('error, la sinopsis no puede estar vacía', form.querySelector('#sinopsis'));
+  if (valoresEnviados.sinopsis.length === 0) return mostrarMensajeError('error, la sinopsis no puede estar vacía');
 
   form.submit();
 });
-
-const mostrarMensajeError = (texto, campo) => {
-  const div = document.createElement('div');
-  div.classList.add('error');
-  const p = document.createElement('p');
-  p.innerText = texto;
-  div.appendChild(p);
-  campo.insertAdjacentElement('afterend', div);
-};

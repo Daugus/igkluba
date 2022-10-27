@@ -71,10 +71,11 @@ agregarHead($busqueda . ' | IGKluba');
     }
 
     if ($cantidadPorLibro === 0 && $cantidadPorAutor === 0) {
-      echo '<p>nada</p>';
+    ?>
+      <p>Saiatu bilaketa aldatzen.</p>
+    <?php
     }
     ?>
-
   </main>
 
   <?php

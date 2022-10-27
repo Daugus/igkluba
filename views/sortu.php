@@ -5,9 +5,7 @@
 include_once '../modules/session.php';
 checkLogin();
 
-$imgInvalida = '';
-$claseInvalida = false;
-$apodoInvalido = false;
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $directorio = './src/img/profila/';
@@ -19,30 +17,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $esImagen = getimagesize($archivo['tmp_name']);
     if (!$esImagen) {
-      $imgInvalida = 'El archivo no es una imagen';
+      $error = 'Fitxategia argazki bat ';
     } else if ($archivo['size'] > 3000000) {
       // >3MB
-      $imgInvalida = 'La imagen no puede ser mayor de 3MB';
+      $error = 'Argazkia 3MB baino txikiagoa izan behar da';
     } else if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
-      $imgInvalida = 'La imagen solo puede ser de tipo JPG o PNG';
+      $error = 'Argazkia PNG edo JPEG bat izan behar da';
     }
   }
 
-  if ($imgInvalida === '') {
+  if ($error === '') {
     include_once '../modules/db-config.php';
     $clase = $pdo->prepare('SELECT cod FROM clase where cod = :cod');
     $clase->execute(['cod' => $_REQUEST['clase']]);
     $clase = $clase->fetch();
 
     if (empty($clase)) {
-      $claseInvalida = true;
+      $error = 'Klase hori es da existitzen';
     } else {
       $buscarApodo = $pdo->prepare('SELECT apodo FROM cuenta where apodo = :apodo');
       $buscarApodo->execute(['apodo' => $_REQUEST['apodo']]);
       $buscarApodo = $buscarApodo->fetch();
 
       if (!empty($buscarApodo)) {
-        $apodoInvalido = true;
+        $error = 'Ezizen hori aukeratuta dago';
       } else {
         $insert = $pdo->prepare('INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, id_centro, correo)
           VALUES (:nombre, :apellido, :apodo, :rol, :activo, :pass, :fecha_nacimiento, :cod_clase, :id_centro, :correo)');
@@ -69,15 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 include_once '../templates/head.php';
-agregarHead('Sortu kontua | IGKluba', __FILE__, false);
+agregarHead('Sortu kontua | IGKluba', __FILE__);
 ?>
 
 <body>
-  <?php
-  include_once '../templates/header.php';
-  headerLogin();
-  ?>
-
   <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Sortu kontua</h1>
@@ -85,36 +78,28 @@ agregarHead('Sortu kontua | IGKluba', __FILE__, false);
       <form action="" method="post" enctype="multipart/form-data" class="flex-stretch-col">
         <div class="campo">
           <label for="nombre">Izena:</label>
-          <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Zure izena">
+          <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Zure izena" value="<?php if (isset($_REQUEST['nombre'])) echo $_REQUEST['nombre'] ?>">
         </div>
 
-        <div class="campo">
+        <div class=" campo">
           <label for="apellido">Abizena:</label>
-          <input type="text" id="apellido" name="apellido" maxlength="50" placeholder="Zure abizena">
+          <input type="text" id="apellido" name="apellido" maxlength="50" placeholder="Zure abizena" value="<?php if (isset($_REQUEST['apellido'])) echo $_REQUEST['apellido'] ?>">
         </div>
 
         <div class="campo">
           <label for="apodo">Ezizena:</label>
-          <input type="text" id="apodo" name="apodo" maxlength="20" placeholder="Zure ezizena">
-          <?php
-          if ($apodoInvalido) {
-          ?>
-            <div class="error">
-              <p>Ese apodo ya está existe</p>
-            </div>
-          <?php
-          }
-          ?>
+          <input type="text" id="apodo" name="apodo" maxlength="20" placeholder="Zure ezizena" value="<?php if (isset($_REQUEST['apodo'])) echo $_REQUEST['apodo'] ?>">
         </div>
 
         <div class="campo">
           <label for="correo">E-maila:</label>
-          <input type="email" id="correo" name="correo" maxlength="100" placeholder="Zure e-maila">
+          <input type="email" id="correo" name="correo" maxlength="100" placeholder="Zure e-maila" value="<?php if (isset($_REQUEST['correo'])) echo $_REQUEST['correo'] ?>">
         </div>
 
         <div class="campo">
           <label for="centro">Ikastetxea:</label>
           <select name="centro" id="centro">
+            <option disabled selected>-</option>
             <?php
             include_once '../modules/db-config.php';
             $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
@@ -122,7 +107,7 @@ agregarHead('Sortu kontua | IGKluba', __FILE__, false);
             $centros = $centros->fetchAll();
             foreach ($centros as $centro) {
             ?>
-              <option value="<?php echo $centro['id'] ?>"><?php echo $centro['nombre'] ?></option>
+              <option value="<?php echo $centro['id'] ?>" <?php if (isset($_REQUEST['centro']) && $centro['id'] === $_REQUEST['centro']) echo 'selected' ?>><?php echo $centro['nombre'] ?></option>
             <?php
             }
             ?>
@@ -131,38 +116,18 @@ agregarHead('Sortu kontua | IGKluba', __FILE__, false);
 
         <div class="campo">
           <label for="clase">Klasea:</label>
-          <input type="text" id="clase" name="clase" maxlength="8" placeholder="Klasearen kodea">
-          <?php
-          if ($claseInvalida) {
-          ?>
-            <div class="error">
-              <p>Esa clase no existe</p>
-            </div>
-          <?php
-          }
-          ?>
+          <input type="text" id="clase" name="clase" maxlength="8" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
         </div>
 
         <div class="campo">
           <label for="fecha">Jaiotze data:</label>
-          <input type="date" id="fecha" name="fecha">
+          <input type="date" id="fecha" name="fecha" value="<?php if (isset($_REQUEST['fecha'])) echo $_REQUEST['fecha'] ?>">
         </div>
 
         <div class="campo">
           <label for="imagen">Profileko argazkia:</label>
           <label for="imagen" class="file-input-text" tabindex="0"><i class="fa-solid fa-file-image"></i> <span>Aukeratu argazki bat...</span></label>
           <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" class="hidden">
-          <?php
-          if ($imgInvalida !== '') {
-          ?>
-            <div class="error">
-              <p>
-                <?php echo $imgInvalida ?>
-              </p>
-            </div>
-          <?php
-          }
-          ?>
         </div>
 
         <div class="campo">
@@ -185,9 +150,12 @@ agregarHead('Sortu kontua | IGKluba', __FILE__, false);
     </div>
   </main>
 
+  <?php if (!empty($error)) { ?>
+    <div class="error"><i class="fa-solid fa-circle-exclamation"></i>
+      <p><?php echo $error ?></p>
+    </div>
   <?php
-  include_once '../templates/footer.php';
-  agregarFooter();
+  }
   ?>
 </body>
 

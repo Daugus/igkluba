@@ -8,7 +8,7 @@ checkLogin();
 include_once '../templates/head.php';
 include_once '../templates/header.php';
 include_once '../templates/footer.php';
-agregarHead('IGKluba', '', false);
+agregarHead('IGKluba', '');
 ?>
 
 <body>

@@ -6,7 +6,8 @@ include_once '../modules/session.php';
 checkSession();
 $accion = $_SESSION['usr']['rol'] === 'Admin' ? 'igo' : 'eskatu';
 
-$imgInvalida = '';
+$error = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $directorio = './src/img/azala/';
   $archivo = $_FILES['imagen'];
@@ -15,12 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $esImagen = getimagesize($archivo['tmp_name']);
   if (!$esImagen) {
-    $imgInvalida = 'El archivo no es una imagen';
+    $error = 'Fitxategia argazki bat ';
   } else if ($archivo['size'] > 5000000) {
     // >5MB
-    $imgInvalida = 'La imagen no puede ser mayor de 3MB';
+    $error = 'Argazkia 5MB baino txikiagoa izan behar da';
   } else if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
-    $imgInvalida = 'La imagen solo puede ser de tipo JPG o PNG';
+    $error = 'Argazkia PNG edo JPEG bat izan behar da';
   } else {
     $aceptado = $_SESSION['usr']['rol'] === 'Admin' ? 1 : 0;
     $tieneSerie = !empty($_REQUEST['serie']);
@@ -40,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $idLibroInsertado = $pdo->lastInsertId();
 
-    if ($_SESSION['usr']['rol'] != 'Admin') {
+    if ($aceptado === 0) {
       $insert = $pdo->prepare('INSERT INTO solicitud_libro VALUES (:id_libro, :id_alumno)');
       $insert->execute(['id_libro' => $idLibroInsertado, 'id_alumno' => $_SESSION['usr']['id']]);
     }
@@ -114,17 +115,6 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
           <label for="imagen">Azala:</label>
           <label for="imagen" class="file-input-text" tabindex="0"><i class="fa-solid fa-file-image"></i> <span>Aukeratu azal bat...</span></label>
           <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" class="hidden">
-          <?php
-          if ($imgInvalida !== '') {
-          ?>
-            <div class="error">
-              <p>
-                <?php echo $imgInvalida ?>
-              </p>
-            </div>
-          <?php
-          }
-          ?>
         </div>
 
         <div class="campo">
@@ -136,9 +126,7 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
       </form>
     </div>
 
-    <?php
-    if ($_SESSION['usr']['rol'] === 'Admin') {
-    ?>
+    <?php if ($_SESSION['usr']['rol'] === 'Admin') { ?>
       <a href="/csv-igo" class="volver">CSV igo</a>
     <?php
     }
@@ -148,6 +136,14 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
   <?php
   include_once '../templates/footer.php';
   agregarFooter();
+
+  if (!empty($error)) {
+  ?>
+    <div class="error"><i class="fa-solid fa-circle-exclamation"></i>
+      <p><?php echo $error ?></p>
+    </div>
+  <?php
+  }
   ?>
 </body>
 

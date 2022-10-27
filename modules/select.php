@@ -203,3 +203,22 @@ function agregarReviews(array $reviews, bool $seccionPersonal = false): void
   </section>
 <?php
 }
+
+function buscarCuentas(bool $activo, string $rol, string $centro): array
+{
+  include '../modules/db-config.php';
+  $cuentas = $pdo->prepare(
+    'SELECT *
+      FROM cuenta
+      WHERE id_centro = :id_centro AND activo = :activo AND rol = :rol;'
+  );
+  $cuentas->execute(
+    [
+      'id_centro' => $centro,
+      'activo' => $activo ? 1 : 0,
+      'rol' => $rol
+    ]
+  );
+
+  return $cuentas->fetchAll();
+}

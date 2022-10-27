@@ -21,56 +21,39 @@ btnRegistro.addEventListener('click', (e) => {
 
   let valoresEnviados = {};
   campos.forEach((campo) => {
-    const valor = campo.querySelector('input');
+    const valor = campo.querySelector('input, select');
     if (valor !== null) valoresEnviados[valor.name] = valor.type === 'file' ? valor.files[0] : valor.value;
   });
 
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,50}$/.test(valoresEnviados.nombre))
-    return mostrarMensajeError('error, nombre inválido', form.querySelector('#nombre'));
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,50}$/.test(valoresEnviados.nombre)) return mostrarMensajeError('Izenak bakarrik letrak izan ditzake');
 
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,50}$/.test(valoresEnviados.apellido))
-    return mostrarMensajeError('error, apellido inválido', form.querySelector('#apellido'));
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,50}$/.test(valoresEnviados.apellido)) return mostrarMensajeError('Abizena bakarrik letrak izan ditzake');
 
-  if (!/^[A-Za-z0-9_-]{1,20}$/.test(valoresEnviados.apodo)) return mostrarMensajeError('error, apodo inválido', form.querySelector('#apodo'));
+  if (!/^[A-Za-z0-9_-]{1,20}$/.test(valoresEnviados.apodo))
+    return mostrarMensajeError('Ezizena bakarrik letrak, zenbakiak, "-" edo "_" izan ditzake');
 
   if (
     !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,100})$/.test(
       valoresEnviados.correo
     )
   )
-    return mostrarMensajeError('error, correo inválido', form.querySelector('#correo'));
+    return mostrarMensajeError('E-maila ez da egokia.');
 
-  if (!/^[A-Za-z0-9]{8,8}$/.test(valoresEnviados.clase)) return mostrarMensajeError('error, clase inválido', form.querySelector('#clase'));
+  if (valoresEnviados.centro === '-') return mostrarMensajeError('Aukeratu ikastetxe bat');
 
-  if (!esMayorDe10(valoresEnviados.fecha)) return mostrarMensajeError('error, el usr no es mayor de diez años', form.querySelector('#fecha'));
+  if (!/^[A-Za-z0-9]{8,8}$/.test(valoresEnviados.clase)) return mostrarMensajeError('Klasearen kodea ez da egokia');
 
-  if (valoresEnviados.imagen && valoresEnviados.imagen['type'].split('/')[0] !== 'image')
-    return mostrarMensajeError('error, el archivo no es una imagen', form.querySelector('#imagen'));
+  if (valoresEnviados.fecha === '' || calcularEdad(valoresEnviados.fecha) < 12)
+    return mostrarMensajeError('Hamar urte baino gehiago izan behar dituzu');
+
+  if (valoresEnviados.imagen && valoresEnviados.imagen['type'].split('/')[0] !== 'image') return mostrarMensajeError('Fitxategia ez da argazki bat');
 
   const rgPwd = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-zÀ-ÖØ-öø-ÿ\d@$!%*?&]{8,30}$/);
-  if (!rgPwd.test(valoresEnviados.pwd)) return mostrarMensajeError('error, contraseña inválido', form.querySelector('#pwd'));
-  if (valoresEnviados.pwd !== valoresEnviados.pwdConf)
-    return mostrarMensajeError('error, las contraseñas no coinciden', form.querySelector('#pwdConf'));
+  if (!rgPwd.test(valoresEnviados.pwd))
+    return mostrarMensajeError(
+      'Pasahitza gutxienez 8 karaktere izan behar ditu, eta hauetatik gutxienez maiuskula bat, minuskula bat, zenbakia bat eta ikur bat (@, $, !, %, *, ?, &).'
+    );
+  if (valoresEnviados.pwd !== valoresEnviados.pwdConf) return mostrarMensajeError('Pasahitzak ez datoz bat');
 
   form.submit();
 });
-
-const esMayorDe10 = (fecha) => {
-  const hoy = new Date();
-  const fechaNacimiento = new Date(fecha);
-
-  let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-  const m = hoy.getMonth() - fechaNacimiento.getMonth();
-  if (m < 0 || (m === 0 && hoy.getDate() < fechaNacimiento.getDate())) edad--;
-
-  return edad > 10;
-};
-
-const mostrarMensajeError = (texto, campo) => {
-  const div = document.createElement('div');
-  div.classList.add('error');
-  const p = document.createElement('p');
-  p.innerText = texto;
-  div.appendChild(p);
-  campo.insertAdjacentElement('afterend', div);
-};
