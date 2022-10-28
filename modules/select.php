@@ -128,17 +128,11 @@ function agregarSolicitudesLibros(array $solicitudesLibros, bool $propias = fals
           </a>
 
           <div class="flex-center-col libro__texto">
-            <p class="libro__titulo" title="<?php echo $libro['titulo'] ?>">
-              <?php echo $libro['titulo'] ?>
-            </p>
+            <p class="libro__titulo" title="<?php echo $libro['titulo'] ?>"><?php echo $libro['titulo'] ?></p>
 
-            <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor">
-              <?php echo $libro['autor'] ?>
-            </a>
+            <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor"><?php echo $libro['autor'] ?></a>
 
-            <!-- <?php //if (!$propias) {
-                  ?> -->
-            <?php if (true) { ?>
+            <?php if (!$propias) { ?>
               <a href="<?php echo $url ?>" class="btn">Eskaera ikusi</a>
             <?php
             }

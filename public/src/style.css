@@ -366,7 +366,7 @@ main {
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(max(var(--min-width), var(--libro-max-width)), 1fr));
-  /* grid-auto-rows: 1fr; */
+  grid-auto-rows: 1fr;
   grid-gap: 2rem var(--gap);
   align-items: start;
 }
