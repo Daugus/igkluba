@@ -1,6 +1,8 @@
 <?php
 
 //----------------CONEXION CON BASE DE DATOS-----------------------
+try {
+
     $usuario = "root";
     $contrasena = "";
     $servidor = "localhost";
@@ -16,18 +18,30 @@
 
 //-----------------CLASES Y GRUPOS---------------------------------
 // si quiero eliminar a un alumno de su clase
-if(isset($_REQUEST["ID_cuenta"])) {
+if(isset($_REQUEST["id"])) {
 
-    $id = $_REQUEST['ID_cuenta'];
-    $name = $_REQUEST['nombre'];
-    $surname = $_REQUEST['apellidos'];
-    $nickname = $_REQUEST['apodo'];
+    $id = $_REQUEST['id'];
 
     // preparo el borrado
-    $borradoCuentaClase = $conexion->prepare("UPDATE cuenta SET cod_clase = 'null' WHERE ID_cuenta = ".$id.";");
+    $borradoCuentaClase = $conexion->prepare("UPDATE cuenta SET cod_clase = 'NULO' WHERE id = ".$id.";");
     // ejecuto el borrado
     $borradoCuentaClase->execute();
-    echo "operacion realizada";
+    echo "el alumno ha sido eliminado del grupo";
+    echo "<br>";
+    }
+
+// si quiero añadir a un alumno a una clase
+if(isset($_REQUEST["id"])) {
+
+    $id = $_REQUEST['id'];
+    $resultadosClase = $_REQUEST['cod'];
+
+    // preparo la insercion
+    $insercionCuentaClase = $conexion->prepare("UPDATE cuenta SET cod_clase = '".$resultadosClase."' WHERE id = ".$id.";");
+    // ejecuto el borrado
+    $insercionCuentaClase->execute();
+    echo "el alumno ha añadido al grupo";
+    echo "<br>";
     }
 
 //--------------------SOLICITUDES DE IDIOMA---------------------------------
@@ -76,6 +90,12 @@ if (isset($_REQUEST["aceptar"])) {
 // añado el idioma a ese idlibro y lo borro de solicitudes de idioma
 
 //----------------REDIRECCION AL ACABAR LA OPERACION---------------------------------
-header("Location:areaPersonalProfesor.php");
-die();
+
+//header("Location:areaPersonalProfesor.php");
+//die();
+
+}// cierre del try
+catch (PDOException $e) {
+    echo "la conexion ha fallado: " . $e->getMessage();
+}
 ?>

@@ -71,11 +71,11 @@ try {
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
     $resultadosClase = $consulta->fetchAll();
-    /*
+    
     // obtencion de alumnos
     // preparo la consulta usando la clase obtenida del desplegable de clases
     $codigoClase = $_REQUEST['cod'];
-    $consulta = $conexion->prepare("SELECT id, nombre, apellido, apodo, fecha_nacimiento from cuenta where rol = 'alumno' and cod_clase = '".$codigoClase."';");
+    $consulta = $conexion->prepare("SELECT id, nombre, apellido, apodo, fecha_nacimiento from cuenta where rol = 'Ikasle' and cod_clase = '".$codigoClase."';");
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
@@ -83,16 +83,16 @@ try {
     // la consulta de los alumnos utiliza la clase obtenida
     
     // mantengo la seleccion de la clase despues de darle a enviar
-    */
-    /*
+    
+    
     // obtencion de solicitudes de idioma
     // preparo la consulta
-    $consulta = $conexion->prepare('SELECT id_libro, cuenta.ID_cuenta, titulo, nombre_idioma, nombre, apellidos, apodo FROM cuenta, solicitud_idioma WHERE cuenta.ID_cuenta = solicitudidioma.ID_cuenta and cod_clase = "'.$codigoClase.'";');
+    $consulta = $conexion->prepare('SELECT id_libro, id_alumno, titulo_alternativo, nombre_idioma, nombre, apellido, apodo FROM cuenta, solicitud_idioma WHERE solicitud_idioma.id_alumno = cuenta.id AND rol = "Ikasle" AND cod_clase = "'.$codigoClase.'";');
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo las solicitudes y las muestro en solicitudes de idioma
     $resultadosSolIdioma = $consulta->fetchAll();
-*/  
+
 } catch (PDOException $e) {
     echo "la conexion ha fallado: " . $e->getMessage();
 }
@@ -145,6 +145,7 @@ try {
             echo    "</tr>";
             echo    "<tr>";
             echo        "<td id='review'>" . $columna['texto'] . "</td>";
+            echo        "<td> <a href=''>Editar</a> <a id='eliminar' href=''>Eliminar</a> </td>";
             echo    "</tr>";
             echo "</table>";
             echo "<br>";
@@ -154,9 +155,9 @@ try {
 
     <!-- CLASES Y ALUMNOS -->
     <div id="contenedorClase">
-        <form action="areaPersonalProfesor.php" method="POST" onsubmit="grupos()">
+        <form action="areaPersonalProfesor.php" method="POST">
             <label for="clase">Mostrar grupo </label>
-            <select name="cod_clase" id="clase">
+            <select name="cod" id="clase">
                 <?php
                 foreach ($resultadosClase as $columna) {
                     echo "<option class='cod_clase' value='" . $columna['cod'] . "'>" . $columna['nombre'] . "</option>";
@@ -171,15 +172,41 @@ try {
                 echo            "<div class='FOTO-PERFIL'><img class='pfp' src='img_110805-1084281250.png' alt='Foto de perfil'></div>";
                 echo            "<div class='LI'>";
                 echo                "<ul>";
-                echo                    "<li>". $columna['nombre'] . " ". $columna['apellidos'] ."</li>";
+                echo                    "<li>". $columna['nombre'] . " ". $columna['apellido'] ."</li>";
                 echo                    "<li> Apodo: ". $columna['apodo'] ."</li>";
-                echo                    "<li>Fecha nacimiento: ". $columna['fecha_nac'] ." </li>";
+                echo                    "<li>Fecha nacimiento: ". $columna['fecha_nacimiento'] ." </li>";
                 echo                    "<li>Curso: 22-23 </li>";
                 echo                    "<li>Fecha caducidad: ". $fechaCaducida ."</li>";
                 echo                "</ul>";
                 echo             "</div>";
                 echo            "<div class='BOTON'>";
-                echo                "<a href='operacionConfirmacion.php?&ID_cuenta=". $columna['ID_cuenta']."&nombre=".$columna['nombre']."&apellidos=".$columna['apellidos']."&apodo=".$columna['apodo']."' name='eliminarAlumno' id='eliminar'>Eliminar</a>";
+
+                // obtengo la clase seleccionada
+                $codigoClase = $_REQUEST['cod'];
+                // obtengo la id para el formulario
+                $idAlumno = $columna['id'];
+                // si elijo los que no tienen clase pongo un menu para añadirlos a otra clase
+                if ($codigoClase == "NULO") {
+                    echo "<form action='operacionConfirmacion.php' method='POST'>";
+                    echo    "<label for='clase'>Añadir a grupo </label>";
+                    echo    "<select name='cod' id='clase'>";
+                                foreach ($resultadosClase as $columna) {
+                                    echo "<option class='cod_clase' value='" . $columna['cod'] . "'>" . $columna['nombre'] . "</option>";
+                                    $idClase = $columna['cod'];
+                                }
+                    echo    "</select>";
+                    echo "<a href='operacionConfirmacion.php?&id=".$idAlumno."&cod=".$idClase."' name='eliminarAlumno' id='aceptar'>Aceptar</a>";
+
+
+                    //echo    "<input type='submit' class='Enviar' name='AnadirAlumno' value='Enviar'>";
+                    echo "</form>";
+                }
+
+                // si elijo a los que ya tienen clase pongo el menu para eliminarlos si se desea
+                else {
+                echo                "<a href='operacionConfirmacion.php?&id=".$columna['id']."' name='eliminarAlumno' id='eliminar'>Eliminar</a>";
+                }
+                
                 echo            "</div>";
                 echo       "</div>";
                 // tomo id cuenta desde la url
@@ -195,10 +222,10 @@ try {
     <div id="contenedorIdioma">
         <form action="areaPersonalProfesor.php" method="POST" onsubmit="solIdiomas()">
             <label for="clase">Mostrar grupo </label>
-            <select name="cod_clase" id="clase">
+            <select name="cod" id="clase">
                 <?php
                 foreach ($resultadosClase as $columna) {
-                    echo "<option class='cod_clase' value='" . $columna['cod_clase'] . "'>" . $columna['nombre'] . "</option>";
+                    echo "<option class='cod_clase' value='" . $columna['cod'] . "'>" . $columna['nombre'] . "</option>";
                 }
                 ?>
             </select>
@@ -210,15 +237,15 @@ try {
         echo        "<div class='FOTO-LIBRO'><img id='caratula' src='img_110805-1084281250.png' alt='Carátula del libro'></div>";
         echo        "<div class='ALUMNO'>";
         echo            "<ul>";
-        echo                "<li>". $columna['nombre'] . " ". $columna['apellidos'] ."</li>";
+        echo                "<li>". $columna['nombre'] . " ". $columna['apellido'] ."</li>";
         echo                "<li> Apodo: ". $columna['apodo'] ."</li>";
-        echo                "<li> Ha solicitado el libro: ".$columna['titulo']." en ".$columna['nombre_idioma'];
+        echo                "<li> Ha solicitado el libro: ".$columna['titulo_alternativo']." en ".$columna['nombre_idioma'];
         echo            "</ul>";    
         echo        "</div>";
         echo        "<div class='BOTONES'>";
         echo            "<ul>";
-        echo                "<a href='operacionConfirmacion.php?&ID_libro=".$columna['id_libro']."&ID_cuenta=".$columna['ID_cuenta']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo']."' id='aceptar' name='aceptar'>Aceptar</a>";
-        echo                "<a href='operacionConfirmacion.php?&ID_libro=".$columna['id_libro']."&ID_cuenta=".$columna['ID_cuenta']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo']."' id='eliminar' name='eliminar'>Eliminar</a>";
+        echo                "<a href='operacionConfirmacion.php?&ID_libro=".$columna['id_libro']."&ID_cuenta=".$columna['id_alumno']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo_alternativo']."' id='aceptar' name='aceptar'>Aceptar</a>";
+        echo                "<a href='operacionConfirmacion.php?&ID_libro=".$columna['id_libro']."&ID_cuenta=".$columna['id_alumno']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo_alternativo']."' id='eliminar' name='eliminar'>Eliminar</a>";
         echo            "</ul>";
         echo        "</div>";
         echo    "</div>";    
