@@ -50,55 +50,82 @@ function agregarLibros(array $libros): void
   }
 }
 
-function buscarSolicitudesLibros(array $usuario): array
+function buscarSolicitudesLibros(array $usuario, bool $propias = false): array
 {
   include '../modules/db-config.php';
-  if ($usuario['rol'] === 'Admin') {
-    $libros = $pdo->prepare(
-      'SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
-        FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
-        WHERE l.aceptado = 0
-        GROUP BY l.id
-        ORDER BY il.id_idioma ASC, titulo ASC
-        LIMIT 24;'
-    );
-  } else {
-    $clases = $pdo->prepare('SELECT * FROM profesor_clase WHERE id_profesor = :id');
-    $clases->execute(['id' => $usuario['id']]);
-    $clases = array_column($clases->fetchAll(), 'cod_clase');
-
-    $clases = implode(', ', array_map(function ($clase) {
-      return "'$clase'";
-    }, $clases));
-
+  if ($propias) {
+    $idUsuario = $usuario['id'];
     $libros = $pdo->prepare(
       "SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
         FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
         WHERE l.aceptado = 0
           AND l.id in (SELECT sl.id_libro
-                        FROM solicitud_libro sl JOIN cuenta c ON sl.id_alumno = c.id
-                        WHERE c.cod_clase IN ($clases))
+                        FROM solicitud_libro sl
+                        WHERE sl.id_cuenta = $idUsuario)
         GROUP BY l.id
         ORDER BY il.id_idioma ASC, titulo ASC
         LIMIT 24;"
     );
+  } else {
+    if ($usuario['rol'] === 'Admin') {
+      $libros = $pdo->prepare(
+        'SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
+        FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
+        WHERE l.aceptado = 0
+        GROUP BY l.id
+        ORDER BY il.id_idioma ASC, titulo ASC
+        LIMIT 24;'
+      );
+    } else {
+      $clases = $pdo->prepare('SELECT * FROM profesor_clase WHERE id_profesor = :id');
+      $clases->execute(['id' => $usuario['id']]);
+      $clases = array_column($clases->fetchAll(), 'cod_clase');
+
+      $clases = implode(', ', array_map(function ($clase) {
+        return "'$clase'";
+      }, $clases));
+
+      $libros = $pdo->prepare(
+        "SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
+        FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
+        WHERE l.aceptado = 0
+          AND l.id in (SELECT sl.id_libro
+                        FROM solicitud_libro sl JOIN cuenta c ON sl.id_cuenta = c.id
+                        WHERE c.cod_clase IN ($clases))
+        GROUP BY l.id
+        ORDER BY il.id_idioma ASC, titulo ASC
+        LIMIT 24;"
+      );
+    }
   }
 
   $libros->execute();
   return $libros->fetchAll();
 }
 
-function agregarSolicitudesLibros(array $solicitudesLibros): void
+function agregarSolicitudesLibros(array $solicitudesLibros, bool $propias = false): void
 {
   ?>
-  <section>
-    <h2 id="eskaerak">Liburu eskaerak</h2>
+  <section class="solicitudes-libros">
+    <?php if ($propias) { ?>
+      <h2 id="nire-liburu-eskaerak">Nire liburu eskaerak</h2>
+    <?php
+    } else {
+    ?>
+      <h2 id="liburu-eskaerak">Liburu eskaerak</h2>
+    <?php
+    }
+    ?>
+
     <div class="grid-libros">
       <?php
       foreach ($solicitudesLibros as $libro) {
+        $url = '/liburua/' . $libro['id'] . '/eskaera';
       ?>
         <article class="flex-space-between-col libro">
-          <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>">
+          <a href="<?php echo $url ?>" class="libro__portada">
+            <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>">
+          </a>
 
           <div class="flex-center-col libro__texto">
             <p class="libro__titulo" title="<?php echo $libro['titulo'] ?>">
@@ -108,8 +135,15 @@ function agregarSolicitudesLibros(array $solicitudesLibros): void
             <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor">
               <?php echo $libro['autor'] ?>
             </a>
+
+            <!-- <?php //if (!$propias) {
+                  ?> -->
+            <?php if (true) { ?>
+              <a href="<?php echo $url ?>" class="btn">Eskaera ikusi</a>
+            <?php
+            }
+            ?>
           </div>
-          <a href="/liburua/<?php echo $libro['id'] ?>/eskaera" class="btn">Eskaera ikusi</a>
         </article>
       <?php
       }
@@ -123,9 +157,11 @@ function buscarReviews(int $id, array $condiciones): array
 {
   include '../modules/db-config.php';
   $reviews = $pdo->prepare(
-    'SELECT r.id, r.nota, r.texto, r.edad_lector, r.nombre_idioma, r.id_cuenta, r.id_libro, c.id AS id_cuenta, c.nombre, c.apellido, c.apodo, c.rol
+    'SELECT r.id, r.nota, r.texto, r.edad_lector, r.nombre_idioma, r.id_cuenta,
+      r.id_libro, c.id AS id_cuenta, c.nombre, c.apellido, c.apodo, c.rol
       FROM review r JOIN cuenta c ON r.id_cuenta = c.id
-      WHERE ' . implode(' AND ', $condiciones) . ';'
+      WHERE ' . implode(' AND ', $condiciones)
+      . ' ORDER BY id DESC;'
   );
   $reviews->execute(['id' => $id]);
 
@@ -221,4 +257,17 @@ function buscarCuentas(bool $activo, string $rol, string $centro): array
   );
 
   return $cuentas->fetchAll();
+}
+
+function buscarCuenta(string $apodo)
+{
+  include_once '../modules/db-config.php';
+  $cuenta = $pdo->prepare(
+    'SELECT cu.id, cu.nombre, cu.apellido, cu.apodo, cu.rol, cu.activo, cu.pass,
+      cu.fecha_nacimiento, cu.correo, cu.tel, cu.cod_clase, cu.id_centro, ce.nombre AS nombre_centro
+      FROM cuenta cu JOIN centro ce ON cu.id_centro = ce.id
+      WHERE apodo = :apodo;'
+  );
+  $cuenta->execute(['apodo' => $apodo]);
+  return $cuenta->fetch();
 }

@@ -17,11 +17,11 @@ if (empty($libro) || ($accion === '' && $libro['aceptado'] === 0)) header('Locat
 if ($accion === 'onartu') {
   $update = $pdo->prepare('UPDATE libro SET aceptado = 1 where id = :id;');
   $update->execute(['id' => $id]);
-  header('Location: /gune-pertsonala#eskaerak');
+  header('Location: /profila#liburu-eskaerak');
 } else if ($accion === 'ukatu') {
   $delete = $pdo->prepare('DELETE FROM libro where id = :id;');
   $delete->execute(['id' => $id]);
-  header('Location: /gune-pertsonala#eskaerak');
+  header('Location: /profila#liburu-eskaerak');
 }
 
 $titulos = $pdo->prepare(

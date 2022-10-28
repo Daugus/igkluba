@@ -11,16 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $apodoEnviado = $_REQUEST['apodo'];
   $passEnviado = $_REQUEST['pass'];
 
-  include_once '../modules/db-config.php';
-  $usrCorrecto = $pdo->prepare(
-    'SELECT cu.id, cu.nombre, cu.apellido, cu.apodo, cu.rol, cu.activo, cu.pass,
-      cu.fecha_nacimiento, cu.correo, cu.tel, cu.cod_clase, cu.id_centro, ce.nombre AS nombre_centro
-      FROM cuenta cu JOIN centro ce ON cu.id_centro = ce.id
-      WHERE apodo = :apodo;'
-  );
-  $usrCorrecto->execute(['apodo' => $apodoEnviado]);
-  $usrCorrecto = $usrCorrecto->fetch();
-
+  include_once '../modules/select.php';
+  $usrCorrecto = buscarCuenta($apodoEnviado);
   if (!empty($usrCorrecto) && password_verify($passEnviado, $usrCorrecto['pass'])) {
     include_once '../modules/session.php';
     saveSession($usrCorrecto);

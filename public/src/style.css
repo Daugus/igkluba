@@ -383,6 +383,11 @@ main {
 
 .libro__portada {
   transition: outline var(--transicion-rapida);
+  height: 100%;
+}
+
+.libro__portada img {
+  height: 100%;
 }
 
 .libro__portada:hover {
@@ -472,7 +477,7 @@ span,
   font-size: 1.25rem;
 }
 
-:is(#iritziak, #eskaerak)::before {
+:is(#iritziak, [id$='eskaerak'])::before {
   content: '';
   display: block;
   height: 4rem;
@@ -536,6 +541,11 @@ span,
 
 #main-personal .titulo-libro a {
   color: inherit;
+}
+
+/* ===== área personal ===== */
+.solicitudes-libros a.btn {
+  margin-top: 1rem;
 }
 
 /* ===== footer ===== */
@@ -626,7 +636,7 @@ a.btn {
   white-space: nowrap;
 }
 
-.error {
+.mensaje-error {
   position: absolute;
   background-color: var(--clr-error);
   color: var(--clr-blanco);
@@ -648,6 +658,10 @@ a.btn {
   gap: 1rem;
 
   animation: error 10s;
+}
+
+.campo-incorrecto {
+  outline: 3px solid var(--clr-error);
 }
 
 @keyframes error {

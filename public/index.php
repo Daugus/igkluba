@@ -12,7 +12,7 @@ switch ($cantidadSecciones) {
     break;
 
   case 2:
-    if (in_array($page[0], ['liburua', 'iritzia', 'bilaketa'])) {
+    if (in_array($page[0], ['liburua', 'iritzia', 'bilaketa', 'profila'])) {
       $ruta_elegida = '../views/' . $page[0] . '.php';
       $busqueda = $page[1];
     }

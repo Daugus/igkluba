@@ -15,8 +15,9 @@ btnBuscar?.addEventListener('click', (e) => {
 });
 
 const mostrarMensajeError = (texto) => {
+  // const mostrarMensajeError = (texto, campo) => {
   const div = document.createElement('div');
-  div.classList.add('error');
+  div.classList.add('mensaje-error');
 
   const i = document.createElement('i');
   i.classList.add('fa-solid', 'fa-circle-exclamation');
@@ -26,6 +27,9 @@ const mostrarMensajeError = (texto) => {
 
   div.appendChild(i);
   div.appendChild(p);
+
+  // campo.classList.add('campo-incorrecto');
+  // campo.focus();
   document.body.appendChild(div);
 };
 

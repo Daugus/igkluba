@@ -96,17 +96,17 @@ create table if not exists respuesta (
 create table if not exists solicitud_libro (
   id int unsigned auto_increment primary key,
   id_libro int unsigned not null,
-  id_alumno int unsigned not null,
+  id_cuenta int unsigned not null,
   foreign key (id_libro) references libro(id) on delete cascade,
-  foreign key (id_alumno) references cuenta(id) on delete cascade
+  foreign key (id_cuenta) references cuenta(id) on delete cascade
 );
 create table if not exists solicitud_idioma (
   id_libro int unsigned not null,
-  id_alumno int unsigned not null,
+  id_cuenta int unsigned not null,
   nombre_idioma varchar(30),
   titulo_alternativo varchar(100),
-  primary key (id_libro, id_alumno, nombre_idioma),
+  primary key (id_libro, id_cuenta, nombre_idioma),
   foreign key (id_libro) references libro(id) on delete cascade,
-  foreign key (id_alumno) references cuenta(id) on delete cascade,
+  foreign key (id_cuenta) references cuenta(id) on delete cascade,
   foreign key (nombre_idioma) references idioma(nombre) on delete cascade
 );

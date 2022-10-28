@@ -63,14 +63,13 @@ after delete on review for each row begin
   where id = OLD.id_libro;
 end;
 //
-delimiter ;
 -- ------------------------------------------------------------------
 -- trigger aceptación de libro
 create trigger eliminar_solicitud_libro
 after update on libro for each row begin
   if NEW.aceptado = 1 then
     delete from solicitud_libro where id_libro = NEW.id;
-  end if
+  end if;
 end;
 //
 delimiter ;
