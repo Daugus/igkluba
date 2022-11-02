@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $numFila = 0;
   $handle = fopen($csv['tmp_name'], 'r');
   if ($handle === false) {
-    echo 'error handle';
+    $error = 'error handle';
   }
 
   include_once '../modules/db-config.php';
@@ -28,20 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $libro = array_combine($columnas, $datos);
 
       //  TODO: arreglar encoding ANSI
-      /* TODO: imágenes */ {
-
-        // $directorio = './src/img/azala/';
-        // $archivo = $_FILES['imagen'];
-
-        // $imageFileType = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
-
-        // $esImagen = getimagesize($archivo['tmp_name']);
-        // if (!$esImagen) {
-        //   $csvInvalido = 'El archivo no es una imagen';
-        // } else if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
-        //   $csvInvalido = 'La imagen solo puede ser de tipo JPG o PNG';
-        // } else {
-      }
 
       $tieneSerie = !empty($libro['serie']) && $libro['serie'] !== '-';
 
@@ -60,11 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $insert = $pdo->prepare('INSERT INTO idiomas_libro VALUES (:id_libro, :nombre_idioma, :titulo)');
       $insert->execute(['id_libro' => $pdo->lastInsertId(), 'nombre_idioma' => 'Gaztelania', 'titulo' => $libro['titulo_castellano']]);
-
-      // $rutaArchivo = $directorio . $idLibroInsertado . '.png';
-      // move_uploaded_file($archivo['tmp_name'], $rutaArchivo);
     }
-    // }
 
     $numFila++;
   }

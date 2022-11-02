@@ -35,32 +35,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($clase)) {
       $error = 'Klase hori es da existitzen';
     } else {
-      $buscarApodo = $pdo->prepare('SELECT apodo FROM cuenta where apodo = :apodo');
+      $buscarApodo = $pdo->prepare('SELECT apodo FROM cuenta WHERE apodo = :apodo');
       $buscarApodo->execute(['apodo' => $_REQUEST['apodo']]);
       $buscarApodo = $buscarApodo->fetch();
 
       if (!empty($buscarApodo)) {
         $error = 'Ezizen hori aukeratuta dago';
       } else {
-        $insert = $pdo->prepare('INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, id_centro, correo)
+        $buscarCorreo = $pdo->prepare('SELECT apodo FROM cuenta WHERE correo = :correo');
+        $buscarCorreo->execute(['correo' => $_REQUEST['correo']]);
+        $buscarCorreo = $buscarCorreo->fetch();
+
+        if (!empty($buscarCorreo)) {
+          $error = 'E-mail hori aukeratuta dago';
+        } else {
+          $insert = $pdo->prepare('INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, id_centro, correo)
           VALUES (:nombre, :apellido, :apodo, :rol, :activo, :pass, :fecha_nacimiento, :cod_clase, :id_centro, :correo)');
-        $insert->execute([
-          'nombre' => $_REQUEST['nombre'],
-          'apellido' => $_REQUEST['apellido'],
-          'apodo' => $_REQUEST['apodo'],
-          'rol' => 'ikasle',
-          'activo' => 0,
-          'pass' => password_hash($_REQUEST['pwd'], PASSWORD_DEFAULT),
-          'fecha_nacimiento' => $_REQUEST['fecha'],
-          'cod_clase' => $_REQUEST['clase'],
-          'id_centro' => $_REQUEST['centro'],
-          'correo' => $_REQUEST['correo']
-        ]);
+          $insert->execute([
+            'nombre' => $_REQUEST['nombre'],
+            'apellido' => $_REQUEST['apellido'],
+            'apodo' => $_REQUEST['apodo'],
+            'rol' => 'ikasle',
+            'activo' => 0,
+            'pass' => password_hash($_REQUEST['pwd'], PASSWORD_DEFAULT),
+            'fecha_nacimiento' => $_REQUEST['fecha'],
+            'cod_clase' => $_REQUEST['clase'],
+            'id_centro' => $_REQUEST['centro'],
+            'correo' => $_REQUEST['correo']
+          ]);
 
-        $rutaArchivo = $directorio . $pdo->lastInsertId() . '.png';
-        move_uploaded_file($archivo['tmp_name'], $rutaArchivo);
+          $rutaArchivo = $directorio . $pdo->lastInsertId() . '.png';
+          move_uploaded_file($archivo['tmp_name'], $rutaArchivo);
 
-        header('Location: /hasi');
+          header('Location: /hasi');
+        }
       }
     }
   }

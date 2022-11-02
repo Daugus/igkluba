@@ -77,37 +77,37 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
       <form action="" method="post" enctype="multipart/form-data" class="flex-stretch-col" id="form-subir-libro">
         <div class="campo">
           <label for="titulo">Izenburua:</label>
-          <input type="text" id="titulo" name="titulo" maxlength="100" placeholder="La Piedra Filosofal">
+          <input type="text" id="titulo" name="titulo" maxlength="100" placeholder="La Piedra Filosofal" value="<?php if (isset($_REQUEST['titulo'])) echo $_REQUEST['titulo'] ?>">
         </div>
 
         <div class="campo">
           <label for="autor">Egilea:</label>
-          <input type="text" id="autor" name="autor" maxlength="100" placeholder="Abizena, Izena">
+          <input type="text" id="autor" name="autor" maxlength="100" placeholder="Abizena, Izena" value="<?php if (isset($_REQUEST['autor'])) echo $_REQUEST['autor'] ?>">
         </div>
 
         <div class="campo">
           <label for="serie">Saila:</label>
-          <input type="text" id="serie" name="serie" maxlength="50" placeholder="Harry Potter">
+          <input type="text" id="serie" name="serie" maxlength="50" placeholder="Harry Potter" value="<?php if (isset($_REQUEST['serie'])) echo $_REQUEST['serie'] ?>">
         </div>
 
         <div class="campo">
           <label for="serie_num">Saila zenbakia:</label>
-          <input type="number" id="serie_num" name="serie_num" min="-10" step="0.5" maxlength="5" placeholder="1" disabled="false">
+          <input type="number" id="serie_num" name="serie_num" min="-10" step="0.5" maxlength="5" placeholder="1" disabled="false" value="<?php if (isset($_REQUEST['serie_num'])) echo $_REQUEST['serie_num'] ?>">
         </div>
 
         <div class="campo">
           <label for="fecha">Argitaratze data:</label>
-          <input type="date" id="fecha" name="fecha">
+          <input type="date" id="fecha" name="fecha" value="<?php if (isset($_REQUEST['fecha'])) echo $_REQUEST['fecha'] ?>">
         </div>
 
         <div class="campo">
           <label for="formato">Formatua:</label>
           <select name="formato" id="formato">
             <option disabled selected>-</option>
-            <option value="nobela">Nobela</option>
-            <option value="komikia">Komikia</option>
-            <option value="nobela grafikoa">Nobela grafikoa</option>
-            <option value="manga">Manga</option>
+            <option value="nobela" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'nobela') echo 'selected' ?>>Nobela</option>
+            <option value="komikia" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'komikia') echo 'selected' ?>>Komikia</option>
+            <option value="nobela grafikoa" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'nobela grafikoa') echo 'selected' ?>>Nobela grafikoa</option>
+            <option value="manga" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'manga') echo 'selected' ?>>Manga</option>
           </select>
         </div>
 
@@ -119,7 +119,7 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
 
         <div class="campo">
           <label for="sinopsis">Sinopsia:</label>
-          <textarea name="sinopsis" id="sinopsis" maxlength="2550" placeholder="Liburaren sinopsia"></textarea>
+          <textarea name="sinopsis" id="sinopsis" maxlength="2550" placeholder="Liburaren sinopsia" value="<?php if (isset($_REQUEST['sinopsis'])) echo $_REQUEST['sinopsis'] ?>"></textarea>
         </div>
 
         <button id="enviar"><?php echo ucfirst($accion) ?></button>

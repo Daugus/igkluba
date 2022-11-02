@@ -8,51 +8,37 @@ inputSerie.addEventListener('input', (e) => {
   if (serieVacia) inputSerieNum.value = '';
 });
 
-const fileInput = document.querySelector('#imagen');
-const labelFileInput = document.querySelector('.file-input-text');
-labelFileInput.addEventListener('keydown', (e) => {
-  if (['Enter', 'Space'].includes(e.code)) {
-    e.preventDefault();
-    fileInput.click();
-  }
-});
-fileInput.addEventListener('input', () => (labelFileInput.querySelector('span').innerText = fileInput.files[0].name));
+selectorArchivo();
 
 const form = document.querySelector('#form-subir-libro');
 const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {
   e.preventDefault();
 
-  document.querySelectorAll('.mensaje-error').forEach((mensaje) => mensaje.remove());
-
-  const campos = [...form.querySelectorAll('.campo')];
-
-  let valoresEnviados = {};
-  campos.forEach((campo) => {
-    const valor = campo.querySelector('input, select, textarea');
-    if (valor !== null) valoresEnviados[valor.name] = valor.type === 'file' ? valor.files[0] : valor.value;
-  });
+  eliminarMensajesError();
+  const [campos, valoresEnviados] = buscarCampos();
 
   if (!/^[A-Za-zÀ-ÖØ-öø-ÿ](?=.*[A-Za-zÀ-ÖØ-öø-ÿ\-])[A-Za-zÀ-ÖØ-öø-ÿ,. ]{1,100}[A-Za-zÀ-ÖØ-öø-ÿ]$/.test(valoresEnviados.titulo))
-    return mostrarMensajeError('error, titulo inválido');
+    return mostrarMensajeError('Izenburua bakarrik letrak izan ditzake', campos.titulo);
 
   if (!/^[A-Za-zÀ-ÖØ-öø-ÿ](?=.*[A-Za-zÀ-ÖØ-öø-ÿ\-])[A-Za-zÀ-ÖØ-öø-ÿ,. ]{1,100}[A-Za-zÀ-ÖØ-öø-ÿ]$/.test(valoresEnviados.autor))
-    return mostrarMensajeError('error, autor inválido');
+    return mostrarMensajeError('Egilea bakarrik letrak eta koma bat izan ditzake', campos.autor);
 
   if (valoresEnviados.serie !== '') {
-    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ,.\- ]{1,50}$/.test(valoresEnviados.serie)) return mostrarMensajeError('error, serie inválida');
+    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ,.\- ]{1,50}$/.test(valoresEnviados.serie)) return mostrarMensajeError('Saila bakarrik letrak izan ditzake', campos.serie);
 
-    if (!/^[\d,.]{1,5}$/.test(valoresEnviados.serie_num)) return mostrarMensajeError('error, número en serie inválida');
+    if (!/^[\d,.]{1,5}$/.test(valoresEnviados.serie_num)) return mostrarMensajeError('Saila zenbakia zenbaki bat izan behar da', campos.serie_num);
   }
 
-  if (valoresEnviados.fecha === '') return mostrarMensajeError('error, la fecha es inválida');
+  if (valoresEnviados.fecha === '') return mostrarMensajeError('Idatzi data bat', campos.fecha);
 
-  if (valoresEnviados.formato === '-') return mostrarMensajeError('error, formato inválido'.parentElement);
+  if (valoresEnviados.formato === '-') return mostrarMensajeError('Aukeratu formatu bat', campos.formato);
 
-  if (valoresEnviados.imagen === undefined) return mostrarMensajeError('error, elige un archivo');
-  if (valoresEnviados.imagen['type'].split('/')[0] !== 'image') return mostrarMensajeError('error, el archivo no es una imagen');
+  if (valoresEnviados.imagen === undefined) return mostrarMensajeError('Aukeratu azal bat', document.querySelector('.file-input-text'));
+  if (valoresEnviados.imagen['type'].split('/')[0] !== 'image')
+    return mostrarMensajeError('Fitxategia argazkia izan behar da', document.querySelector('.file-input-text'));
 
-  if (valoresEnviados.sinopsis.length === 0) return mostrarMensajeError('error, la sinopsis no puede estar vacía');
+  if (valoresEnviados.sinopsis.length === 0) return mostrarMensajeError('error, la sinopsis no puede estar vacía', campos.sinopsis);
 
   form.submit();
 });

@@ -87,8 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_review = isset($_REQUEST['id_review']) ?  $_REQUEST['id_review'] : $pdo->lastInsertId();
     header('Location: /iritzia/' . $id_review);
   } else {
-    echo 'Location: /liburua/' . $id;
-    // header('Location: /liburua/' . $id);
+    header('Location: /liburua/' . $id);
   }
 }
 

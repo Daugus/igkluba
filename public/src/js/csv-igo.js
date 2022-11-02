@@ -1,27 +1,20 @@
 'use strict';
 
-const form = document.querySelector('#form-subir-csv');
+selectorArchivo();
 
 const fileInput = document.querySelector('#csv');
-const labelFileInput = document.querySelector('.file-input-text');
-labelFileInput.addEventListener('keydown', (e) => {
-  if (['Enter', 'Space'].includes(e.code)) {
-    e.preventDefault();
-    fileInput.click();
-  }
-});
-fileInput.addEventListener('input', () => (labelFileInput.querySelector('span').innerText = fileInput.files[0].name));
-
+const fileLabel = document.querySelector('.file-input-text');
+const form = document.querySelector('#form-subir-csv');
 const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {
   e.preventDefault();
 
-  document.querySelectorAll('.mensaje-error').forEach((mensaje) => mensaje.remove());
+  eliminarMensajesError();
 
   const csv = fileInput.files[0];
-  if (csv === undefined) return mostrarMensajeError('error, elige un archivo');
+  if (csv === undefined) return mostrarMensajeError('Fitxategi bat aukeratu', fileLabel);
   const type = csv['name'].split('.');
-  if (type.splice(type.length - 1)[0].toLowerCase() !== 'csv') return mostrarMensajeError('error, el archivo no es una csv');
+  if (type.splice(type.length - 1)[0].toLowerCase() !== 'csv') return mostrarMensajeError('Fitxategia CSV bat izan behar da', fileLabel);
 
   form.submit();
 });

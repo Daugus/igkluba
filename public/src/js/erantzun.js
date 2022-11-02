@@ -1,25 +1,17 @@
 'use strict';
 
 const form = document.querySelector('#form-iritzia');
-
 const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {
   e.preventDefault();
 
-  document.querySelectorAll('.mensaje-error').forEach((mensaje) => mensaje.remove());
+  eliminarMensajesError();
+  const [campos, valoresEnviados] = buscarCampos();
 
-  const campos = [...form.querySelectorAll('.campo')];
-
-  let valoresEnviados = {};
-  campos.forEach((campo) => {
-    const valor = campo.querySelector('select, textarea');
-    if (valor !== null) valoresEnviados[valor.name] = valor.value;
-  });
-
-  if (valoresEnviados.texto.length === 0) return mostrarMensajeError('error, la respuesta no puede estar vacía');
+  if (valoresEnviados.texto.length === 0) return mostrarMensajeError('Idatzi erantzun bat', campos.texto);
 
   if (valoresEnviados.texto.trim().split(/[\n ]/).length > 100 || valoresEnviados.texto.length > 765)
-    return mostrarMensajeError('error, la respuesta es demasiado larga');
+    return mostrarMensajeError('Erantzuna 100 hitz edo gutxiago izan behar du', campos.texto);
 
   form.submit();
 });

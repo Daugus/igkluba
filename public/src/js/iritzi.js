@@ -5,21 +5,18 @@ const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {
   e.preventDefault();
 
-  document.querySelectorAll('.mensaje-error').forEach((mensaje) => mensaje.remove());
+  eliminarMensajesError();
+  const [campos, valoresEnviados] = buscarCampos();
 
-  const campos = [...form.querySelectorAll('.campo')];
+  if (valoresEnviados.nota === '-') return mostrarMensajeError('Aukeratu nota bat', campos.nota);
+  if (valoresEnviados.idioma === '-') return mostrarMensajeError('Aukeratu hizkuntz bat', campos.idioma);
 
-  let valoresEnviados = {};
-  campos.forEach((campo) => {
-    const valor = campo.querySelector('select, textarea');
-    if (valor !== null) valoresEnviados[valor.name] = valor.value;
-  });
-
-  if (valoresEnviados.nota === '-') return mostrarMensajeError('error, nota inválida');
-  if (valoresEnviados.idioma === '-') return mostrarMensajeError('error, idioma inválido');
-
-  if ('texto' in valoresEnviados && valoresEnviados.texto.length > 0 && valoresEnviados.texto.trim().split(/[\n ]/).length > 300)
-    return mostrarMensajeError('error, la review demasiado larga', form.querySelector('#texto'));
+  if (
+    'texto' in valoresEnviados &&
+    valoresEnviados.texto.length > 0 &&
+    (valoresEnviados.texto.trim().split(/[\n ]/).length > 300 || valoresEnviados.texto.length > 2295)
+  )
+    return mostrarMensajeError('Iritzia 300 hitz edo gutxiago izan behar du', campos.texto);
 
   const campoEdad = form.querySelector('#edad');
   campoEdad.value = calcularEdad(campoEdad.value);
