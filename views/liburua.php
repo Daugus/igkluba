@@ -17,11 +17,11 @@ if (empty($libro) || ($accion === '' && $libro['aceptado'] === 0)) header('Locat
 if ($accion === 'onartu') {
   $update = $pdo->prepare('UPDATE libro SET aceptado = 1 where id = :id;');
   $update->execute(['id' => $id]);
-  header('Location: /gune-pertsonala#eskaerak');
+  header('Location: /profila#liburu-eskaerak');
 } else if ($accion === 'ukatu') {
   $delete = $pdo->prepare('DELETE FROM libro where id = :id;');
   $delete->execute(['id' => $id]);
-  header('Location: /gune-pertsonala#eskaerak');
+  header('Location: /profila#liburu-eskaerak');
 }
 
 $titulos = $pdo->prepare(
@@ -52,7 +52,7 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
   <main class="flex-center-col" id="main-libro">
     <section class="flex-center-row" id="informacion">
       <div id="portada">
-        <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada" id="portada">
+        <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada" class="portada-libro" id="portada">
       </div>
 
       <div class="flex-center-col" id="datos">

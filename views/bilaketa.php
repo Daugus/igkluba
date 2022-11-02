@@ -51,9 +51,7 @@ agregarHead($busqueda . ' | IGKluba');
       <section>
         <h2>Titulo bidez <span>(<?php echo $cantidadPorLibro ?>)</span>:</h2>
 
-        <div class="grid-libros">
-          <?php agregarLibros($librosPorTitulo) ?>
-        </div>
+        <?php agregarLibros($librosPorTitulo) ?>
       </section>
     <?php
     }
@@ -63,7 +61,7 @@ agregarHead($busqueda . ' | IGKluba');
       <section>
         <h2>Egile bidez <span>(<?php echo $cantidadPorAutor ?>)</span>:</h2>
 
-        <div class="grid-libros">
+        <div class="grid">
           <?php agregarLibros($librosPorAutor) ?>
         </div>
       </section>

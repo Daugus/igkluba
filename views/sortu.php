@@ -151,7 +151,7 @@ agregarHead('Sortu kontua | IGKluba', __FILE__);
   </main>
 
   <?php if (!empty($error)) { ?>
-    <div class="error"><i class="fa-solid fa-circle-exclamation"></i>
+    <div class="mensaje-error"><i class="fa-solid fa-circle-exclamation"></i>
       <p><?php echo $error ?></p>
     </div>
   <?php

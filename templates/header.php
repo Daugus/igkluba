@@ -39,12 +39,12 @@ function headerGeneral(String $valueBusqueda = ''): void
     </form>
 
     <div id="header-perfil">
-      <a href="/gune-pertsonala">
+      <a href="/profila">
         <?php
         $rutaImagen = '/src/img/profila/' . $_SESSION['usr']['id'] .  '.png';
         if (!file_exists('../public' . $rutaImagen)) $rutaImagen = '/src/img/profila/default.svg';
         ?>
-        <img src="<?php echo $rutaImagen ?>" alt="Profileko argazkia">
+        <img src="<?php echo $rutaImagen ?>" alt="Profileko argazkia" class="foto-perfil">
       </a>
     </div>
   </header>
@@ -52,7 +52,7 @@ function headerGeneral(String $valueBusqueda = ''): void
   <nav id="nav-general">
     <ul class="flex-center-row">
       <li><a href="/nagusia">Hasiera</a></li>
-      <li><a href="/gune-pertsonala">Gune pertsonala</a></li>
+      <li><a href="/profila">Gune pertsonala</a></li>
       <li><a href="/liburua-igo">Liburua <?php echo $_SESSION['usr']['rol'] === 'Admin' ? 'igo' : 'eskatu' ?></a></li>
       <li><a href="/itxi" id="logout">Saioa itxi</a></li>
     </ul>

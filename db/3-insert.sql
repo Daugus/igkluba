@@ -229,7 +229,7 @@ Entre la minoría normal, sin poder alguno, aparece Izuku Midoriya, dispuesto
   ),
   (
     11,
-    'Vivanco Ramirez, Esibaliz; Larretxe Berazadi, Joseba',
+    'Vivanco Ramirez, Esibaliz',
     null,
     null,
     '2015-10-10',
@@ -429,5 +429,5 @@ values (
     4,
     true
   );
-insert into solicitud_libro (id, id_libro, id_alumno)
+insert into solicitud_libro (id, id_libro, id_cuenta)
   values (1, 13, 4), (2, 14, 5);

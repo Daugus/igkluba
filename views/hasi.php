@@ -11,24 +11,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $apodoEnviado = $_REQUEST['apodo'];
   $passEnviado = $_REQUEST['pass'];
 
-  include_once '../modules/db-config.php';
-  $usrCorrecto = $pdo->prepare(
-    'SELECT cu.id, cu.nombre, cu.apellido, cu.apodo, cu.rol, cu.activo, cu.pass,
-      cu.fecha_nacimiento, cu.correo, cu.tel, cu.cod_clase, cu.id_centro, ce.nombre AS nombre_centro
-      FROM cuenta cu JOIN centro ce ON cu.id_centro = ce.id
-      WHERE apodo = :apodo;'
-  );
-  $usrCorrecto->execute(['apodo' => $apodoEnviado]);
-  $usrCorrecto = $usrCorrecto->fetch();
-
-  if (!empty($usrCorrecto) && password_verify($passEnviado, $usrCorrecto['pass'])) {
+  include_once '../modules/select.php';
+  $usrCorrecto = buscarCuenta($apodoEnviado);
+  if (empty($usrCorrecto) || !password_verify($passEnviado, $usrCorrecto['pass'])) {
+    $error = 'Ezizena edo pasahitza txarto sartu egin da. Saiatu berriz.';
+  } else if ($usrCorrecto['activo'] === 0) {
+    $error = 'Zure kontua oraindik ez dago onartuta.';
+  } else {
     include_once '../modules/session.php';
     saveSession($usrCorrecto);
     $destino = isset($_SESSION['url']) ? $_SESSION['url'] : '/nagusia';
     header("Location: $destino");
   }
-
-  $error = 'Ezizena edo pasahitza txarto sartu egin da. Saiatu berriz.';
 }
 
 include_once '../templates/head.php';
@@ -62,7 +56,7 @@ agregarHead('Saioa hasi | IGKluba', __FILE__);
   </main>
 
   <?php if (!empty($error)) { ?>
-    <div class="error"><i class="fa-solid fa-circle-exclamation"></i>
+    <div class="mensaje-error"><i class="fa-solid fa-circle-exclamation"></i>
       <p><?php echo $error ?></p>
     </div>
   <?php

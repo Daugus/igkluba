@@ -42,12 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idLibroInsertado = $pdo->lastInsertId();
 
     if ($aceptado === 0) {
-      $insert = $pdo->prepare('INSERT INTO solicitud_libro VALUES (:id_libro, :id_alumno)');
-      $insert->execute(['id_libro' => $idLibroInsertado, 'id_alumno' => $_SESSION['usr']['id']]);
+      $insert = $pdo->prepare('INSERT INTO solicitud_libro (id_libro, id_cuenta) VALUES (:id_libro, :id_cuenta)');
+      $insert->execute(['id_libro' => $idLibroInsertado, 'id_cuenta' => $_SESSION['usr']['id']]);
     }
 
-    $insert = $pdo->prepare('INSERT INTO idiomas_libro VALUES (:id_libro, :nombre_idioma, :titulo)');
-    $insert->execute(['id_libro' => $idLibroInsertado, 'nombre_idioma' => 'Gaztelania', 'titulo' => $_REQUEST['titulo']]);
+    $insert = $pdo->prepare('INSERT INTO idiomas_libro VALUES (:id_libro, :id_idioma, :titulo_alternativo)');
+    $insert->execute(['id_libro' => $idLibroInsertado, 'id_idioma' => 1, 'titulo_alternativo' => $_REQUEST['titulo']]);
 
     $rutaArchivo = $directorio . $idLibroInsertado . '.png';
     move_uploaded_file($archivo['tmp_name'], $rutaArchivo);
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($aceptado === 1) {
       header('Location: /liburua/' . $idLibroInsertado);
     } else {
-      header('Location: /nagusia');
+      header('Location: /profila#nire-liburu-eskaerak');
     }
   }
 }
@@ -139,7 +139,7 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
 
   if (!empty($error)) {
   ?>
-    <div class="error"><i class="fa-solid fa-circle-exclamation"></i>
+    <div class="mensaje-error"><i class="fa-solid fa-circle-exclamation"></i>
       <p><?php echo $error ?></p>
     </div>
   <?php

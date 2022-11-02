@@ -18,12 +18,10 @@ agregarHead('IGKluba');
   <main>
     <h1>Gehien irakurritako liburuak</h1>
 
-    <section class="grid-libros">
-      <?php
-      include_once '../modules/select.php';
-      agregarLibros(buscarLibros('1', 'l.nota_media DESC, il.id_idioma ASC'));
-      ?>
-    </section>
+    <?php
+    include_once '../modules/select.php';
+    agregarLibros(buscarLibros('1', 'l.nota_media DESC, il.id_idioma ASC'));
+    ?>
   </main>
 
   <?php

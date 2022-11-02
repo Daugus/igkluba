@@ -355,8 +355,8 @@ main {
   margin-top: 2rem;
 }
 
-/* --- nagusia / bilaketa --- */
-.grid-libros {
+/* --- nagusia / bilaketa / eskaerak --- */
+.grid {
   --gap: 8rem;
   --columnas: 4;
   --min-width: 12rem;
@@ -366,36 +366,46 @@ main {
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(max(var(--min-width), var(--libro-max-width)), 1fr));
-  /* grid-auto-rows: 1fr; */
+  grid-auto-rows: 1fr;
   grid-gap: 2rem var(--gap);
   align-items: start;
 }
 
-.libro {
+.libro,
+.cuenta {
   text-align: center;
   gap: 0.5rem;
   align-self: stretch;
 }
 
-.libro a {
+:is(.libro, .cuenta) a {
   color: var(--clr-negro);
 }
 
-.libro__portada {
+.libro__portada,
+.cuenta__foto {
   transition: outline var(--transicion-rapida);
+  height: 100%;
 }
 
-.libro__portada:hover {
+:is(.libro__portada, .cuenta__foto) img {
+  height: 100%;
+}
+
+:is(.libro__portada, .cuenta__foto):hover {
   outline: var(--outline);
   outline-offset: 0.25rem;
 }
 
 .libro__texto,
-.libro__titulo {
+.libro__titulo,
+.cuenta__texto,
+.cuenta__apodo {
   width: 120%;
 }
 
-.libro__titulo {
+.libro__titulo,
+.cuenta__apodo {
   font-weight: 600;
   font-size: 1.5rem;
   white-space: nowrap;
@@ -403,7 +413,8 @@ main {
   text-overflow: ellipsis;
 }
 
-.libro__autor {
+.libro__autor,
+.cuenta__nombre {
   font-weight: 500;
   font-size: 1.125rem;
 }
@@ -472,7 +483,7 @@ span,
   font-size: 1.25rem;
 }
 
-:is(#iritziak, #eskaerak)::before {
+:is(#iritziak, [id$='eskaerak'])::before {
   content: '';
   display: block;
   height: 4rem;
@@ -536,6 +547,15 @@ span,
 
 #main-personal .titulo-libro a {
   color: inherit;
+}
+
+/* ===== área personal ===== */
+#main-personal [class^='solicitudes'] a.btn {
+  margin-top: 1rem;
+}
+
+#main-personal .solicitudes-cuentas img {
+  width: 100%;
 }
 
 /* ===== footer ===== */
@@ -626,7 +646,7 @@ a.btn {
   white-space: nowrap;
 }
 
-.error {
+.mensaje-error {
   position: absolute;
   background-color: var(--clr-error);
   color: var(--clr-blanco);
@@ -648,6 +668,10 @@ a.btn {
   gap: 1rem;
 
   animation: error 10s;
+}
+
+.campo-incorrecto {
+  outline: 3px solid var(--clr-error);
 }
 
 @keyframes error {
@@ -684,4 +708,13 @@ a.btn {
 .grupo-volver,
 .grupo-botones {
   gap: 0.5rem;
+}
+
+.foto-perfil {
+  aspect-ratio: 1 / 1;
+}
+
+.portada-libro {
+  width: 100%;
+  aspect-ratio: 1 / 1.55;
 }
