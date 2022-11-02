@@ -35,7 +35,7 @@ include_once '../templates/head.php';
 agregarHead('Saioa hasi | IGKluba', __FILE__);
 ?>
 
-<body>
+<body id="fondo-libros">
   <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Saioa hasi</h1>

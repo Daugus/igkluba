@@ -29,7 +29,7 @@
     transparent
   );
 
-  --outline: var(--clr-acento) solid 0.3125rem;
+  --outline: var(--clr-acento) solid 0.2125rem;
 
   --borde-gradiente-radius: linear-gradient(var(--clr-blanco), var(--clr-blanco)) padding-box, var(--gradiente) border-box;
 
@@ -63,7 +63,7 @@ body {
 }
 
 h1 {
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 h2 {
@@ -99,14 +99,6 @@ a:hover {
   text-decoration-color: initial;
 }
 
-#collage {
-  width: 1000;
-  height: 700;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 3%;
-}
 
 .form-container {
   background-color: var(--clr-blanco);
@@ -120,7 +112,7 @@ a:hover {
 }
 
 .form-container form {
-  gap: 1rem;
+  gap: 1.75rem;
 }
 
 form :is(.campo, .campo-predefinido) {
@@ -128,7 +120,7 @@ form :is(.campo, .campo-predefinido) {
   flex-direction: row;
 
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
 
   font-size: 1.1rem;
   gap: 1rem;
@@ -205,7 +197,7 @@ button,
 select,
 textarea,
 .file-input-text,
-#header-perfil img {
+#perfil img {
   transition: outline var(--transicion-rapida);
 }
 
@@ -214,10 +206,11 @@ button:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 .file-input-text:focus-visible,
-#header-perfil img:hover {
+#perfil img:hover {
   outline: var(--outline);
   outline-offset: 0.1875rem;
 }
+
 
 textarea {
   resize: vertical;
@@ -281,11 +274,11 @@ header {
   border: none;
 }
 
-#header-perfil img {
+#perfil img {
   height: 5vw;
 }
 
-#header-perfil img[src$='png'] {
+#perfil img[src$='png'] {
   border-radius: 100%;
 }
 
@@ -342,21 +335,100 @@ nav {
 }
 
 /* ===== main ===== */
-main {
+main:not(#main-hasiera) {
   flex-grow: 1;
+  padding-block: 3rem;
   width: 75vw;
   margin-inline: auto;
-  padding-block: 3rem;
+}
+
+#body-hasiera{
+  background-color: var(--clr-acento);
+}
+
+#main-hasiera {  
+  flex-grow: 1;
+  background-image: url(/src/img/collage-Libros.png);
+  background-size: auto 130%;
+
+
+
+  background-color: #14409e8b;
+  background-blend-mode: screen;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
 /* --- hasiera --- */
-#collage {
+.clm-izq-hasiera{
+  padding: 5rem;
   width: 100%;
-  margin-top: 2rem;
+  align-items: center;
+  
 }
 
+.botones-hasiera{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+  gap: 4rem;
+}
+a.btn-hasiera{
+  background-color: var(--clr-blanco);
+  color: var(--clr-negro);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: var(--sombra-alrededor);
+  letter-spacing: 0.1rem;
+
+}
+
+#fondo-libros{
+
+  background-image: url(/src/img/collage-Libros.png);
+  background-size: auto 100%;
+
+  backdrop-filter: grayscale(1) blur(2px);
+
+}
+
+
+.flex-hasiera-registro{
+  grid-area: 1 / 1 / 2 / 2;
+  background-color: var(--clr-acento);
+  color: white;
+  box-shadow: var(--sombra-alrededor);
+  font-weight: 600;
+}
+/*
+.flex-hasiera-registro > div {
+  width: 100%;
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+}
+*/
+/*
+.flex-hasiera-registro > div:first-child {
+  margin-right: 20px;
+  background-color: var(--clr-acento);
+  color: white;
+  box-shadow: var(--sombra-alrededor);
+  font-weight: 600;
+
+
+}
+*/
+
 /* --- nagusia / bilaketa --- */
-.grid-libros {
+#main-nagusia-bilaketa {
   --gap: 8rem;
   --columnas: 4;
   --min-width: 12rem;
@@ -366,7 +438,7 @@ main {
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(max(var(--min-width), var(--libro-max-width)), 1fr));
-  /* grid-auto-rows: 1fr; */
+  grid-auto-rows: 1fr;
   grid-gap: 2rem var(--gap);
   align-items: start;
 }
@@ -414,12 +486,11 @@ main {
 
 /* --- libro --- */
 #main-libro,
-#main-personal,
 .main-form {
   gap: 2.5rem;
 }
 
-#main-libro #informacion {
+#main-libro #superior {
   gap: 12.5rem;
 }
 
@@ -427,30 +498,29 @@ main {
   flex: 0 1 30%;
 }
 
-#datos {
+#main-libro #datos {
   align-items: start;
   font-size: 1.25rem;
   gap: 1rem;
 }
 
-#datos-importantes {
+#main-libro #datos-importantes {
   align-items: start;
   gap: 0.5rem;
 }
 
-:is(#main-libro, #main-personal) h1 {
+#main-libro h1 {
   margin-bottom: 0;
   font-size: 2.5rem;
   font-weight: 700;
 }
 
-#datos-importantes > * {
+#main-libro #datos-importantes > * {
   line-height: 1.1;
   font-weight: 500;
 }
 
-#main-libro #serie,
-#main-personal #apodo {
+#main-libro #serie {
   font-size: 1.75rem;
 }
 
@@ -462,9 +532,9 @@ main {
   font-size: 1.35rem;
 }
 
-span,
-#main-libro :is(h2, h3),
-#main-personal #apodo {
+#main-libro #datos span,
+#main-libro h2,
+#main-libro h3 {
   font-weight: 500;
 }
 
@@ -472,7 +542,7 @@ span,
   font-size: 1.25rem;
 }
 
-:is(#iritziak, #eskaerak)::before {
+#main-libro #iritziak::before {
   content: '';
   display: block;
   height: 4rem;
@@ -480,15 +550,15 @@ span,
   visibility: hidden;
 }
 
-#reviews {
+#main-libro #reviews {
   gap: 1.5rem;
 }
 
-.review {
+#main-libro .review {
   gap: 0.75rem;
 }
 
-#reviews .btn {
+#main-libro #reviews .btn {
   align-self: start;
 }
 
@@ -510,8 +580,7 @@ span,
   font-weight: 400;
 }
 
-#main-libro #sinopsis,
-#opiniones,
+#main-libro :is(#central, #inferior),
 :is(#main-respuestas) > section {
   width: 70ch;
   text-align: justify;
@@ -519,23 +588,6 @@ span,
 
 #main-respuestas > section {
   align-items: stretch;
-}
-
-/* - área personal - */
-#main-personal #informacion {
-  column-gap: 8rem;
-}
-
-#main-personal #perfil {
-  flex: 0 1 20%;
-}
-
-#main-personal #perfil img {
-  width: 100%;
-}
-
-#main-personal .titulo-libro a {
-  color: inherit;
 }
 
 /* ===== footer ===== */
@@ -614,7 +666,7 @@ a.btn {
   background: var(--borde-gradiente-radius);
 
   font-weight: 600;
-
+  
   padding: 0.5rem 1rem;
   align-self: center;
 
@@ -626,47 +678,50 @@ a.btn {
   white-space: nowrap;
 }
 
-.error {
+/* a.btn::before {
+  content: '';
+
   position: absolute;
-  background-color: var(--clr-error);
-  color: var(--clr-blanco);
+  top: 0;
+  left: -100%;
 
-  top: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
+  width: 100%;
+  height: 100%;
 
-  margin-inline: auto;
-  padding: 1.5rem 2.75rem;
-
-  border: 3px solid transparent;
-  border-radius: 1rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-
-  animation: error 10s;
+  background: var(--gradiente-transparente);
+  transition: left 650ms;
 }
 
+a.btn:hover::before {
+  left: 100%;
+} */
+
+.error {
+background-color: var(--clr-error);
+color: var(--clr-blanco);
+position: absolute;
+
+top: -100px;
+border: 3px solid transparent;
+border-radius: 1rem;
+margin-inline: auto;
+left: 50%;
+transform: translateX(-50%);
+
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 1rem;
+animation: error 10s;
+padding: 1.5rem 2.75rem;
+}
 @keyframes error {
-  0% {
-    top: -100px;
-  }
-
-  25% {
-    top: 200px;
-  }
-
-  75% {
-    top: -100%;
-  }
-
-  100% {
-    top: -100%;
-  }
+  0%   {top: -100px;}
+  25%  {top: 200px;}
+  75%  {top: -100px}
+  100% {top: -100px;}
 }
+
 
 .fa-star {
   color: var(--clr-acento);
@@ -676,12 +731,53 @@ a.btn {
   display: none;
 }
 
-.volver {
+a.volver {
   font-size: 1.3rem;
   font-weight: 450;
+  background-color: var(--clr-negro);
+  color: var(--clr-blanco);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+
 }
 
 .grupo-volver,
 .grupo-botones {
   gap: 0.5rem;
 }
+
+/* button-eliminar CSS */
+
+
+.button-eliminar{
+
+  padding: 20px 50px;
+
+  border:none;
+  cursor:pointer;
+  
+
+  text-decoration:none;
+  color: #ecf0f1;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+
+.button-eliminar{
+  background-color: var(--clr-error);
+  transition: all 0.07s ease-in-out;
+
+  border-bottom: 5px solid #BD3E31;
+}
+.button-eliminar:hover {
+	color: #ecf0f1;
+	background-color: var(--clr-error);
+  
+}
+.button-eliminar:active
+{
+background-color: #ca3e2e ;
+
+}
+

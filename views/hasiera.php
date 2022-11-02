@@ -8,16 +8,29 @@ checkLogin();
 include_once '../templates/head.php';
 include_once '../templates/header.php';
 include_once '../templates/footer.php';
-agregarHead('IGKluba', '');
+agregarHead('IGKluba', '', false);
 ?>
 
-<body>
-  <?php headerInicio() ?>
+<body id="body-hasiera">
 
-  <main id="hasiera">
-    <h1>Irakurle Gazteen Kluba</h1>
-    <p>Bigarren Hezkuntzako gazte askok irakurtzeko zaletasuna dugu. Hala ere, liburudendetan hainbeste liburu daude, ez dakigula nondik hasi! Webgune honetan gaztetxuentzako eta ez hain gaztetxuentzako liburuak daude: arrakastatsuenak…baita gustatu ez zaizkigunak ere. Bilatu eta gozatu!</p>
-    <img id="collage" src="/src/img/collage-Libros.png" alt="collage">
+
+  <main id="main-hasiera">
+
+    <div class="flex-hasiera-registro">
+
+      <div class="clm-izq-hasiera">
+        <h1>Irakurle Gazteen Kluba</h1>
+        <p>Bigarren Hezkuntzako gazte askok irakurtzeko zaletasuna dugu. Hala ere, liburudendetan hainbeste liburu daude, ez dakigula nondik hasi! Webgune honetan gaztetxuentzako eta ez hain gaztetxuentzako liburuak daude: arrakastatsuenak…baita gustatu ez zaizkigunak ere. Bilatu eta gozatu!</p>
+       <div class="botones-hasiera">
+        <a href="/sortu" class="btn-hasiera">Sortu kontua</a>
+        <a href="/hasi" class="btn-hasiera">Saioa hasi</a>
+       </div>
+      </div>
+      
+
+
+    </div>
+    
   </main>
 
   <?php agregarFooter() ?>
