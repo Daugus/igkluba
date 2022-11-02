@@ -13,14 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   include_once '../modules/select.php';
   $usrCorrecto = buscarCuenta($apodoEnviado);
-  if (!empty($usrCorrecto) && password_verify($passEnviado, $usrCorrecto['pass'])) {
+  if (empty($usrCorrecto) || !password_verify($passEnviado, $usrCorrecto['pass'])) {
+    $error = 'Ezizena edo pasahitza txarto sartu egin da. Saiatu berriz.';
+  } else if ($usrCorrecto['activo'] === 0) {
+    $error = 'Zure kontua oraindik ez dago onartuta.';
+  } else {
     include_once '../modules/session.php';
     saveSession($usrCorrecto);
     $destino = isset($_SESSION['url']) ? $_SESSION['url'] : '/nagusia';
     header("Location: $destino");
   }
-
-  $error = 'Ezizena edo pasahitza txarto sartu egin da. Saiatu berriz.';
 }
 
 include_once '../templates/head.php';

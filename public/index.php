@@ -19,13 +19,13 @@ switch ($cantidadSecciones) {
     break;
 
   case 3:
-    if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun'])) {
+    if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun', 'profila'])) {
       $id = $page[1];
 
       if (in_array($page[2], ['iritzi', 'erantzun'])) {
         $ruta_elegida = '../views/' . $page[2] . '.php';
       } else if (($page[0] !== 'iritzia' && in_array($page[2], ['aldatu', 'ezabatu', 'eskaera']))
-        || $page[0] === 'liburua' && in_array($page[2], ['onartu', 'ukatu'])
+        || in_array($page[0], ['liburua', 'profila']) && in_array($page[2], ['onartu', 'ukatu'])
       ) {
         $ruta_elegida = '../views/' . $page[0] . '.php';
         $busqueda = $page[1];

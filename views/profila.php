@@ -16,12 +16,23 @@ if (isset($busqueda)) {
         || ($_SESSION['usr']['rol'] === 'Irakasle' && $usuario['rol'] !== 'Ikasle')))
 
   ) header('Location: /nagusia');
+  $aceptado = $usuario['activo']  === 1 ? true : false;
 } else {
   $usuario = $_SESSION['usr'];
 }
 
+include_once '../modules/db-config.php';
+if ($accion === 'onartu') {
+  $update = $pdo->prepare('UPDATE cuenta SET activo = 1 where apodo = :apodo;');
+  $update->execute(['apodo' => $usuario['apodo']]);
+  header('Location: /profila#kontu-eskaerak');
+} else if ($accion === 'ukatu') {
+  $delete = $pdo->prepare('DELETE FROM cuenta where apodo = :apodo;');
+  $delete->execute(['apodo' => $usuario['apodo']]);
+  header('Location: /profila#kontu-eskaerak');
+}
+
 if ($usuario['rol'] === 'Ikasle') {
-  include '../modules/db-config.php';
   $clase = $pdo->prepare('SELECT * FROM clase WHERE cod = :cod_clase;');
   $clase->execute(['cod_clase' => $usuario['cod_clase']]);
   $clase = $clase->fetch();
@@ -69,16 +80,25 @@ include_once '../modules/select.php';
       </div>
     </section>
 
-    <?php if ($_SESSION['usr']['id'] === $usuario['id'] && $usuario['rol'] !== 'Ikasle') { ?>
     <?php
+    if ($accion === 'eskaera') {
+    ?>
+      <section>
+        <a href="/profila/<?php echo $usuario['apodo'] ?>/onartu" class="btn">Eskaera onartu</a>
+        <a href="/profila/<?php echo $usuario['apodo'] ?>/ukatu" class="btn">Eskaera ukatu</a>
+      </section>
+    <?php
+    } else if ($_SESSION['usr']['id'] === $usuario['id'] && $usuario['rol'] !== 'Ikasle') {
+
       $solicitudesLibros = buscarSolicitudesLibros($usuario);
       if (count($solicitudesLibros) > 0) agregarSolicitudesLibros($solicitudesLibros);
 
       if ($usuario['rol'] === 'Admin') {
-        $solicitudesProfesores = buscarCuentas(false, 'Irakasle', $usuario['id_centro']);
+        $solicitudesCuentas = buscarCuentas(false, 'Irakasle', $usuario['id_centro']);
       } else {
-        $solicitudesAlumnos = buscarCuentas(false, 'Ikasle', $usuario['id_centro']);
+        $solicitudesCuentas = buscarCuentas(false, 'Ikasle', $usuario['id_centro']);
       }
+      if (count($solicitudesCuentas) > 0) agregarSolicitudesCuentas($solicitudesCuentas);
     }
 
     if ($usuario['rol'] !== 'Admin') {

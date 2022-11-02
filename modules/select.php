@@ -1,6 +1,6 @@
 <?php
 
-function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', bool $aceptado = true, bool $esProfesor = true): array
+function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', bool $aceptado = true): array
 {
   $aceptado = $aceptado ? 1 : 0;
   include '../modules/db-config.php';
@@ -251,6 +251,37 @@ function buscarCuentas(bool $activo, string $rol, string $centro): array
   );
 
   return $cuentas->fetchAll();
+}
+
+function agregarSolicitudesCuentas(array $cuentas): void
+{
+?>
+  <section>
+    <h2 id="kontu-eskaerak">Kontu eskaerak:</h2>
+
+    <div class="flex-stretch-col" id="cuentas">
+      <?php foreach ($cuentas as $cuenta) { ?>
+        <article class="flex-space-between-col cuenta">
+          <a href="/profila/<?php echo $cuenta['apodo'] ?>/eskaera">
+            <img src="/src/img/profila/<?php echo $cuenta['id'] ?>.png" alt="<?php echo $cuenta['apodo'] ?> profila">
+          </a>
+
+          <div class="flex-center-col cuenta_texto">
+            <a href="/profila/<?php echo $cuenta['apodo'] ?>/eskaera" class="cuenta__apodo">
+              <?php echo $cuenta['apodo'] ?>
+            </a>
+
+            <a href="/profila/<?php echo $cuenta['apodo'] ?>/eskaera" class="cuenta__nombre">
+              <?php echo $cuenta['nombre'] . ' ' . $cuenta['apellido'] ?>
+            </a>
+          </div>
+        </article>
+      <?php
+      }
+      ?>
+    </div>
+  </section>
+<?php
 }
 
 function buscarCuenta(string $apodo)
