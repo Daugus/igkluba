@@ -49,7 +49,7 @@ try {
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
     $resultadosPerfil = $consulta->fetch();
-    //print_r($resultadosPerfil);
+    print_r($resultadosPerfil);
 
     // calculo de la fecha de caducidad
     $fechaActual = date('10-06-y');
@@ -58,7 +58,7 @@ try {
 
     // obtencion de reviews
     // preparo la consulta
-    $consulta = $conexion->prepare('SELECT nota,texto,nombre_idioma,serie FROM review, libro WHERE review.id_libro = libro.id and id_cuenta = 1;');
+    $consulta = $conexion->prepare('SELECT review.id, nota,texto,nombre_idioma,serie FROM review, libro WHERE review.id_libro = libro.id and id_cuenta = 1;');
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
@@ -74,20 +74,22 @@ try {
     
     // obtencion de alumnos
     // preparo la consulta usando la clase obtenida del desplegable de clases
-    $codigoClase = $_REQUEST['cod'];
-    $consulta = $conexion->prepare("SELECT id, nombre, apellido, apodo, fecha_nacimiento from cuenta where rol = 'Ikasle' and cod_clase = '".$codigoClase."';");
+/*    $codigoClase = $_REQUEST['cod'];
+    $consulta = $conexion->prepare("SELECT id, nombre, apellido, apodo, fecha_nacimiento from cuenta 
+                                    where rol = 'Ikasle' and cod_clase = '".$codigoClase."';");
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo todos los registros y los muesto en el perfil
     $resultadosAlumnos = $consulta->fetchAll();
-    // la consulta de los alumnos utiliza la clase obtenida
+*/    // la consulta de los alumnos utiliza la clase obtenida
     
     // mantengo la seleccion de la clase despues de darle a enviar
     
     
     // obtencion de solicitudes de idioma
     // preparo la consulta
-    $consulta = $conexion->prepare('SELECT id_libro, id_alumno, titulo_alternativo, nombre_idioma, nombre, apellido, apodo FROM cuenta, solicitud_idioma WHERE solicitud_idioma.id_alumno = cuenta.id AND rol = "Ikasle" AND cod_clase = "'.$codigoClase.'";');
+    $consulta = $conexion->prepare('SELECT id_libro, id_alumno, titulo_alternativo, nombre_idioma, nombre, apellido, apodo 
+    FROM cuenta, solicitud_idioma WHERE solicitud_idioma.id_alumno = cuenta.id AND rol = "Ikasle" AND cod_clase = "'.$codigoClase.'";');
     // ejecuto la consulta
     $consulta->execute();
     // en resultados guardo las solicitudes y las muestro en solicitudes de idioma
@@ -145,7 +147,10 @@ try {
             echo    "</tr>";
             echo    "<tr>";
             echo        "<td id='review'>" . $columna['texto'] . "</td>";
-            echo        "<td> <a href=''>Editar</a> <a id='eliminar' href=''>Eliminar</a> </td>";
+            echo        "<td>";
+            echo            "<a id='modificar' href='operacionConfirmacion.php?&ComponenteReview=modificar'>Editar</a> ";
+            echo            "<a id='eliminar' href='operacionConfirmacion.php?&ComponenteReview=eliminar&idReview=".$columna['id']."'>Eliminar</a>"; 
+            echo        "</td>";
             echo    "</tr>";
             echo "</table>";
             echo "<br>";
@@ -192,10 +197,9 @@ try {
                     echo    "<select name='cod' id='clase'>";
                                 foreach ($resultadosClase as $columna) {
                                     echo "<option class='cod_clase' value='" . $columna['cod'] . "'>" . $columna['nombre'] . "</option>";
-                                    $idClase = $columna['cod'];
                                 }
                     echo    "</select>";
-                    echo "<a href='operacionConfirmacion.php?&id=".$idAlumno."&cod=".$idClase."' name='eliminarAlumno' id='aceptar'>Aceptar</a>";
+                    echo "<a href='operacionConfirmacion.php?&id=".$idAlumno."&cod=".$codigoClase."&idComponente=aceptar' name='aceptarAlumno' id='aceptar'>Aceptar</a>";
 
 
                     //echo    "<input type='submit' class='Enviar' name='AnadirAlumno' value='Enviar'>";
@@ -204,7 +208,7 @@ try {
 
                 // si elijo a los que ya tienen clase pongo el menu para eliminarlos si se desea
                 else {
-                echo                "<a href='operacionConfirmacion.php?&id=".$columna['id']."' name='eliminarAlumno' id='eliminar'>Eliminar</a>";
+                echo  "<a href='operacionConfirmacion.php?&id=".$columna['id']."&idComponente=eliminar' name='eliminarAlumno' id='eliminar'>Eliminar</a>";
                 }
                 
                 echo            "</div>";
@@ -220,7 +224,7 @@ try {
 
     <!-- SOLICITUDES IDIOMA -->
     <div id="contenedorIdioma">
-        <form action="areaPersonalProfesor.php" method="POST" onsubmit="solIdiomas()">
+        <form action="areaPersonalProfesor.php" method="POST">
             <label for="clase">Mostrar grupo </label>
             <select name="cod" id="clase">
                 <?php
@@ -244,8 +248,8 @@ try {
         echo        "</div>";
         echo        "<div class='BOTONES'>";
         echo            "<ul>";
-        echo                "<a href='operacionConfirmacion.php?&ID_libro=".$columna['id_libro']."&ID_cuenta=".$columna['id_alumno']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo_alternativo']."' id='aceptar' name='aceptar'>Aceptar</a>";
-        echo                "<a href='operacionConfirmacion.php?&ID_libro=".$columna['id_libro']."&ID_cuenta=".$columna['id_alumno']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo_alternativo']."' id='eliminar' name='eliminar'>Eliminar</a>";
+        echo                "<a href='operacionConfirmacion.php?&id_libro=".$columna['id_libro']."&id_cuenta=".$columna['id_alumno']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo_alternativo']."&idSolicitud=aceptar' id='aceptar' name='aceptar'>Aceptar</a>";
+        echo                "<a href='operacionConfirmacion.php?&id_libro=".$columna['id_libro']."&id_cuenta=".$columna['id_alumno']."&nombre_idioma=".$columna['nombre_idioma']."&titulo=".$columna['titulo_alternativo']."&idSolicitud=eliminar' id='eliminar' name='eliminar'>Eliminar</a>";
         echo            "</ul>";
         echo        "</div>";
         echo    "</div>";    
