@@ -16,7 +16,7 @@ const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {
   e.preventDefault();
 
-  document.querySelectorAll('.error').forEach((mensaje) => mensaje.remove());
+  document.querySelectorAll('.mensaje-error').forEach((mensaje) => mensaje.remove());
 
   const csv = fileInput.files[0];
   if (csv === undefined) return mostrarMensajeError('error, elige un archivo');

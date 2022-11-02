@@ -14,8 +14,8 @@ btnBuscar?.addEventListener('click', (e) => {
   if (campoBusqueda.value !== '') formBuscador.submit();
 });
 
-const mostrarMensajeError = (texto) => {
-  // const mostrarMensajeError = (texto, campo) => {
+// const mostrarMensajeError = (texto) => {
+const mostrarMensajeError = (texto, campo) => {
   const div = document.createElement('div');
   div.classList.add('mensaje-error');
 
@@ -28,8 +28,8 @@ const mostrarMensajeError = (texto) => {
   div.appendChild(i);
   div.appendChild(p);
 
-  // campo.classList.add('campo-incorrecto');
-  // campo.focus();
+  campo.classList.add('campo-incorrecto');
+  campo.focus();
   document.body.appendChild(div);
 };
 

@@ -30,6 +30,7 @@
   );
 
   --outline: var(--clr-acento) solid 0.3125rem;
+  --outline-error: var(--clr-error) solid 0.3125rem;
 
   --borde-gradiente-radius: linear-gradient(var(--clr-blanco), var(--clr-blanco)) padding-box, var(--gradiente) border-box;
 
@@ -386,6 +387,7 @@ main {
 .cuenta__foto {
   transition: outline var(--transicion-rapida);
   height: 100%;
+  box-shadow: var(--sombra-alrededor);
 }
 
 :is(.libro__portada, .cuenta__foto) img {
@@ -668,27 +670,26 @@ a.btn {
   gap: 1rem;
 
   animation: error 10s;
+  box-shadow: var(--sombra-alrededor);
 }
 
-.campo-incorrecto {
-  outline: 3px solid var(--clr-error);
+.campo-incorrecto,
+.campo-incorrecto:focus-visible {
+  outline: var(--outline-error);
+  outline-offset: 0.1875rem;
 }
 
 @keyframes error {
   0% {
-    top: -100px;
+    top: -20%;
   }
 
-  25% {
-    top: 200px;
-  }
-
-  75% {
-    top: -100%;
+  50% {
+    top: 25%;
   }
 
   100% {
-    top: -100%;
+    top: -50%;
   }
 }
 
