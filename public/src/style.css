@@ -355,8 +355,8 @@ main {
   margin-top: 2rem;
 }
 
-/* --- nagusia / bilaketa --- */
-.grid-libros {
+/* --- nagusia / bilaketa / eskaerak --- */
+.grid {
   --gap: 8rem;
   --columnas: 4;
   --min-width: 12rem;
@@ -371,36 +371,41 @@ main {
   align-items: start;
 }
 
-.libro {
+.libro,
+.cuenta {
   text-align: center;
   gap: 0.5rem;
   align-self: stretch;
 }
 
-.libro a {
+:is(.libro, .cuenta) a {
   color: var(--clr-negro);
 }
 
-.libro__portada {
+.libro__portada,
+.cuenta__foto {
   transition: outline var(--transicion-rapida);
   height: 100%;
 }
 
-.libro__portada img {
+:is(.libro__portada, .cuenta__foto) img {
   height: 100%;
 }
 
-.libro__portada:hover {
+:is(.libro__portada, .cuenta__foto):hover {
   outline: var(--outline);
   outline-offset: 0.25rem;
 }
 
 .libro__texto,
-.libro__titulo {
+.libro__titulo,
+.cuenta__texto,
+.cuenta__apodo {
   width: 120%;
 }
 
-.libro__titulo {
+.libro__titulo,
+.cuenta__apodo {
   font-weight: 600;
   font-size: 1.5rem;
   white-space: nowrap;
@@ -408,7 +413,8 @@ main {
   text-overflow: ellipsis;
 }
 
-.libro__autor {
+.libro__autor,
+.cuenta__nombre {
   font-weight: 500;
   font-size: 1.125rem;
 }
@@ -544,8 +550,12 @@ span,
 }
 
 /* ===== área personal ===== */
-.solicitudes-libros a.btn {
+#main-personal [class^='solicitudes'] a.btn {
   margin-top: 1rem;
+}
+
+#main-personal .solicitudes-cuentas img {
+  width: 100%;
 }
 
 /* ===== footer ===== */
@@ -698,4 +708,13 @@ a.btn {
 .grupo-volver,
 .grupo-botones {
   gap: 0.5rem;
+}
+
+.foto-perfil {
+  aspect-ratio: 1 / 1;
+}
+
+.portada-libro {
+  width: 100%;
+  aspect-ratio: 1 / 1.55;
 }

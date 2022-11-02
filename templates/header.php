@@ -44,7 +44,7 @@ function headerGeneral(String $valueBusqueda = ''): void
         $rutaImagen = '/src/img/profila/' . $_SESSION['usr']['id'] .  '.png';
         if (!file_exists('../public' . $rutaImagen)) $rutaImagen = '/src/img/profila/default.svg';
         ?>
-        <img src="<?php echo $rutaImagen ?>" alt="Profileko argazkia">
+        <img src="<?php echo $rutaImagen ?>" alt="Profileko argazkia" class="foto-perfil">
       </a>
     </div>
   </header>

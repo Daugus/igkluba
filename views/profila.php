@@ -57,7 +57,7 @@ include_once '../modules/select.php';
         $rutaImagen = '../public/src/img/profila/' . $usuario['id'] .  '.png';
         if (!file_exists($rutaImagen)) $rutaImagen = '/src/img/profila/default.svg';
         ?>
-        <img src="<?php echo str_replace('../public', '', $rutaImagen) ?>" alt="Profileko argazkia" width="100">
+        <img src="<?php echo str_replace('../public', '', $rutaImagen) ?>" alt="Profileko argazkia" width="100" class="foto-perfil">
       </div>
 
       <div class="flex-center-col" id="datos">
@@ -96,7 +96,7 @@ include_once '../modules/select.php';
       if ($usuario['rol'] === 'Admin') {
         $solicitudesCuentas = buscarCuentas(false, 'Irakasle', $usuario['id_centro']);
       } else {
-        $solicitudesCuentas = buscarCuentas(false, 'Ikasle', $usuario['id_centro']);
+        $solicitudesCuentas = buscarCuentas(false, 'Ikasle', $usuario['id_centro'], $usuario['id']);
       }
       if (count($solicitudesCuentas) > 0) agregarSolicitudesCuentas($solicitudesCuentas);
     }

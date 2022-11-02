@@ -52,7 +52,7 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
   <main class="flex-center-col" id="main-libro">
     <section class="flex-center-row" id="informacion">
       <div id="portada">
-        <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada" id="portada">
+        <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="portada" class="portada-libro" id="portada">
       </div>
 
       <div class="flex-center-col" id="datos">
