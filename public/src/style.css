@@ -99,7 +99,6 @@ a:hover {
   text-decoration-color: initial;
 }
 
-
 .form-container {
   background-color: var(--clr-blanco);
   padding: 1.75rem 2.75rem;
@@ -210,7 +209,6 @@ textarea:focus-visible,
   outline: var(--outline);
   outline-offset: 0.1875rem;
 }
-
 
 textarea {
   resize: vertical;
@@ -342,16 +340,14 @@ main:not(#main-hasiera) {
   margin-inline: auto;
 }
 
-#body-hasiera{
+#body-hasiera {
   background-color: var(--clr-acento);
 }
 
-#main-hasiera {  
+#main-hasiera {
   flex-grow: 1;
   background-image: url(/src/img/collage-Libros.png);
   background-size: auto 130%;
-
-
 
   background-color: #14409e8b;
   background-blend-mode: screen;
@@ -363,21 +359,34 @@ main:not(#main-hasiera) {
 }
 
 /* --- hasiera --- */
-.clm-izq-hasiera{
+.clm-izq-hasiera {
+  grid-area: 1 / 1 / 2 / 2;
+  background-color: var(--clr-acento);
+  color: white;
+  box-shadow: var(--sombra-alrededor);
+  font-weight: 600;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.clm-izq-hasiera > div {
   padding: 5rem;
   width: 100%;
   align-items: center;
-  
 }
 
-.botones-hasiera{
+.botones-hasiera {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 4rem;
   gap: 4rem;
 }
-a.btn-hasiera{
+
+a.btn-hasiera {
   background-color: var(--clr-blanco);
   color: var(--clr-negro);
   padding: 1rem;
@@ -386,46 +395,14 @@ a.btn-hasiera{
   font-weight: 800;
   box-shadow: var(--sombra-alrededor);
   letter-spacing: 0.1rem;
-
 }
 
-#fondo-libros{
-
+#fondo-libros {
   background-image: url(/src/img/collage-Libros.png);
   background-size: auto 100%;
 
   backdrop-filter: grayscale(1) blur(2px);
-
 }
-
-
-.flex-hasiera-registro{
-  grid-area: 1 / 1 / 2 / 2;
-  background-color: var(--clr-acento);
-  color: white;
-  box-shadow: var(--sombra-alrededor);
-  font-weight: 600;
-}
-/*
-.flex-hasiera-registro > div {
-  width: 100%;
-  padding: 10px;
-
-  display: flex;
-  align-items: center;
-}
-*/
-/*
-.flex-hasiera-registro > div:first-child {
-  margin-right: 20px;
-  background-color: var(--clr-acento);
-  color: white;
-  box-shadow: var(--sombra-alrededor);
-  font-weight: 600;
-
-
-}
-*/
 
 /* --- nagusia / bilaketa --- */
 #main-nagusia-bilaketa {
@@ -666,7 +643,7 @@ a.btn {
   background: var(--borde-gradiente-radius);
 
   font-weight: 600;
-  
+
   padding: 0.5rem 1rem;
   align-self: center;
 
@@ -697,31 +674,38 @@ a.btn:hover::before {
 } */
 
 .error {
-background-color: var(--clr-error);
-color: var(--clr-blanco);
-position: absolute;
+  background-color: var(--clr-error);
+  color: var(--clr-blanco);
+  position: absolute;
 
-top: -100px;
-border: 3px solid transparent;
-border-radius: 1rem;
-margin-inline: auto;
-left: 50%;
-transform: translateX(-50%);
+  top: -100px;
+  border: 3px solid transparent;
+  border-radius: 1rem;
+  margin-inline: auto;
+  left: 50%;
+  transform: translateX(-50%);
 
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 1rem;
-animation: error 10s;
-padding: 1.5rem 2.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  animation: error 10s;
+  padding: 1.5rem 2.75rem;
 }
 @keyframes error {
-  0%   {top: -100px;}
-  25%  {top: 200px;}
-  75%  {top: -100px}
-  100% {top: -100px;}
+  0% {
+    top: -100px;
+  }
+  25% {
+    top: 200px;
+  }
+  75% {
+    top: -100px;
+  }
+  100% {
+    top: -100px;
+  }
 }
-
 
 .fa-star {
   color: var(--clr-acento);
@@ -738,7 +722,6 @@ a.volver {
   color: var(--clr-blanco);
   padding: 0.5rem;
   border-radius: 0.5rem;
-
 }
 
 .grupo-volver,
@@ -748,36 +731,28 @@ a.volver {
 
 /* button-eliminar CSS */
 
-
-.button-eliminar{
-
+.button-eliminar {
   padding: 20px 50px;
 
-  border:none;
-  cursor:pointer;
-  
+  border: none;
+  cursor: pointer;
 
-  text-decoration:none;
+  text-decoration: none;
   color: #ecf0f1;
   font-weight: 600;
   border-radius: 5px;
 }
 
-
-.button-eliminar{
+.button-eliminar {
   background-color: var(--clr-error);
   transition: all 0.07s ease-in-out;
 
-  border-bottom: 5px solid #BD3E31;
+  border-bottom: 5px solid #bd3e31;
 }
 .button-eliminar:hover {
-	color: #ecf0f1;
-	background-color: var(--clr-error);
-  
+  color: #ecf0f1;
+  background-color: var(--clr-error);
 }
-.button-eliminar:active
-{
-background-color: #ca3e2e ;
-
+.button-eliminar:active {
+  background-color: #ca3e2e;
 }
-
