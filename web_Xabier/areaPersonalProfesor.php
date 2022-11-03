@@ -200,7 +200,7 @@ try {
                 // obtengo la id para el formulario
                 $idAlumno = $columna['id'];
                 // si elijo los que no tienen clase pongo un menu para añadirlos a otra clase
-                if ($codigoClase == "NULO") {
+                if ($codigoClase == "0000") {
                     echo "<form action='operacionConfirmacion.php' method='POST'>";
                     echo    "<label for='clase'>Añadir a grupo </label>";
                     echo    "<select name='cod' id='clase'>";

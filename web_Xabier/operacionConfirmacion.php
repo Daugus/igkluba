@@ -18,7 +18,7 @@ try {
 
 //-----------------CLASES Y GRUPOS---------------------------------
 
-if(isset($_REQUEST["id"])) {
+if(isset($_REQUEST["idComponente"])) {
 
     $id = $_REQUEST['id'];
     $idComponente = $_REQUEST['idComponente'];
@@ -26,7 +26,7 @@ if(isset($_REQUEST["id"])) {
     // si quiero eliminar a un alumno de su clase
     if ($idComponente == 'eliminar') {
         // preparo el borrado
-        $borradoCuentaClase = $conexion->prepare("UPDATE cuenta SET cod_clase = 'NULO' WHERE id = ".$id.";");
+        $borradoCuentaClase = $conexion->prepare("UPDATE cuenta SET cod_clase = '0000' WHERE id = ".$id.";");
         // ejecuto el borrado
         $borradoCuentaClase->execute();
         echo "el alumno ha sido eliminado del grupo";
