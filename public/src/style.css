@@ -343,7 +343,7 @@ nav {
 }
 
 /* ===== main ===== */
-main {
+main:not(#main-hasiera) {
   flex-grow: 1;
   width: 75vw;
   margin-inline: auto;
@@ -351,9 +351,67 @@ main {
 }
 
 /* --- hasiera --- */
-#collage {
+#body-hasiera {
+  background-color: var(--clr-acento);
+}
+
+#main-hasiera {
+  flex-grow: 1;
+  background-image: url(/src/img/collage.png);
+  background-size: auto 130%;
+
+  background-color: #14409e8b;
+  background-blend-mode: screen;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.clm-izq-hasiera {
+  grid-area: 1 / 1 / 2 / 2;
+  background-color: var(--clr-acento);
+  color: white;
+  box-shadow: var(--sombra-alrededor);
+  font-weight: 600;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.clm-izq-hasiera > div {
+  padding: 5rem;
   width: 100%;
-  margin-top: 2rem;
+  align-items: center;
+}
+
+.botones-hasiera {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+  gap: 4rem;
+}
+
+a.btn-hasiera {
+  background-color: var(--clr-blanco);
+  color: var(--clr-negro);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: var(--sombra-alrededor);
+  letter-spacing: 0.1rem;
+}
+
+#fondo-libros {
+  background-image: url(/src/img/collage.png);
+  background-size: auto 100%;
+
+  backdrop-filter: grayscale(1) blur(2px);
 }
 
 /* --- nagusia / bilaketa / eskaerak --- */
