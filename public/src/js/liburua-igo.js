@@ -18,10 +18,10 @@ btnEnviar.addEventListener('click', (e) => {
   eliminarMensajesError();
   const [campos, valoresEnviados] = buscarCampos();
 
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ](?=.*[A-Za-zÀ-ÖØ-öø-ÿ\-])[A-Za-zÀ-ÖØ-öø-ÿ,. ]{1,100}[A-Za-zÀ-ÖØ-öø-ÿ]$/.test(valoresEnviados.titulo))
+  if (!/^(?=.*[A-Za-zÀ-ÖØ-öø-ÿ\-])[0-9A-Za-zÀ-ÖØ-öø-ÿ,.\-:; ]{1,100}$/.test(valoresEnviados.titulo))
     return mostrarMensajeError('Izenburua bakarrik letrak izan ditzake', campos.titulo);
 
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ](?=.*[A-Za-zÀ-ÖØ-öø-ÿ\-])[A-Za-zÀ-ÖØ-öø-ÿ,. ]{1,100}[A-Za-zÀ-ÖØ-öø-ÿ]$/.test(valoresEnviados.autor))
+  if (!/^(?=.*[0-9A-Za-zÀ-ÖØ-öø-ÿ\-])[A-Za-zÀ-ÖØ-öø-ÿ,. ]{1,100}$/.test(valoresEnviados.autor))
     return mostrarMensajeError('Egilea bakarrik letrak eta koma bat izan ditzake', campos.autor);
 
   if (valoresEnviados.serie !== '') {

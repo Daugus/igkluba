@@ -6,34 +6,31 @@ $ruta_elegida = '';
 $accion = '';
 
 $cantidadSecciones = count($page);
-switch ($cantidadSecciones) {
-  case 1:
+if ($cantidadSecciones === 1) {
+  $ruta_elegida = '../views/' . $page[0] . '.php';
+} else if ($cantidadSecciones === 2) {
+  if (in_array($page[0], ['liburua', 'iritzia', 'profila'])) {
     $ruta_elegida = '../views/' . $page[0] . '.php';
-    break;
+    $busqueda = $page[1];
+  }
+} else if ($cantidadSecciones === 3 && $page[0] !== 'bilaketa') {
+  if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun', 'profila'])) {
+    $id = $page[1];
 
-  case 2:
-    if (in_array($page[0], ['liburua', 'iritzia', 'bilaketa', 'profila'])) {
+    if (in_array($page[2], ['iritzi', 'erantzun'])) {
+      $ruta_elegida = '../views/' . $page[2] . '.php';
+    } else if (($page[0] !== 'iritzia' && in_array($page[2], ['aldatu', 'ezabatu', 'eskaera']))
+      || in_array($page[0], ['liburua', 'profila']) && in_array($page[2], ['onartu', 'ukatu'])
+    ) {
       $ruta_elegida = '../views/' . $page[0] . '.php';
       $busqueda = $page[1];
+      $accion = $page[2];
     }
-    break;
-
-  case 3:
-    if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun', 'profila'])) {
-      $id = $page[1];
-
-      if (in_array($page[2], ['iritzi', 'erantzun'])) {
-        $ruta_elegida = '../views/' . $page[2] . '.php';
-      } else if (($page[0] !== 'iritzia' && in_array($page[2], ['aldatu', 'ezabatu', 'eskaera']))
-        || in_array($page[0], ['liburua', 'profila']) && in_array($page[2], ['onartu', 'ukatu'])
-      ) {
-        $ruta_elegida = '../views/' . $page[0] . '.php';
-        $busqueda = $page[1];
-        $accion = $page[2];
-      }
-    }
-
-    break;
+  }
+} else if ($cantidadSecciones >= 3 && $page[0] === 'bilaketa' && intval($page[2]) !== 0) {
+  $ruta_elegida = '../views/' . $page[0] . '.php';
+  $busqueda = $page[1];
+  $pagina = $page[2];
 }
 
 if (empty($ruta_elegida) || !file_exists($ruta_elegida)) {

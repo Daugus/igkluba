@@ -6,36 +6,36 @@ include_once '../modules/session.php';
 checkSession();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['busqueda'])) {
+  $_SESSION['busquedaOriginal'] = trim($_REQUEST['busqueda']);
   $busqueda = preg_replace('/^#/', 'e:', str_replace(' ', '_', trim($_REQUEST['busqueda'])));
-  header('Location: /bilaketa/' . $busqueda);
+  header('Location: /bilaketa/' . $busqueda . '/1');
 }
 
 if (!isset($busqueda)) header('Location: /nagusia');
-$busqueda = str_replace('_', ' ', $busqueda);
+$busquedaOriginal = $_SESSION['busquedaOriginal'];
 
 include_once '../templates/head.php';
-agregarHead($busqueda . ' | IGKluba');
+agregarHead($busquedaOriginal . ' | IGKluba');
 ?>
 
 <body>
   <?php
   include_once '../templates/header.php';
-  headerGeneral($busqueda);
+  headerGeneral($busquedaOriginal);
   ?>
 
   <main>
     <?php
-    $busqueda = strtolower($busqueda);
     include_once '../modules/select.php';
     ?>
 
     <?php
     $librosPorTitulo = buscarLibros(
-      "LOWER(il.titulo_alternativo) like '%$busqueda%'",
+      "LOWER(il.titulo_alternativo) like '%$busquedaOriginal%'",
       'il.id_idioma ASC, l.nota_media DESC'
     );
     $librosPorAutor = buscarLibros(
-      "LOWER(l.autor) like '%$busqueda%'",
+      "LOWER(l.autor) like '%$busquedaOriginal%'",
       'l.autor ASC, l.nota_media DESC'
     );
 
@@ -43,7 +43,7 @@ agregarHead($busqueda . ' | IGKluba');
     $cantidadPorAutor = count($librosPorAutor);
     ?>
 
-    <h1>"<?php echo $busqueda ?>" bilaketa <?php echo $cantidadPorLibro + $cantidadPorAutor ?> erantzunak eman ditu:</h1>
+    <h1 id="titulo-busqueda">"<?php echo $busquedaOriginal ?>" bilaketa <?php echo $cantidadPorLibro + $cantidadPorAutor ?> erantzunak eman ditu:</h1>
 
     <?php
     if ($cantidadPorLibro > 0) {

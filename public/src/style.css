@@ -4,6 +4,7 @@
   --clr-fondo: #f0f0f0;
   --clr-transparente: #00000000;
   --clr-acento: #14409e;
+  --clr-acento-transparente: #14409e;
   --clr-error: #ff3232;
   --clr-enlace: #807c7c;
 
@@ -481,6 +482,10 @@ a.btn-hasiera {
 
 .libro__nota {
   font-size: 1.125rem;
+}
+
+#titulo-busqueda {
+  white-space: pre;
 }
 
 /* --- libro --- */
