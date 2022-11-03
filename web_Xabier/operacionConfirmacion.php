@@ -52,7 +52,7 @@ if(isset($_REQUEST["id"])) {
 
 //--------------------SOLICITUDES DE IDIOMA---------------------------------
 
-if (isset($_REQUEST["id_libro"])) {
+if (isset($_REQUEST["idSolicitud"])) {
 
     $idLibro = $_REQUEST['id_libro'];
     $idSolicitud = $_REQUEST['idSolicitud'];
@@ -75,8 +75,13 @@ if (isset($_REQUEST["id_libro"])) {
     // si quiero aceptar una solicitud de idioma
     if ($idSolicitud == 'aceptar') {
         
+        // obtengo la id numerica del idioma solicitado y luego uso la id en la insercion
+        $consulta = $conexion->prepare("SELECT id FROM idioma WHERE nombre='".$nombre_idioma."';");
+        $consulta->execute();
+        $idIdioma = $consulta->fetch();
+
         // preparo la insercion del nuevo idioma
-        $insercion = $conexion->prepare("INSERT INTO idiomas_libro VALUES (".$idLibro.",'".$nombre_idioma."','".$titulo."');");
+        $insercion = $conexion->prepare("INSERT INTO idiomas_libro VALUES (".$idLibro.",'".$idIdioma['id']."','".$titulo."');");
         // ejecuto la insercion
         $insercion->execute();
         // añado el idioma a ese idlibro y lo borro de solicitudes de idioma
