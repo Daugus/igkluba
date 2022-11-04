@@ -27,7 +27,7 @@ if ($cantidadSecciones === 1) {
       $accion = $page[2];
     }
   }
-} else if ($cantidadSecciones >= 3 && $page[0] === 'bilaketa' && intval($page[2]) !== 0) {
+} else if ($cantidadSecciones >= 3 && $page[0] === 'bilaketa' && intval($page[2]) > 0) {
   $ruta_elegida = '../views/' . $page[0] . '.php';
   $busqueda = $page[1];
   $pagina = $page[2];

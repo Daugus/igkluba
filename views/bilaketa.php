@@ -6,8 +6,9 @@ include_once '../modules/session.php';
 checkSession();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['busqueda'])) {
-  $_SESSION['busquedaOriginal'] = trim($_REQUEST['busqueda']);
-  $busqueda = preg_replace('/^#/', 'e:', str_replace(' ', '_', trim($_REQUEST['busqueda'])));
+  $busqueda = trim($_REQUEST['busqueda']);
+  $_SESSION['busquedaOriginal'] = $busqueda;
+  $busqueda = preg_replace('/^#/', 'e:', str_replace(' ', '_', $busqueda));
   header('Location: /bilaketa/' . $busqueda . '/1');
 }
 
@@ -27,46 +28,70 @@ agregarHead($busquedaOriginal . ' | IGKluba');
   <main>
     <?php
     include_once '../modules/select.php';
-    ?>
 
-    <?php
-    $librosPorTitulo = buscarLibros(
+    $libros = buscarLibros(
       "LOWER(il.titulo_alternativo) like '%$busquedaOriginal%'",
       'il.id_idioma ASC, l.nota_media DESC'
     );
-    $librosPorAutor = buscarLibros(
-      "LOWER(l.autor) like '%$busquedaOriginal%'",
-      'l.autor ASC, l.nota_media DESC'
-    );
 
-    $cantidadPorLibro = count($librosPorTitulo);
-    $cantidadPorAutor = count($librosPorAutor);
-    ?>
+    $resultados = count($libros);
 
-    <h1 id="titulo-busqueda">"<?php echo $busquedaOriginal ?>" bilaketa <?php echo $cantidadPorLibro + $cantidadPorAutor ?> erantzunak eman ditu:</h1>
+    $pagina = intval($pagina);
 
-    <?php
-    if ($cantidadPorLibro > 0) {
-    ?>
-      <section>
-        <h2>Titulo bidez <span>(<?php echo $cantidadPorLibro ?>)</span>:</h2>
+    $libros = array_chunk($libros, 4);
+    $cantidadPaginas = count($libros);
+    $rutaBusqueda = '/bilaketa/' . $busquedaOriginal;
 
-        <?php agregarLibros($librosPorTitulo) ?>
-      </section>
-    <?php
+    if ($pagina !== 1) {
+      if ($cantidadPaginas === 0) {
+        header("Location: $rutaBusqueda/1");
+      } else if ($cantidadPaginas < $pagina) {
+        header("Location: $rutaBusqueda/$cantidadPaginas");
+      }
     }
-
-    if ($cantidadPorAutor > 0) {
     ?>
-      <section>
-        <h2>Egile bidez <span>(<?php echo $cantidadPorAutor ?>)</span>:</h2>
 
-        <?php agregarLibros($librosPorAutor) ?>
-      </section>
+    <h1 id="titulo-busqueda">"<?php echo $busquedaOriginal ?>" bilaketa <?php echo $resultados ?> erantzunak eman ditu:</h1>
+
+    <?php if ($resultados > 0) { ?>
+      <div id="resultados">
+        <aside id="menu-busqueda">
+          <section>
+            <p>Orden</p>
+          </section>
+          <section>
+            <p>Filtros</p>
+          </section>
+        </aside>
+
+        <section>
+          <?php
+          agregarLibros($libros[$pagina - 1]);
+
+          if ($cantidadPaginas > 1) {
+          ?>
+            <ul class="flex-center-row" id="selector-pagina">
+              <?php
+              foreach (range(1, $cantidadPaginas) as $enlacePagina) {
+              ?>
+                <li>
+                  <a <?php if ($enlacePagina === $pagina) echo 'class="pagina-actual"' ?> href="<?php echo $rutaBusqueda . '/' . $enlacePagina ?>">
+                    <span>
+                      <?php echo $enlacePagina ?>
+                    </span>
+                  </a>
+                </li>
+              <?php
+              }
+              ?>
+            </ul>
+          <?php
+          }
+          ?>
+        </section>
+      </div>
     <?php
-    }
-
-    if ($cantidadPorLibro === 0 && $cantidadPorAutor === 0) {
+    } else {
     ?>
       <p>Saiatu bilaketa aldatzen.</p>
     <?php

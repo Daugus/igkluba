@@ -1,16 +1,15 @@
 <?php
 
-function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', bool $aceptado = true): array
+function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', int $limit = 24, int $numPagina = 1): array
 {
-  $aceptado = $aceptado ? 1 : 0;
+  // $offset = $limit * ($numPagina - 1);
   include '../modules/db-config.php';
-  $libros = $pdo->prepare('SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
+  $libros = $pdo->prepare("SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
   FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
-  WHERE ' . $condicion
-    . ' AND l.aceptado = ' . $aceptado
-    . ' GROUP BY l.id'
-    . ' ORDER BY ' . $orden
-    . ' LIMIT 24;');
+  WHERE $condicion
+     GROUP BY l.id
+     ORDER BY $orden;");
+  //  LIMIT $offset, $limit;");
   $libros->execute();
 
   return $libros->fetchAll();
@@ -52,8 +51,8 @@ function agregarLibros(array $libros): void
     <?php
     }
     ?>
-    </secti>
-  <?php
+  </div>
+<?php
 }
 
 function buscarSolicitudesLibros(array $usuario, bool $propias = false): array
@@ -111,46 +110,46 @@ function buscarSolicitudesLibros(array $usuario, bool $propias = false): array
 
 function agregarSolicitudesLibros(array $solicitudesLibros, bool $propias = false): void
 {
-  ?>
-    <section class="solicitudes-libros">
-      <?php if ($propias) { ?>
-        <h2 id="nire-liburu-eskaerak">Nire liburu eskaerak</h2>
+?>
+  <section class="solicitudes-libros">
+    <?php if ($propias) { ?>
+      <h2 id="nire-liburu-eskaerak">Nire liburu eskaerak</h2>
+    <?php
+    } else {
+    ?>
+      <h2 id="liburu-eskaerak">Liburu eskaerak</h2>
+    <?php
+    }
+    ?>
+
+    <div class="grid">
       <?php
-      } else {
+      foreach ($solicitudesLibros as $libro) {
+        $url = '/liburua/' . $libro['id'] . '/eskaera';
       ?>
-        <h2 id="liburu-eskaerak">Liburu eskaerak</h2>
+        <article class="flex-space-between-col libro">
+          <a href="<?php echo $url ?>" class="libro__portada">
+            <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>" class="portada-libro">
+          </a>
+
+          <div class="flex-center-col libro__texto">
+            <p class="libro__titulo" title="<?php echo $libro['titulo'] ?>"><?php echo $libro['titulo'] ?></p>
+
+            <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor"><?php echo $libro['autor'] ?></a>
+
+            <?php if (!$propias) { ?>
+              <a href="<?php echo $url ?>" class="btn">Eskaera ikusi</a>
+            <?php
+            }
+            ?>
+          </div>
+        </article>
       <?php
       }
       ?>
-
-      <div class="grid">
-        <?php
-        foreach ($solicitudesLibros as $libro) {
-          $url = '/liburua/' . $libro['id'] . '/eskaera';
-        ?>
-          <article class="flex-space-between-col libro">
-            <a href="<?php echo $url ?>" class="libro__portada">
-              <img src="/src/img/azala/<?php echo $libro['id'] ?>.png" alt="Portada <?php echo $libro['titulo'] ?>" class="portada-libro">
-            </a>
-
-            <div class="flex-center-col libro__texto">
-              <p class="libro__titulo" title="<?php echo $libro['titulo'] ?>"><?php echo $libro['titulo'] ?></p>
-
-              <a href="/#<?php echo $libro['autor'] ?>" class="libro__autor"><?php echo $libro['autor'] ?></a>
-
-              <?php if (!$propias) { ?>
-                <a href="<?php echo $url ?>" class="btn">Eskaera ikusi</a>
-              <?php
-              }
-              ?>
-            </div>
-          </article>
-        <?php
-        }
-        ?>
-      </div>
-    </section>
-  <?php
+    </div>
+  </section>
+<?php
 }
 
 function buscarReviews(int $id, array $condiciones): array
@@ -171,73 +170,73 @@ function buscarReviews(int $id, array $condiciones): array
 function agregarReviews(array $reviews, bool $seccionPersonal = false): void
 {
   include '../modules/db-config.php';
-  ?>
-    <section id="opiniones">
-      <h2 id="iritziak">Iritziak:</h2>
+?>
+  <section id="opiniones">
+    <h2 id="iritziak">Iritziak:</h2>
 
-      <div class="flex-stretch-col" id="reviews">
-        <?php foreach ($reviews as $review) { ?>
-          <article class="flex-stretch-col review">
-            <div>
-              <?php
-              if ($seccionPersonal) {
-                $tituloLibro = $pdo->prepare('SELECT titulo_alternativo AS titulo FROM idiomas_libro WHERE id_libro = :id_libro;');
-                $tituloLibro->execute(['id_libro' => $review['id_libro']]);
-                $tituloLibro = $tituloLibro->fetch()['titulo'];
-              ?>
-                <h3 class="titulo-libro"><a href="/liburua/<?php echo $review['id_libro'] ?>"><?php echo $tituloLibro ?></a></h3>
-              <?php
-              } else {
-              ?>
-                <h3>
-                  <?php
-                  echo $review['apodo'];
-                  if ($_SESSION['usr']['rol'] !== 'Ikasle') {
-                    echo ' (' . $review['nombre'] . ' ' . $review['apellido'] . ')';
-                  }
-                  ?>:
-                </h3>
-              <?php
-              }
-              ?>
-              <p><?php echo $review['texto'] ?></p>
-              <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
-              <p><span>Adina:</span> <?php echo $review['edad_lector'] ?></p>
-              <?php
-              $cantidadRespuestas = $pdo->prepare('SELECT count(id) AS cantidad_respuestas FROM respuesta WHERE id_review = :id_review;');
-              $cantidadRespuestas->execute(['id_review' => $review['id']]);
-              $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
-              if ($cantidadRespuestas > 0) {
-              ?>
-                <a href="/iritzia/<?php echo $review['id'] ?>" class="ver-respuestas">
-                  Erantzunak (<?php echo $cantidadRespuestas ?>)
-                </a>
-              <?php
-              }
-              ?>
-            </div>
+    <div class="flex-stretch-col" id="reviews">
+      <?php foreach ($reviews as $review) { ?>
+        <article class="flex-stretch-col review">
+          <div>
+            <?php
+            if ($seccionPersonal) {
+              $tituloLibro = $pdo->prepare('SELECT titulo_alternativo AS titulo FROM idiomas_libro WHERE id_libro = :id_libro;');
+              $tituloLibro->execute(['id_libro' => $review['id_libro']]);
+              $tituloLibro = $tituloLibro->fetch()['titulo'];
+            ?>
+              <h3 class="titulo-libro"><a href="/liburua/<?php echo $review['id_libro'] ?>"><?php echo $tituloLibro ?></a></h3>
+            <?php
+            } else {
+            ?>
+              <h3>
+                <?php
+                echo $review['apodo'];
+                if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+                  echo ' (' . $review['nombre'] . ' ' . $review['apellido'] . ')';
+                }
+                ?>:
+              </h3>
+            <?php
+            }
+            ?>
+            <p><?php echo $review['texto'] ?></p>
+            <p class="nota"><?php echo $review['nota'] ?><i class="fa-solid fa-star"></i></p>
+            <p><span>Adina:</span> <?php echo $review['edad_lector'] ?></p>
+            <?php
+            $cantidadRespuestas = $pdo->prepare('SELECT count(id) AS cantidad_respuestas FROM respuesta WHERE id_review = :id_review;');
+            $cantidadRespuestas->execute(['id_review' => $review['id']]);
+            $cantidadRespuestas = $cantidadRespuestas->fetch()['cantidad_respuestas'];
+            if ($cantidadRespuestas > 0) {
+            ?>
+              <a href="/iritzia/<?php echo $review['id'] ?>" class="ver-respuestas">
+                Erantzunak (<?php echo $cantidadRespuestas ?>)
+              </a>
+            <?php
+            }
+            ?>
+          </div>
 
-            <div class="flex-stretch-row">
-              <?php if (!$seccionPersonal) { ?>
-                <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
-              <?php
-              }
-              ?>
+          <div class="flex-stretch-row">
+            <?php if (!$seccionPersonal) { ?>
+              <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
+            <?php
+            }
+            ?>
 
-              <?php if ($seccionPersonal || $review['id_cuenta'] === $_SESSION['usr']['id']) { ?>
-                <a href="/iritzi/<?php echo $review['id'] ?>/aldatu" class="btn">Iritzia aldatu</a>
-                <a href="/iritzi/<?php echo $review['id'] ?>/ezabatu" class="btn">Iritzia ezabatu</a>
-              <?php
-              }
-              ?>
-            </div>
-          </article>
-        <?php
-        }
-        ?>
-      </div>
-    </section>
-  <?php
+            <?php if ($seccionPersonal || $review['id_cuenta'] === $_SESSION['usr']['id']) { ?>
+              <a href="/iritzi/<?php echo $review['id'] ?>/aldatu" class="btn">Iritzia aldatu</a>
+              <a href="/iritzi/<?php echo $review['id'] ?>/ezabatu" class="btn">Iritzia ezabatu</a>
+            <?php
+            }
+            ?>
+          </div>
+        </article>
+      <?php
+      }
+      ?>
+    </div>
+  </section>
+<?php
 }
 
 function buscarCuentas(bool $activo, string $rol, string $centro, string $idProfesor = ''): array
@@ -275,38 +274,38 @@ function buscarCuentas(bool $activo, string $rol, string $centro, string $idProf
 
 function agregarSolicitudesCuentas(array $cuentas): void
 {
-  ?>
-    <section class="solicitudes-cuentas">
-      <h2 id="kontu-eskaerak">Kontu eskaerak:</h2>
+?>
+  <section class="solicitudes-cuentas">
+    <h2 id="kontu-eskaerak">Kontu eskaerak:</h2>
 
-      <div class="grid" id="cuentas">
-        <?php
-        foreach ($cuentas as $cuenta) {
-          $url = '/profila/' . $cuenta['apodo'] . '/eskaera';
-        ?>
-          <article class="flex-space-between-col cuenta">
-            <a href="<?php echo $url ?>">
-              <img src="/src/img/profila/<?php echo $cuenta['id'] ?>.png" alt="<?php echo $cuenta['apodo'] ?> profila" class="cuenta__foto foto-perfil">
+    <div class="grid" id="cuentas">
+      <?php
+      foreach ($cuentas as $cuenta) {
+        $url = '/profila/' . $cuenta['apodo'] . '/eskaera';
+      ?>
+        <article class="flex-space-between-col cuenta">
+          <a href="<?php echo $url ?>">
+            <img src="/src/img/profila/<?php echo $cuenta['id'] ?>.png" alt="<?php echo $cuenta['apodo'] ?> profila" class="cuenta__foto foto-perfil">
+          </a>
+
+          <div class="flex-center-col cuenta__texto">
+            <a href="<?php echo $url ?>" class="cuenta__apodo">
+              <?php echo $cuenta['apodo'] ?>
             </a>
 
-            <div class="flex-center-col cuenta__texto">
-              <a href="<?php echo $url ?>" class="cuenta__apodo">
-                <?php echo $cuenta['apodo'] ?>
-              </a>
+            <a href="<?php echo $url ?>" class="cuenta__nombre">
+              <?php echo $cuenta['nombre'] . ' ' . $cuenta['apellido'] ?>
+            </a>
 
-              <a href="<?php echo $url ?>" class="cuenta__nombre">
-                <?php echo $cuenta['nombre'] . ' ' . $cuenta['apellido'] ?>
-              </a>
-
-              <a href="<?php echo $url ?>" class="btn">Eskaera ikusi</a>
-            </div>
-          </article>
-        <?php
-        }
-        ?>
-      </div>
-    </section>
-  <?php
+            <a href="<?php echo $url ?>" class="btn">Eskaera ikusi</a>
+          </div>
+        </article>
+      <?php
+      }
+      ?>
+    </div>
+  </section>
+<?php
 }
 
 function buscarCuenta(string $apodo)

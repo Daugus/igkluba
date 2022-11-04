@@ -108,5 +108,5 @@ create table if not exists solicitud_idioma (
   primary key (id_libro, id_cuenta, nombre_idioma),
   foreign key (id_libro) references libro(id) on delete cascade,
   foreign key (id_cuenta) references cuenta(id) on delete cascade,
-  foreign key (nombre_idioma) references idioma(nombre) on delete cascade
+  -- foreign key (nombre_idioma) references idioma(nombre) on delete cascade
 );

@@ -11,6 +11,7 @@ const btnBuscar = document.querySelector('#buscar');
 
 btnBuscar?.addEventListener('click', (e) => {
   e.preventDefault();
+  campoBusqueda.value = campoBusqueda.value.replaceAll(/[%_/\+ç¡´`']/gi, '');
   if (campoBusqueda.value !== '') formBuscador.submit();
 });
 

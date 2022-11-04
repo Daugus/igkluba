@@ -35,6 +35,7 @@
 
   --borde-gradiente-radius: linear-gradient(var(--clr-blanco), var(--clr-blanco)) padding-box, var(--gradiente) border-box;
 
+  --sombra-alrededor-suave: 0 0rem 1.125rem -0.375rem rgba(0, 0, 0, 0.35);
   --sombra-alrededor: 0 0rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
   --sombra-superior: 0 -0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
   --sombra-inferior: 0 0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
@@ -110,7 +111,8 @@ a:hover {
   margin-top: 3%;
 }
 
-.form-container {
+.form-container,
+#menu-busqueda {
   background-color: var(--clr-blanco);
   padding: 1.75rem 2.75rem;
 
@@ -484,8 +486,50 @@ a.btn-hasiera {
   font-size: 1.125rem;
 }
 
-#titulo-busqueda {
+/* - bilaketa - */
+#resultados {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 5rem;
+}
+
+#menu-busqueda {
+  height: max-content;
+}
+
+#menu-busqueda section p {
+  font-weight: 500;
+}
+
+#menu-busqueda #titulo-busqueda {
   white-space: pre;
+}
+
+#selector-pagina {
+  gap: 2rem;
+  font-size: 1.25rem;
+  margin-top: 3rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+#selector-pagina a {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 3ch;
+  height: 3ch;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: var(--clr-blanco);
+  box-shadow: var(--sombra-alrededor-suave);
+}
+
+#selector-pagina a.pagina-actual {
+  color: white;
+  background-color: var(--clr-acento);
 }
 
 /* --- libro --- */
@@ -570,6 +614,10 @@ span,
 
 .ver-respuestas {
   font-size: 1.15rem;
+}
+
+:is(#sinopsis, #reviews, #main-respuestas, #respuestas) p {
+  word-wrap: break-word;
 }
 
 /* - respuestas -  */
