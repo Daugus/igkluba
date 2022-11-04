@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang='eu'>
 
+
 <?php
 
 include_once '../templates/head.php';
@@ -8,18 +9,28 @@ agregarHead('Saioa hasi | IGKluba', __FILE__);
 
 include_once '../modules/session.php';
 checkSession();
-?>
-<?php
-$metodo = '';
-$recoger = $_POST['otro'];
-if (isset($_POST['Hizkuntza-berria'])) {
-  $metodo = $_POST['Hizkuntza-berria'];
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  include_once '../modules/db-config.php';
+  // obtengo la id numerica del idioma solicitado y luego uso la id en la insercion
+  $consulta = $pdo->prepare("SELECT id FROM idioma WHERE nombre='" . $nombre_idioma . "';");
+  $consulta->execute();
+  $idIdioma = $consulta->fetch();
+
+  $id_libro = $id;
+  $id_cuenta = $_SESSION['usr']['id'];
+  $nombre_idioma = $_REQUEST['liburuIzena'];
+  $titulo_alternat0ivo = $_REQUEST['hizkuntzaBerria'];
+
+  $insert = $pdo->prepare("INSERT INTO solicitud_idioma (id_libro, id_cuenta, nombre_idioma, titulo_alternativo) VALUES (" . $id_libro . ", " . $id_cuenta . ", '" . $nombre_idioma . "', '" . $titulo_alternativo . "')");
+  $insert->execute([]);
+
+  /* header('Location: /liburua/' . $id);*/
 }
-
-
-echo $recoger . " " . $metodo;
-
 ?>
+
+
 
 
 
@@ -34,10 +45,10 @@ echo $recoger . " " . $metodo;
     <div class="form-container">
       <h1>Hezkuntza berria eskatu</h1>
 
-      <form id="form-hizkuntza" action="" name="formHizkuntza" method="post" class="flex-stretch-col">
+      <form id="form-hizkuntza" action="" name="fHizkuntza" method="post" class="flex-stretch-col">
         <div class="campo">
-          <label for="Liburu-izena">Liburuaren izena:</label>
-          <input type="text" id="Liburu-izena" name="Liburu-izena" minlength="1" maxlength="20" placeholder="Izena">
+          <label for="liburuIzena">Liburuaren izena:</label>
+          <input type="text" id="liburuIzena" name="liburuIzena" placeholder="Izena">
         </div>
 
         <div class="campo">
@@ -54,21 +65,20 @@ echo $recoger . " " . $metodo;
             $idiomasLibro = $idiomasLibro->fetchAll();
             foreach ($idiomasLibro as $idioma) {
             ?>
-              <option value="<?php echo $idioma['nombre'] ?>">
+              <option value="<?php echo $idioma['id'] ?>">
                 <?php echo $idioma['nombre'] ?>
               </option>
             <?php
             }
             ?>
-            <option value="otro" name="otro" onclick="recoger_usuario()">Otro</option>
+            <option value="otro" name="otro">Otro</option>
+
           </select>
         </div>
 
-        <div class="campo" id="recojanme" style="display:none">
-          <label for="Hizkuntza-berria">Hizkuntza berria:</label>
-
-          <input id="Hizkuntza-berria" name="Hizkuntza-berria" minlength="1" maxlength="30" placeholder="Hizkuntza">
-
+        <div class="campo hidden" id="nuevo-idioma">
+          <label for="hizkuntzaBerria">Hizkuntza berria:</label>
+          <input id="hizkuntzaBerria" name="hizkuntzaBerria" minlength="1" maxlength="30" placeholder="Hizkuntza">
         </div>
 
         <button id="login">Bidali</button>
@@ -81,7 +91,7 @@ echo $recoger . " " . $metodo;
   </main>
 
   <?php if (!empty($error)) { ?>
-    <div class="error"><i class="fa-solid fa-circle-exclamation"></i>
+    <div class="mensaje-error"><i class="fa-solid fa-circle-exclamation"></i>
       <p><?php echo $error ?></p>
     </div>
   <?php

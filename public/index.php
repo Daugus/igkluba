@@ -22,7 +22,7 @@ switch ($cantidadSecciones) {
     if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun', 'profila'])) {
       $id = $page[1];
 
-      if (in_array($page[2], ['iritzi', 'erantzun'])) {
+      if (in_array($page[2], ['iritzi', 'erantzun', 'hizkuntza-igo'])) {
         $ruta_elegida = '../views/' . $page[2] . '.php';
       } else if (($page[0] !== 'iritzia' && in_array($page[2], ['aldatu', 'ezabatu', 'eskaera']))
         || in_array($page[0], ['liburua', 'profila']) && in_array($page[2], ['onartu', 'ukatu'])

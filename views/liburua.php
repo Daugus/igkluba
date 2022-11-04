@@ -133,6 +133,7 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
       <?php
       }
       ?>
+      <a href="/liburua/<?php echo $libro['id'] ?>/hizkuntza-igo" class="btn">Hizkuntza berri bat ezkatu</a>
     </section>
 
     <?php

@@ -127,7 +127,7 @@ a:hover {
   gap: 1rem;
 }
 
-form :is(.campo, .campo-predefinido) {
+form :where(.campo, .campo-predefinido) {
   display: flex;
   flex-direction: row;
 

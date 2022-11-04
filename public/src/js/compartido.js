@@ -14,8 +14,38 @@ btnBuscar?.addEventListener('click', (e) => {
   if (campoBusqueda.value !== '') formBuscador.submit();
 });
 
-const mostrarMensajeError = (texto) => {
-  // const mostrarMensajeError = (texto, campo) => {
+const selectorArchivo = () => {
+  const fileInput = document.querySelector('[type="file"]');
+  const labelFileInput = document.querySelector('.file-input-text');
+  labelFileInput.addEventListener('keyup', (e) => {
+    if (['Enter', 'Space'].includes(e.code)) {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+  fileInput.addEventListener('input', () => (labelFileInput.querySelector('span').innerText = fileInput.files[0].name));
+};
+
+const eliminarMensajesError = () => {
+  document.querySelectorAll('.mensaje-error').forEach((mensaje) => mensaje.remove());
+  document.querySelector('.campo-incorrecto')?.classList.remove('campo-incorrecto');
+};
+
+const buscarCampos = () => {
+  const campos = [...form.querySelectorAll('.campo')];
+  let elementosCampos = {};
+
+  let valoresEnviados = {};
+  campos.forEach((campo) => {
+    const valor = campo.querySelector('input, select, textarea');
+    if (valor !== null) valoresEnviados[valor.name] = valor.type === 'file' ? valor.files[0] : valor.value;
+    elementosCampos[valor.name] = valor;
+  });
+
+  return [elementosCampos, valoresEnviados];
+};
+
+const mostrarMensajeError = (texto, campo) => {
   const div = document.createElement('div');
   div.classList.add('mensaje-error');
 
@@ -28,8 +58,8 @@ const mostrarMensajeError = (texto) => {
   div.appendChild(i);
   div.appendChild(p);
 
-  // campo.classList.add('campo-incorrecto');
-  // campo.focus();
+  campo.classList.add('campo-incorrecto');
+  campo.focus();
   document.body.appendChild(div);
 };
 
