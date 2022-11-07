@@ -1,15 +1,15 @@
 <?php
 
-function buscarLibros(String $condicion, String $orden = 'l.nota_media DESC', int $limit = 24, int $numPagina = 1): array
+function buscarLibros(array $condiciones, array $orden = ['l.nota_media DESC']): array
 {
-  // $offset = $limit * ($numPagina - 1);
+  $condiciones = implode(' AND ', $condiciones);
+  $orden = implode(', ', $orden);
   include '../modules/db-config.php';
   $libros = $pdo->prepare("SELECT DISTINCT l.id, il.titulo_alternativo AS titulo, l.autor, l.nota_media
   FROM libro l JOIN idiomas_libro il ON l.id = il.id_libro
-  WHERE $condicion
+  WHERE $condiciones
      GROUP BY l.id
      ORDER BY $orden;");
-  //  LIMIT $offset, $limit;");
   $libros->execute();
 
   return $libros->fetchAll();

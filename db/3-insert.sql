@@ -4,7 +4,7 @@ use igkluba;
 insert into centro
 values (1, 'Unamuno');
 insert into clase (cod, nombre, nivel, curso, id_centro)
-  values ('1234abcd', '2dw3', 3, '2022-2023', 1),
+values ('1234abcd', '2dw3', 3, '2022-2023', 1),
   ('5678efgh', 'otra clase', 4, '2022-2023', 1);
 insert into cuenta (
     id,
@@ -108,10 +108,20 @@ insert into profesor_clase
 values (3, '1234abcd'),
   (6, '5678efgh');
 insert into idioma
-values(1, 'Gaztelania'),
+values (1, 'Gaztelania'),
   (2, 'Euskara'),
   (3, 'Ingelesa'),
   (4, 'Frantsesa');
+insert into idioma (nombre)
+values ('Portugesa'),
+  ('Alemaniarra'),
+  ('Ukraniarra'),
+  ('Rumaniarra'),
+  ('Italiera'),
+  ('Errusiera'),
+  ('Japoniera '),
+  ('Koreera'),
+  ('Txinera');
 insert into libro (
     id,
     autor,
@@ -304,8 +314,16 @@ values (1, 1, 'El Camino de los Reyes'),
   (8, 1, 'El Misterio de los Árbitros Dormidos'),
   (9, 1, 'Cruzada en Jeans'),
   (9, 3, 'Crusade in Jeans'),
-  (10, 1, 'My Hero Academia: Izuku Midoriya: Origen'),
-  (10, 3, 'My Hero Academia: Izuku Midoriya: Origin'),
+  (
+    10,
+    1,
+    'My Hero Academia: Izuku Midoriya: Origen'
+  ),
+  (
+    10,
+    3,
+    'My Hero Academia: Izuku Midoriya: Origin'
+  ),
   (11, 2, 'Eireren Egunerokoa'),
   (12, 1, 'Charlie y la Fábrica de Chocolate'),
   (12, 2, 'Charlie eta Txokolate-lantegia'),
@@ -430,4 +448,5 @@ values (
     true
   );
 insert into solicitud_libro (id, id_libro, id_cuenta)
-  values (1, 13, 4), (2, 14, 5);
+values (1, 13, 4),
+  (2, 14, 5);

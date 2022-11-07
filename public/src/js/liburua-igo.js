@@ -18,14 +18,15 @@ btnEnviar.addEventListener('click', (e) => {
   eliminarMensajesError();
   const [campos, valoresEnviados] = buscarCampos();
 
-  if (!/^(?=.*[A-Za-zÀ-ÖØ-öø-ÿ\-])[0-9A-Za-zÀ-ÖØ-öø-ÿ,.\-:; ]{1,100}$/.test(valoresEnviados.titulo))
-    return mostrarMensajeError('Izenburua bakarrik letrak izan ditzake', campos.titulo);
+  if (!/^(?=.*[0-9A-Za-zÀ-ÖØ-öø-ÿ\-])[0-9A-Za-zÀ-ÖØ-öø-ÿ,.\-:; ]{1,100}$/.test(valoresEnviados.titulo))
+    return mostrarMensajeError('Izenburua bakarrik letrak eta zenbakiak izan ditzake', campos.titulo);
 
   if (!/^(?=.*[0-9A-Za-zÀ-ÖØ-öø-ÿ\-])[A-Za-zÀ-ÖØ-öø-ÿ,. ]{1,100}$/.test(valoresEnviados.autor))
     return mostrarMensajeError('Egilea bakarrik letrak eta koma bat izan ditzake', campos.autor);
 
   if (valoresEnviados.serie !== '') {
-    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ,.\- ]{1,50}$/.test(valoresEnviados.serie)) return mostrarMensajeError('Saila bakarrik letrak izan ditzake', campos.serie);
+    if (!/^[0-9A-Za-zÀ-ÖØ-öø-ÿ,.\- ]{1,50}$/.test(valoresEnviados.serie))
+      return mostrarMensajeError('Saila bakarrik letrak eta zenbakiak izan ditzake', campos.serie);
 
     if (!/^[\d,.]{1,5}$/.test(valoresEnviados.serie_num)) return mostrarMensajeError('Saila zenbakia zenbaki bat izan behar da', campos.serie_num);
   }

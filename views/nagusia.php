@@ -20,7 +20,7 @@ agregarHead('IGKluba');
 
     <?php
     include_once '../modules/select.php';
-    agregarLibros(buscarLibros('1', 'l.nota_media DESC, il.id_idioma ASC'));
+    agregarLibros(buscarLibros(['1'], ['l.nota_media DESC', 'il.id_idioma ASC']));
     ?>
   </main>
 

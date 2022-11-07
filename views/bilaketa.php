@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['busqueda'])) {
   $busqueda = trim($_REQUEST['busqueda']);
   $_SESSION['busquedaOriginal'] = $busqueda;
   $busqueda = preg_replace('/^#/', 'e:', str_replace(' ', '_', $busqueda));
-  header('Location: /bilaketa/' . $busqueda . '/1');
+  header("Location: /bilaketa/$busqueda/1");
 }
 
 if (!isset($busqueda)) header('Location: /nagusia');
@@ -29,9 +29,42 @@ agregarHead($busquedaOriginal . ' | IGKluba');
     <?php
     include_once '../modules/select.php';
 
+    $orden = ['il.id_idioma ASC', 'l.nota_media DESC'];
+    $condicion = ["LOWER(il.titulo_alternativo) like '%$busquedaOriginal%'"];
+
+    if (isset($_REQUEST['ordenatu'])) {
+      switch ($_REQUEST['ordenatu']) {
+        case 'data':
+          $orden = ['l.fecha_pub'];
+          break;
+
+        case 'nota':
+          $orden = ['l.nota_media'];
+          break;
+
+        case 'id':
+          $orden = ['l.id'];
+          break;
+
+        case 'irakurleak':
+          $orden = ['l.cantidad_reviews'];
+          break;
+      }
+
+      switch ($_REQUEST['ordena']) {
+        case 'goranzkoa':
+          $orden[0] .= ' ASC';
+          break;
+
+        case 'beheranzkoa':
+          $orden[0] .= ' DESC';
+          break;
+      }
+    }
+
     $libros = buscarLibros(
-      "LOWER(il.titulo_alternativo) like '%$busquedaOriginal%'",
-      'il.id_idioma ASC, l.nota_media DESC'
+      $condicion,
+      $orden
     );
 
     $resultados = count($libros);
@@ -58,6 +91,7 @@ agregarHead($busquedaOriginal . ' | IGKluba');
         <aside id="menu-busqueda">
           <section>
             <p>Orden</p>
+
           </section>
           <section>
             <p>Filtros</p>

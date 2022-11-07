@@ -21,6 +21,7 @@ if ($accion === 'onartu') {
 } else if ($accion === 'ukatu') {
   $delete = $pdo->prepare('DELETE FROM libro where id = :id;');
   $delete->execute(['id' => $id]);
+  unlink("../public/src/img/azala/$id.png");
   header('Location: /profila#liburu-eskaerak');
 }
 
