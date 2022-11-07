@@ -15,14 +15,15 @@ selectIdioma.addEventListener('input', e => {
 const btnLogin = document.querySelector('#login');
 btnLogin.addEventListener('click', (e) => {
     e.preventDefault();
+
     eliminarMensajesError();
     const [campos, valoresEnviados] = buscarCampos();
   
-    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,50}$/.test(valoresEnviados.liburuIzena)) return mostrarMensajeError('Liburuaren izena ezin da egon utzik', campos.liburuIzena);
+    if (!/^[0-9A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,50}$/.test(valoresEnviados.nombreLibro)) return mostrarMensajeError('Liburuaren izena ezin da egon utzik', campos.nombreLibro);
   
     if (valoresEnviados.idioma === '-') return mostrarMensajeError('Hizkuntza ezin da egon utzik', campos.idioma);
   
-    if (valoresEnviados.idioma === 'otro' && !/^[A-Z][A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,49}$/.test(valoresEnviados.hizkuntzaBerria)) return mostrarMensajeError('Letra larriz hasi behar da', campos.hizkuntzaBerria);
+    if (valoresEnviados.idioma === 'otro' && !/^[A-Z][A-Za-zÀ-ÖØ-öø-ÿ\- ]{1,49}$/.test(valoresEnviados.nuevoIdioma)) return mostrarMensajeError('Letra larriz hasi behar da', campos.nuevoIdioma);
     
     form.submit();
   });
