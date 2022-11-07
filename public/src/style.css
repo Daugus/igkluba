@@ -211,6 +211,7 @@ textarea,
 .file-input-text,
 #header-perfil img {
   transition: outline var(--transicion-rapida);
+  border-radius: 2px;
 }
 
 input:focus-visible,
@@ -220,7 +221,7 @@ textarea:focus-visible,
 .file-input-text:focus-visible,
 #header-perfil img:hover {
   outline: var(--outline);
-  outline-offset: 0.1875rem;
+  outline-offset: 0.3125rem;
 }
 
 textarea {

@@ -21,7 +21,7 @@ if (isset($busqueda)) {
   $usuario = $_SESSION['usr'];
 }
 
-include_once '../modules/db-config.php';
+include '../modules/db-config.php';
 if ($accion === 'onartu') {
   $update = $pdo->prepare('UPDATE cuenta SET activo = 1 where apodo = :apodo;');
   $update->execute(['apodo' => $usuario['apodo']]);

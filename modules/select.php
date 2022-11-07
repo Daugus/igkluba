@@ -2,6 +2,7 @@
 
 function buscarLibros(array $condiciones, array $orden = ['l.nota_media DESC']): array
 {
+  $condiciones[] = 'aceptado = 1';
   $condiciones = implode(' AND ', $condiciones);
   $orden = implode(', ', $orden);
   include '../modules/db-config.php';

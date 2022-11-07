@@ -35,7 +35,7 @@ btnRegistro.addEventListener('click', (e) => {
   if (valoresEnviados.imagen && valoresEnviados.imagen['type'].split('/')[0] !== 'image')
     return mostrarMensajeError('Fitxategia argazkia izan behar da', campos.imagen);
 
-  const rgPwd = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-zÀ-ÖØ-öø-ÿ\d@$!%*?&]{8,30}$/);
+  const rgPwd = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#\-_])[A-Za-zÀ-ÖØ-öø-ÿ\d@$!%*?&#\-_]{8,30}$/);
   if (!rgPwd.test(valoresEnviados.pwd))
     return mostrarMensajeError(
       'Pasahitza gutxienez 8 karaktere izan behar ditu, eta hauetatik gutxienez maiuskula bat, minuskula bat, zenbakia bat eta ikur bat (@, $, !, %, *, ?, &).',
