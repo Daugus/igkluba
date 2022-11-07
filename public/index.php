@@ -1,18 +1,43 @@
 <?php
-include_once '../modules/url.php';
-$url['page'] = getPage();
+$url = parse_url($_SERVER['REQUEST_URI']);
+$page =  array_slice(array_filter(explode('/', strtolower($url['path']))), 0);
 
 $ruta_elegida = '';
+$accion = '';
 
-if (count($url['page']) === 1) {
-  $ruta_elegida = '../views/' . $url['page'][0] . '.php';
-} else if (count($url['page']) === 2 && $url['page'][0] === 'liburu') {
-  $ruta_elegida = '../views/' . $url['page'][0] . '.php';
-  $id = $url['page'][1];
+$cantidadSecciones = count($page);
+switch ($cantidadSecciones) {
+  case 1:
+    $ruta_elegida = '../views/' . $page[0] . '.php';
+    break;
+
+  case 2:
+    if (in_array($page[0], ['liburua', 'iritzia', 'bilaketa', 'profila'])) {
+      $ruta_elegida = '../views/' . $page[0] . '.php';
+      $busqueda = $page[1];
+    }
+    break;
+
+  case 3:
+    if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun', 'profila'])) {
+      $id = $page[1];
+
+      if (in_array($page[2], ['iritzi', 'erantzun'])) {
+        $ruta_elegida = '../views/' . $page[2] . '.php';
+      } else if (($page[0] !== 'iritzia' && in_array($page[2], ['aldatu', 'ezabatu', 'eskaera']))
+        || in_array($page[0], ['liburua', 'profila']) && in_array($page[2], ['onartu', 'ukatu'])
+      ) {
+        $ruta_elegida = '../views/' . $page[0] . '.php';
+        $busqueda = $page[1];
+        $accion = $page[2];
+      }
+    }
+
+    break;
 }
 
 if (empty($ruta_elegida) || !file_exists($ruta_elegida)) {
-  header('Location: ' . getUrl() . '/hasiera');
+  header('Location: /hasiera');
 }
 
 include_once $ruta_elegida;

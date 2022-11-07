@@ -1,0 +1,261 @@
+/* oculto los contenedores de cada seccion por defecto solo se mostraran al darle button los botones */
+#contenedorReviews, #contenedorClase, #contenedorIdioma {
+    display: none;
+}
+
+
+/* Global */
+
+body {
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: azure;
+    margin: 0;
+}
+
+
+table  {
+    border: 3px solid dodgerblue;
+    border-radius: 10px; 
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
+
+tr, td {
+    padding-top: 5%;
+}
+
+li {
+    list-style: none;
+}
+
+a,button, .Enviar {
+    background-color: black;
+    border-radius: 5px;
+    margin-right: 5%;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#botones :hover {
+    background-color: rgb(70, 70, 70);   
+}
+
+#botones :active {
+    background-color: rgb(150, 150, 150);   
+}
+
+.pfp {
+    width: 120px;
+    height: 120px;
+    margin-top: 1%;
+    border: 3px solid dodgerblue;
+    border-radius: 10px; 
+}
+
+#contenedorClase, #contenedorSolicitudIdioma, #contenedorIdioma {
+    border: 3px solid dodgerblue;
+    border-radius: 10px; 
+}
+
+#contenedorAlumno {
+    display: grid; 
+    text-align: center;
+    margin-top: 3%;
+    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 25px; 
+    grid-template-areas: 
+      "FOTO-PERFIL LI BOTON"; 
+}
+.FOTO-PERFIL { 
+    grid-area: FOTO-PERFIL; 
+}
+.NOMBRE-APELLIDOS { 
+    grid-area: NOMBRE-APELLIDOS; 
+}
+.LI { 
+    grid-area: LI; 
+    text-align: left; 
+}
+
+.BOTON { 
+    grid-area: BOTON; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+#eliminar {
+    background-color: red;
+    border-radius: 5px;
+    color: black;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#eliminar :hover {
+    background-color: rgb(200, 0, 0);   
+}
+
+#eliminar :active {
+    background-color: rgb(255, 40, 40);   
+}
+
+#contenedorSolicitudIdioma {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 25px;
+    grid-auto-flow: row;
+    grid-template-areas: "FOTO-LIBRO ALUMNO BOTONES";
+}
+  
+.FOTO-LIBRO { 
+    grid-area: FOTO-LIBRO; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#caratula {
+    width: 150px;
+    height: 250px;
+    justify-content: center;
+    align-items: center;
+}
+.ALUMNO { 
+    grid-area: ALUMNO;
+}
+  
+.BOTONES { 
+    grid-area: BOTONES; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+}
+
+/* Movil */
+@media screen and (max-width: 500px) {
+
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase, #contenedorSolicitudIdioma, #contenedorIdioma {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 2%;
+    }
+
+    ul {
+        margin-left: -10%;
+    }
+
+    #contenedorUsuario {
+        display: flex;
+        justify-content: center;
+    }
+
+    #botones {
+        display: flex;
+        flex-direction: column;
+        margin-left: 10%;
+        margin-right: 10%;
+        
+    }
+
+    #contenedorAlumno, #contenedorSolicitudIdioma {
+        display: flex; 
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .LI {
+        position: relative;
+        text-align: left;
+        margin-left: 20%;
+    }
+
+    
+}
+
+/* Tablet */
+@media screen and (min-width: 501px) and (max-width: 1000px) {
+
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase, #contenedorIdioma {
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-top: 2%;
+    }
+
+    #contenedorUsuario {
+        display: flex;
+        justify-content: center;
+    }
+
+    .perfilLista {
+        margin-left: -15%;
+    }
+
+    #botones {
+        display: flex;
+        justify-content: center;
+    }
+
+    #contenedorAlumno, #contenedorSolicitudIdioma {
+        gap: 0px 0px; 
+    }
+
+    .LI {
+        position: relative;
+        text-align: left;
+        margin-left: -20%;
+    }
+
+    .BOTONES {
+        margin-left: -10%;
+    }
+
+    
+}
+
+
+
+/* PC */
+@media screen and (min-width: 1000px) {
+
+    #contenedorReviews, #contenedorUsuario, #botones, #contenedorClase, #contenedorIdioma {
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-top: 2%;
+    }
+
+    #contenedorSolicitudIdioma {
+        margin-left: 0%;
+    margin-right: 0%;
+    }
+    
+
+    #contenedorUsuario {
+        display: flex;
+        justify-content: center;
+    }
+
+    .perfilLista {
+        margin-left: -15%;
+    }
+
+    #botones {
+        display: flex;
+        justify-content: center;
+    }
+
+    .LI { 
+        margin-left: -35%;
+    }
+
+
+      
+}

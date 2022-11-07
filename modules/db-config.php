@@ -8,5 +8,5 @@ $nombreDB = $env->DB;
 $usuarioDB = $env->USR;
 $passDB = $env->PASS;
 
-$hostPDO = "mysql:host=$hostDB;dbname=$nombreDB;";
+$hostPDO = "mysql:host=$hostDB;dbname=$nombreDB;charset=utf8mb4";
 $pdo = new PDO($hostPDO, $usuarioDB, $passDB);
