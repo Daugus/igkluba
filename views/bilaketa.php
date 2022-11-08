@@ -93,8 +93,10 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
               <option value="irakurleak" <?php if (isset($_REQUEST['ordenatu']) && $_REQUEST['ordenatu'] === 'irakurleak') echo 'selected' ?>>Irakurle kopurua</option>
             </select>
 
-            <label for="gora">Gora</label><input type="radio" name="direccion" value="gora" id="gora" <?php if (isset($_REQUEST['ordena']) && $_REQUEST['ordena'] === 'gora') echo 'checked' ?>>
-            <label for="behera">Behera</label><input type="radio" name="direccion" value="behera" id="behera" <?php if (!isset($_REQUEST['ordena']) || $_REQUEST['ordena'] === 'behera') echo 'checked' ?>>
+            <div class="campo">
+              <label for="gora">Gora</label><input type="radio" name="direccion" value="gora" id="gora" <?php if (isset($_REQUEST['ordena']) && $_REQUEST['ordena'] === 'gora') echo 'checked' ?>>
+              <label for="behera">Behera</label><input type="radio" name="direccion" value="behera" id="behera" <?php if (!isset($_REQUEST['ordena']) || $_REQUEST['ordena'] === 'behera') echo 'checked' ?>>
+            </div>
 
             <input type="hidden" value="<?php echo $busqor ?>" id="busqueda">
             <input type="hidden" value="<?php echo $pagina ?>" id="pagina">
