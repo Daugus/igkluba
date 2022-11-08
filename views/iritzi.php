@@ -170,7 +170,7 @@ agregarHead('Iritzia eman | IGKluba', __FILE__);
         }
         ?>
 
-        <button id="enviar">Bidali</button>
+        <button class="btn" id="enviar">Bidali</button>
       </form>
     </div>
 

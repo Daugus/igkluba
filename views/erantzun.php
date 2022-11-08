@@ -45,7 +45,7 @@ agregarHead('Erantzun | IGKluba', __FILE__);
           <textarea name="texto" id="texto" minlength="1" maxlength="2295" placeholder="Zure erantzuna (100 hitz gehienez)..."></textarea>
         </div>
 
-        <button id="enviar">Bidali</button>
+        <button class="btn" id="enviar">Bidali</button>
       </form>
     </div>
 

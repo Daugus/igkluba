@@ -127,8 +127,11 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
           <a href="/liburua/<?php echo $libro['id'] ?>/iritzi" class="btn">Iritzia eman</a>
         <?php
         }
-      } else {
         ?>
+        <a href="/liburua/<?php echo $libro['id'] ?>/hizkuntza-igo" class="btn">Hizkuntza berria <?php echo $_SESSION['usr']['rol']  === 'Admin' ? 'gehitu' : 'eskatu' ?></a>
+      <?php
+      } else {
+      ?>
         <a href="/liburua/<?php echo $libro['id'] ?>/onartu" class="btn">Eskaera onartu</a>
         <a href="/liburua/<?php echo $libro['id'] ?>/ukatu" class="btn">Eskaera ukatu</a>
       <?php

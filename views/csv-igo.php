@@ -76,7 +76,7 @@ agregarHead('CSV igo | IGKluba', __FILE__);
           <input type="file" id="csv" name="csv" accept="text/csv,.csv" class="hidden">
         </div>
 
-        <button id="enviar">Igo</button>
+        <button class="btn" id="enviar">Igo</button>
       </form>
     </div>
 

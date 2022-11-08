@@ -98,6 +98,7 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
 
             <input type="hidden" value="<?php echo $busqor ?>" id="busqueda">
             <input type="hidden" value="<?php echo $pagina ?>" id="pagina">
+
             <button class="btn" type="submit" id="filtrar">Bilatu</button>
           </form>
         </aside>

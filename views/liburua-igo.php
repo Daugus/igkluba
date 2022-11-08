@@ -122,7 +122,7 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
           <textarea name="sinopsis" id="sinopsis" maxlength="2550" placeholder="Liburaren sinopsia" value="<?php if (isset($_REQUEST['sinopsis'])) echo $_REQUEST['sinopsis'] ?>"></textarea>
         </div>
 
-        <button id="enviar"><?php echo ucfirst($accion) ?></button>
+        <button class="btn" id="enviar"><?php echo ucfirst($accion) ?></button>
       </form>
     </div>
 

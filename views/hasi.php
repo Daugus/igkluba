@@ -45,7 +45,7 @@ agregarHead('Saioa hasi | IGKluba', __FILE__);
           <input type="password" id="pass" name="pass" minlength="1" maxlength="30" placeholder="Zure pasahitza">
         </div>
 
-        <button id="login">Saioa hasi</button>
+        <button class="btn" id="login">Saioa hasi</button>
       </form>
     </div>
 

@@ -148,7 +148,7 @@ agregarHead('Sortu kontua | IGKluba', __FILE__);
           <input type="password" id="pwdConf" name="pwdConf" maxlength="30" placeholder="Zure pasahitza">
         </div>
 
-        <button type="submit" id="registrarse">Sortu kontua</button>
+        <button type="submit" class="btn" id="registrarse">Sortu kontua</button>
       </form>
     </div>
 
