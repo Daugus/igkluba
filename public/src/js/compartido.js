@@ -60,6 +60,7 @@ const mostrarMensajeError = (texto, campo) => {
   div.appendChild(p);
 
   div.addEventListener('animationend', (e) => e.target.classList.add('hidden'));
+  div.addEventListener('click', () => div.classList.add('hidden'));
   document.body.appendChild(div);
 
   campo.focus();

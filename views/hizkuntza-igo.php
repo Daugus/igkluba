@@ -71,31 +71,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="campo">
           <label for="idioma">Hizkuntza:</label>
-          <select name="idioma" id="idioma">
-            <option disabled selected>-</option>
-            <?php
-            include_once '../modules/db-config.php';
-            $idiomasLibro = $pdo->prepare(
-              'SELECT DISTINCT i.id, i.nombre AS nombre
+
+          <div class="select-container">
+            <select name="idioma" id="idioma">
+              <option disabled selected>-</option>
+              <?php
+              include_once '../modules/db-config.php';
+              $idiomasLibro = $pdo->prepare(
+                'SELECT DISTINCT i.id, i.nombre AS nombre
                 FROM idioma i
                 WHERE i.id NOT IN (SELECT DISTINCT idiomas_libro.id_idioma FROM idiomas_libro WHERE id_libro = :id)
                 AND i.id NOT IN (SELECT id_idioma FROM solicitud_idioma WHERE id_libro = :id)
                 ORDER BY i.nombre ASC;'
-            );
+              );
 
-            $idiomasLibro->execute(['id' => $id]);
-            $idiomasLibro = $idiomasLibro->fetchAll();
-            foreach ($idiomasLibro as $idioma) {
-            ?>
-              <option value="<?php echo $idioma['id'] ?>">
-                <?php echo $idioma['nombre'] ?>
-              </option>
-            <?php
-            }
-            ?>
-            <option value="otro" name="otro">Otro</option>
-
-          </select>
+              $idiomasLibro->execute(['id' => $id]);
+              $idiomasLibro = $idiomasLibro->fetchAll();
+              foreach ($idiomasLibro as $idioma) {
+              ?>
+                <option value="<?php echo $idioma['id'] ?>">
+                  <?php echo $idioma['nombre'] ?>
+                </option>
+              <?php
+              }
+              ?>
+              <option value="otro" name="otro">Otro</option>
+            </select>
+          </div>
         </div>
 
         <div class="campo hidden" id="nuevo-idioma">

@@ -102,13 +102,16 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
 
         <div class="campo">
           <label for="formato">Formatua:</label>
-          <select name="formato" id="formato">
-            <option disabled selected>-</option>
-            <option value="nobela" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'nobela') echo 'selected' ?>>Nobela</option>
-            <option value="komikia" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'komikia') echo 'selected' ?>>Komikia</option>
-            <option value="nobela grafikoa" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'nobela grafikoa') echo 'selected' ?>>Nobela grafikoa</option>
-            <option value="manga" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'manga') echo 'selected' ?>>Manga</option>
-          </select>
+
+          <div class="select-container">
+            <select name="formato" id="formato">
+              <option disabled selected>-</option>
+              <option value="nobela" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'nobela') echo 'selected' ?>>Nobela</option>
+              <option value="komikia" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'komikia') echo 'selected' ?>>Komikia</option>
+              <option value="nobela grafikoa" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'nobela grafikoa') echo 'selected' ?>>Nobela grafikoa</option>
+              <option value="manga" <?php if (isset($_REQUEST['formato']) && $_REQUEST['formato'] === 'manga') echo 'selected' ?>>Manga</option>
+            </select>
+          </div>
         </div>
 
         <div class="campo">

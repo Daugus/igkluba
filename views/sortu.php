@@ -106,20 +106,23 @@ agregarHead('Sortu kontua | IGKluba', __FILE__);
 
         <div class="campo">
           <label for="centro">Ikastetxea:</label>
-          <select name="centro" id="centro">
-            <option disabled selected>-</option>
-            <?php
-            include_once '../modules/db-config.php';
-            $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
-            $centros->execute();
-            $centros = $centros->fetchAll();
-            foreach ($centros as $centro) {
-            ?>
-              <option value="<?php echo $centro['id'] ?>" <?php if (isset($_REQUEST['centro']) && $centro['id'] === $_REQUEST['centro']) echo 'selected' ?>><?php echo $centro['nombre'] ?></option>
-            <?php
-            }
-            ?>
-          </select>
+
+          <div class="select-container">
+            <select name="centro" id="centro">
+              <option disabled selected>-</option>
+              <?php
+              include_once '../modules/db-config.php';
+              $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
+              $centros->execute();
+              $centros = $centros->fetchAll();
+              foreach ($centros as $centro) {
+              ?>
+                <option value="<?php echo $centro['id'] ?>" <?php if (isset($_REQUEST['centro']) && $centro['id'] === $_REQUEST['centro']) echo 'selected' ?>><?php echo $centro['nombre'] ?></option>
+              <?php
+              }
+              ?>
+            </select>
+          </div>
         </div>
 
         <div class="campo">

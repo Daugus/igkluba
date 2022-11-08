@@ -65,7 +65,7 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
 
     $pagina = intval($pagina);
 
-    $libros = array_chunk($libros, 6);
+    $libros = array_chunk($libros, 12);
     $cantidadPaginas = count($libros);
     $rutaBusqueda = '/bilaketa/' . $busquedaOriginal;
 
@@ -83,19 +83,25 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
     <?php if ($resultados > 0) { ?>
       <div id="resultados">
         <aside class="form-container" id="menu-busqueda">
-          <form method="get" action="GET">
+          <form method="get" action="GET" class="flex-stretch-col">
             <p>Ordenatu</p>
 
-            <select name="orden" id="orden">
-              <option value="igoera" <?php if (isset($_REQUEST['ordenatu']) && $_REQUEST['ordenatu'] === 'igoera') echo 'selected' ?>>Igoera data</option>
-              <option value="nota" <?php if (!isset($_REQUEST['ordenatu']) || $_REQUEST['ordenatu'] === 'nota') echo 'selected' ?>>Nota</option>
-              <option value="data" <?php if (isset($_REQUEST['ordenatu']) && $_REQUEST['ordenatu'] === 'data') echo 'selected' ?>>Argitaratze data</option>
-              <option value="irakurleak" <?php if (isset($_REQUEST['ordenatu']) && $_REQUEST['ordenatu'] === 'irakurleak') echo 'selected' ?>>Irakurle kopurua</option>
-            </select>
+            <div class="select-container">
+              <select name="orden" id="orden">
+                <option value="igoera" <?php if (isset($_REQUEST['ordenatu']) && $_REQUEST['ordenatu'] === 'igoera') echo 'selected' ?>>Igoera data</option>
+                <option value="nota" <?php if (!isset($_REQUEST['ordenatu']) || $_REQUEST['ordenatu'] === 'nota') echo 'selected' ?>>Nota</option>
+                <option value="data" <?php if (isset($_REQUEST['ordenatu']) && $_REQUEST['ordenatu'] === 'data') echo 'selected' ?>>Argitaratze data</option>
+                <option value="irakurleak" <?php if (isset($_REQUEST['ordenatu']) && $_REQUEST['ordenatu'] === 'irakurleak') echo 'selected' ?>>Irakurle kopurua</option>
+              </select>
+            </div>
 
-            <div class="campo">
-              <label for="gora">Gora</label><input type="radio" name="direccion" value="gora" id="gora" <?php if (isset($_REQUEST['ordena']) && $_REQUEST['ordena'] === 'gora') echo 'checked' ?>>
-              <label for="behera">Behera</label><input type="radio" name="direccion" value="behera" id="behera" <?php if (!isset($_REQUEST['ordena']) || $_REQUEST['ordena'] === 'behera') echo 'checked' ?>>
+            <div class="campo flex-stretch-col">
+              <div class="flex-space-between-row radio-container">
+                <label for="gora">Gora</label><input type="radio" name="direccion" value="gora" id="gora" <?php if (isset($_REQUEST['ordena']) && $_REQUEST['ordena'] === 'gora') echo 'checked' ?>>
+              </div>
+              <div class="flex-space-between-row radio-container">
+                <label for="behera">Behera</label><input type="radio" name="direccion" value="behera" id="behera" <?php if (!isset($_REQUEST['ordena']) || $_REQUEST['ordena'] === 'behera') echo 'checked' ?>>
+              </div>
             </div>
 
             <input type="hidden" value="<?php echo $busqor ?>" id="busqueda">

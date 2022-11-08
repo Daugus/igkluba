@@ -118,41 +118,46 @@ agregarHead('Iritzia eman | IGKluba', __FILE__);
 
         <div class="campo">
           <label for="nota">Nota:</label>
-          <div>
-            <select name="nota" id="nota">
-              <option disabled selected>-</option>
-              <?php
-              foreach (range(1, 5) as $nota) {
-              ?>
-                <option value="<?php echo $nota ?>" <?php if ($editar && $nota === $review['nota']) echo 'selected' ?>><?php echo $nota ?></option>
-              <?php
-              }
-              ?>
-            </select>
+          <div class="select-nota">
+            <div class="select-container">
+              <select name="nota" id="nota">
+                <option disabled selected>-</option>
+                <?php
+                foreach (range(1, 5) as $nota) {
+                ?>
+                  <option value="<?php echo $nota ?>" <?php if ($editar && $nota === $review['nota']) echo 'selected' ?>><?php echo $nota ?></option>
+                <?php
+                }
+                ?>
+              </select>
+            </div>
             <i class="fa-solid fa-star"></i>
           </div>
         </div>
 
         <div class="campo">
           <label for="idioma">Irakurritako hizkuntza:</label>
-          <select name="idioma" id="idioma">
-            <option disabled selected>-</option>
-            <?php
-            include_once '../modules/db-config.php';
-            $idiomasLibro = $pdo->prepare('SELECT i.id, i.nombre AS nombre
+
+          <div class="select-container">
+            <select name="idioma" id="idioma">
+              <option disabled selected>-</option>
+              <?php
+              include_once '../modules/db-config.php';
+              $idiomasLibro = $pdo->prepare('SELECT i.id, i.nombre AS nombre
                                             FROM idiomas_libro il JOIN idioma i ON il.id_idioma = i.id
                                             WHERE id_libro = :id;');
-            $idiomasLibro->execute(['id' => $id]);
-            $idiomasLibro = $idiomasLibro->fetchAll();
-            foreach ($idiomasLibro as $idioma) {
-            ?>
-              <option value="<?php echo $idioma['nombre'] ?>" <?php if ($editar && $idioma['nombre'] === $review['nombre_idioma']) echo 'selected' ?>>
-                <?php echo $idioma['nombre'] ?>
-              </option>
-            <?php
-            }
-            ?>
-          </select>
+              $idiomasLibro->execute(['id' => $id]);
+              $idiomasLibro = $idiomasLibro->fetchAll();
+              foreach ($idiomasLibro as $idioma) {
+              ?>
+                <option value="<?php echo $idioma['nombre'] ?>" <?php if ($editar && $idioma['nombre'] === $review['nombre_idioma']) echo 'selected' ?>>
+                  <?php echo $idioma['nombre'] ?>
+                </option>
+              <?php
+              }
+              ?>
+            </select>
+          </div>
         </div>
 
         <div class="campo">
