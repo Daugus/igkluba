@@ -59,9 +59,11 @@ const mostrarMensajeError = (texto, campo) => {
   div.appendChild(i);
   div.appendChild(p);
 
-  campo.classList.add('campo-incorrecto');
-  campo.focus();
+  div.addEventListener('animationend', (e) => e.target.classList.add('hidden'));
   document.body.appendChild(div);
+
+  campo.focus();
+  setTimeout(() => campo.classList.add('campo-incorrecto'), 5);
 };
 
 const calcularEdad = (fecha) => {
@@ -74,3 +76,10 @@ const calcularEdad = (fecha) => {
 
   return edad;
 };
+
+// agregar listeners de animacion a portadas y fotos de perfil
+const portadas = [...document.querySelectorAll('.libro__portada, .cuenta__foto')];
+portadas.forEach((imagen) => {
+  imagen.addEventListener('animationend', () => imagen.classList.remove('animacion-subir'));
+  imagen.addEventListener('mouseover', () => imagen.classList.add('animacion-subir'));
+});

@@ -38,7 +38,8 @@ btnRegistro.addEventListener('click', (e) => {
   const rgPwd = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#\-_])[A-Za-zÀ-ÖØ-öø-ÿ\d@$!%*?&#\-_]{8,30}$/);
   if (!rgPwd.test(valoresEnviados.pwd))
     return mostrarMensajeError(
-      'Pasahitza gutxienez 8 karaktere izan behar ditu, eta hauetatik gutxienez maiuskula bat, minuskula bat, zenbakia bat eta ikur bat (@, $, !, %, *, ?, &).',
+      `Pasahitza gutxienez 8 karaktere, maiuskula bat, minuskula bat,
+zenbaki bat eta ikur (@, #, !, _, -) bat behar du.`,
       campos.pwd
     );
   if (valoresEnviados.pwd !== valoresEnviados.pwdConf) return mostrarMensajeError('Pasahitzak ez datoz bat', campos.pwdConf);

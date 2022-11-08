@@ -35,8 +35,9 @@
 
   --borde-gradiente-radius: linear-gradient(var(--clr-blanco), var(--clr-blanco)) padding-box, var(--gradiente) border-box;
 
-  --sombra-alrededor-suave: 0 0rem 1.125rem -0.375rem rgba(0, 0, 0, 0.35);
-  --sombra-alrededor: 0 0rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
+  --sombra-alrededor-suave: 0 0 1.125rem -0.375rem rgba(0, 0, 0, 0.35);
+  --sombra-alrededor: 0 0 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
+
   --sombra-superior: 0 -0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
   --sombra-inferior: 0 0.375rem 1.125rem -0.375rem rgba(0, 0, 0, 0.75);
 
@@ -98,7 +99,7 @@ a:visited {
   color: var(--clr-acento);
 }
 
-a:hover {
+a:not(header a) {
   text-decoration-color: initial;
 }
 
@@ -422,23 +423,35 @@ a.btn-hasiera {
 
 .libro__portada,
 .cuenta__foto {
-  transition: outline var(--transicion-rapida);
   height: 100%;
   box-shadow: var(--sombra-alrededor);
 }
 
-:is(.libro__portada, .cuenta__foto) img {
-  height: 100%;
-}
-
 .libro__portada,
-.libro__portada img {
+.cuenta__foto,
+:is(.libro__portada, .cuenta__foto) img {
   border-radius: 8px;
 }
 
-:is(.libro__portada, .cuenta__foto):hover {
+.libro__portada img:focus-visible {
   outline: var(--outline);
   outline-offset: 0.3125rem;
+}
+
+.animacion-subir {
+  animation: subir 500ms;
+}
+
+@keyframes subir {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.75rem);
+  }
+  100% {
+    transform: translateY(0rem);
+  }
 }
 
 .libro__texto,
@@ -749,9 +762,9 @@ a.btn {
   background-color: var(--clr-error);
   color: var(--clr-blanco);
 
-  top: -100%;
+  top: 1.5rem;
   left: 50%;
-  transform: translateX(-50%);
+  translate: -50% 0;
   z-index: 2;
 
   margin-inline: auto;
@@ -765,8 +778,12 @@ a.btn {
   align-items: center;
   gap: 1rem;
 
-  animation: error 10s;
+  animation: error 8s;
   box-shadow: var(--sombra-alrededor);
+}
+
+.campo-incorrecto {
+  animation: error-campo 800ms;
 }
 
 .campo-incorrecto,
@@ -777,15 +794,40 @@ a.btn {
 
 @keyframes error {
   0% {
-    top: -20%;
+    transform: rotateX(90deg);
   }
 
-  50% {
-    top: 25%;
+  10% {
+    transform: rotateX(0deg);
+  }
+
+  90% {
+    transform: rotateX(0deg);
   }
 
   100% {
-    top: -50%;
+    transform: rotateX(90deg);
+  }
+}
+
+@keyframes error-campo {
+  0% {
+    translate: 0 0;
+  }
+  20% {
+    translate: -0.5rem 0;
+  }
+  40% {
+    translate: 0.5rem 0;
+  }
+  60% {
+    translate: -0.5rem 0;
+  }
+  80% {
+    translate: 0.5rem 0;
+  }
+  100% {
+    translate: 0 0;
   }
 }
 
