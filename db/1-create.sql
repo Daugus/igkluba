@@ -101,11 +101,11 @@ create table if not exists solicitud_libro (
   foreign key (id_cuenta) references cuenta(id) on delete cascade
 );
 create table if not exists solicitud_idioma (
+  id int unsigned auto_increment primary key,
   id_libro int unsigned not null,
   id_cuenta int unsigned not null,
   id_idioma int unsigned not null,
   titulo_alternativo varchar(100) not null,
-  primary key (id_libro, id_cuenta, id_idioma),
   foreign key (id_libro) references libro(id) on delete cascade,
   foreign key (id_cuenta) references cuenta(id) on delete cascade,
   foreign key (id_idioma) references idioma(id) on delete cascade

@@ -29,6 +29,7 @@ if ($accion === 'onartu') {
 } else if ($accion === 'ukatu') {
   $delete = $pdo->prepare('DELETE FROM cuenta where apodo = :apodo;');
   $delete->execute(['apodo' => $usuario['apodo']]);
+  unlink('../public/src/img/profila/' . $usuario['id'] . '.png');
   header('Location: /profila#kontu-eskaerak');
 }
 
@@ -96,8 +97,12 @@ include_once '../modules/select.php';
       if ($usuario['rol'] === 'Admin') {
         $solicitudesCuentas = buscarCuentas(false, 'Irakasle', $usuario['id_centro']);
       } else {
+        $misClases = buscarClases($usuario);
+        if (count($misClases) > 0) agregarClases($misClases);
+
         $solicitudesCuentas = buscarCuentas(false, 'Ikasle', $usuario['id_centro'], $usuario['id']);
       }
+
       if (count($solicitudesCuentas) > 0) agregarSolicitudesCuentas($solicitudesCuentas);
     }
 

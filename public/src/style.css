@@ -508,6 +508,10 @@ a.btn-hasiera {
 .libro__portada,
 .cuenta__foto {
   height: 100%;
+  width: 100%;
+}
+
+.cuenta__foto img:not([src$='.svg']) {
   box-shadow: var(--sombra-alrededor);
 }
 
@@ -669,8 +673,9 @@ span,
 #main-libro h3 {
   font-size: 1.25rem;
 }
+
 #iritziak,
-[id$='eskaerak'] {
+#main-personal h2 {
   margin-top: 2rem;
 }
 :is(#iritziak, [id$='eskaerak'])::before {
@@ -719,7 +724,7 @@ span,
 #main-libro #sinopsis,
 #opiniones,
 :is(#main-respuestas) > section {
-  width: 70ch;
+  max-width: 70ch;
   text-align: justify;
 }
 

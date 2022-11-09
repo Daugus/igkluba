@@ -9,7 +9,7 @@ $cantidadSecciones = count($page);
 if ($cantidadSecciones === 1) {
   $ruta_elegida = '../views/' . $page[0] . '.php';
 } else if ($cantidadSecciones === 2) {
-  if (in_array($page[0], ['liburua', 'iritzia', 'profila'])) {
+  if (in_array($page[0], ['liburua', 'iritzia', 'profila', 'klasea'])) {
     $ruta_elegida = '../views/' . $page[0] . '.php';
     $busqueda = $page[1];
   }

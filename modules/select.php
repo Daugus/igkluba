@@ -83,9 +83,7 @@ function buscarSolicitudesLibros(array $usuario, bool $propias = false): array
         LIMIT 24;'
       );
     } else {
-      $clases = $pdo->prepare('SELECT * FROM profesor_clase WHERE id_profesor = :id');
-      $clases->execute(['id' => $usuario['id']]);
-      $clases = array_column($clases->fetchAll(), 'cod_clase');
+      $clases = $clases = array_column(buscarClases($usuario), 'cod_clase');
 
       $clases = implode(', ', array_map(function ($clase) {
         return "'$clase'";
@@ -240,25 +238,109 @@ function agregarReviews(array $reviews, bool $seccionPersonal = false): void
 <?php
 }
 
+function buscarClases(array $profesor): array
+{
+  include '../modules/db-config.php';
+  $clases = $pdo->prepare('SELECT * FROM profesor_clase pc JOIN clase c ON pc.cod_clase = c.cod WHERE id_profesor = :id');
+  $clases->execute(['id' => $profesor['id']]);
+
+  return $clases->fetchAll();
+}
+
+function agregarClases($clases): void
+{
+?>
+  <section id="clases">
+    <h2 id="klaseak">Ikasleak:</h2>
+
+    <?php
+    foreach ($clases as $clase) {
+      $url = "/klasea/" .  $clase['cod'];
+    ?>
+      <article class="flex-center-col clase">
+        <h3><a href="<?php echo $url ?>"><?php echo $clase['nombre'] ?></a></h3>
+        <a href="<?php echo $url ?>">Kodea: <?php echo $clase['cod'] ?></a>
+        <a href="<?php echo $url ?>">Curso: <?php echo $clase['nivel'] ?></a>
+        <a href="<?php echo $url ?>">Curso: <?php echo $clase['curso'] ?></a>
+      </article>
+    <?php
+    }
+    ?>
+  </section>
+<?php
+}
+
+function buscarAlumnos($clase): array
+{
+  include '../modules/db-config.php';
+  $alumnos = $pdo->prepare(
+    'SELECT * FROM cuenta
+      WHERE rol = "Ikasle"
+        AND activo = 1
+        AND cod_clase = :cod_clase;'
+  );
+  $alumnos->execute(['cod_clase' => $clase]);
+
+  return $alumnos->fetchAll();
+}
+
+function agregarAlumnos($alumnos): void
+{
+?>
+  <section class="listado-alumnos">
+    <h2>Ikasleak:</h2>
+
+    <div class="grid" id="alumnos">
+      <?php
+      foreach ($alumnos as $alumno) {
+        $url = '/profila/' . $alumno['apodo'] . '/eskaera';
+      ?>
+        <article class="flex-space-between-col cuenta">
+          <a href="<?php echo $url ?>" class="cuenta__foto">
+            <?php
+            $rutaImagen = '../public/src/img/profila/' . $alumno['id'] .  '.png';
+            if (!file_exists($rutaImagen)) $rutaImagen = '/src/img/profila/default.svg';
+            ?>
+            <img src="<?php echo str_replace('../public', '', $rutaImagen) ?>" alt="<?php echo $alumno['apodo'] ?> profila" class="foto-perfil">
+          </a>
+
+          <div class="flex-center-col cuenta__texto">
+            <a href="<?php echo $url ?>" class="cuenta__apodo">
+              <?php echo $alumno['apodo'] ?>
+            </a>
+
+            <a href="<?php echo $url ?>" class="cuenta__nombre">
+              <?php echo $alumno['nombre'] . ' ' . $alumno['apellido'] ?>
+            </a>
+          </div>
+        </article>
+      <?php
+      }
+      ?>
+    </div>
+  </section>
+<?php
+}
+
 function buscarCuentas(bool $activo, string $rol, string $centro, string $idProfesor = ''): array
 {
   include '../modules/db-config.php';
   if (empty($idProfesor)) {
     $cuentas = $pdo->prepare(
       'SELECT *
-      FROM cuenta
-      WHERE id_centro = :id_centro AND activo = :activo AND rol = :rol;'
+  FROM cuenta
+  WHERE id_centro = :id_centro AND activo = :activo AND rol = :rol;'
     );
   } else {
     $cuentas = $pdo->prepare(
       "SELECT *
-      FROM cuenta
-      WHERE id_centro = :id_centro
-        AND activo = :activo
-        AND rol = :rol
-        AND cod_clase in (SELECT cod
-                          FROM clase c JOIN profesor_clase pc ON c.cod = pc.cod_clase
-                           WHERE pc.id_profesor = '$idProfesor');"
+  FROM cuenta
+  WHERE id_centro = :id_centro
+  AND activo = :activo
+  AND rol = :rol
+  AND cod_clase in (SELECT cod
+  FROM clase c JOIN profesor_clase pc ON c.cod = pc.cod_clase
+  WHERE pc.id_profesor = '$idProfesor');"
     );
   }
 
@@ -285,8 +367,12 @@ function agregarSolicitudesCuentas(array $cuentas): void
         $url = '/profila/' . $cuenta['apodo'] . '/eskaera';
       ?>
         <article class="flex-space-between-col cuenta">
-          <a href="<?php echo $url ?>">
-            <img src="/src/img/profila/<?php echo $cuenta['id'] ?>.png" alt="<?php echo $cuenta['apodo'] ?> profila" class="cuenta__foto foto-perfil">
+          <a href="<?php echo $url ?>" class="cuenta__foto">
+            <?php
+            $rutaImagen = '../public/src/img/profila/' . $cuenta['id'] .  '.png';
+            if (!file_exists($rutaImagen)) $rutaImagen = '/src/img/profila/default.svg';
+            ?>
+            <img src="<?php echo str_replace('../public', '', $rutaImagen) ?>" alt="<?php echo $cuenta['apodo'] ?> profila" class="foto-perfil">
           </a>
 
           <div class="flex-center-col cuenta__texto">
