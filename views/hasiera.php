@@ -11,7 +11,7 @@ include_once '../templates/footer.php';
 agregarHead('IGKluba', '');
 ?>
 
-<body>
+<body id="bodyHasiera">
   <main id="main-hasiera">
     <div class="clm-izq-hasiera">
       <div>

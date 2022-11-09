@@ -828,6 +828,14 @@ a.btn {
 
   }
 
+  :is(#bodyHasiera) > #footerMovil {
+    display: none;
+  }
+
+  :is(#bodyHasiera) > #footerNormal {
+    display: block;
+  }
+
   .nav-footer-movil {
     display: flex;
     flex-direction: row;
