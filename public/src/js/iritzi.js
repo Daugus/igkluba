@@ -1,5 +1,7 @@
 'use strict';
 
+agregarContadorPalabras(300);
+
 const form = document.querySelector('#form-iritzia');
 const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {
@@ -14,7 +16,7 @@ btnEnviar.addEventListener('click', (e) => {
   if (
     'texto' in valoresEnviados &&
     valoresEnviados.texto.length > 0 &&
-    (valoresEnviados.texto.trim().split(/[\n ]/).length > 300 || valoresEnviados.texto.length > 2295)
+    (contarPalabras(valoresEnviados.texto) > 300 || valoresEnviados.texto.length > 2295)
   )
     return mostrarMensajeError('Iritzia 300 hitz edo gutxiago izan behar du', campos.texto);
 

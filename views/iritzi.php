@@ -101,7 +101,7 @@ agregarHead('Iritzia eman | IGKluba', __FILE__);
   headerGeneral();
   ?>
 
-  <main class="flex-center-col main-form">
+  <main class="flex-center-col main-form" id="main-iritzi">
     <div class="form-container">
       <h1>Iritzia <?php echo $editar ? 'aldatu' : 'eman' ?></h1>
 
@@ -160,8 +160,8 @@ agregarHead('Iritzia eman | IGKluba', __FILE__);
           </div>
         </div>
 
-        <div class="campo">
-          <label for="texto">Iritzia:</label>
+        <div class="campo textarea-container">
+          <label for="texto">Iritzia:<br><span id="contador">0/300</span></label>
           <textarea name="texto" id="texto" maxlength="2295" placeholder="Zure iritzia (300 hitz gehienez)..."><?php if ($editar) echo $review['texto'] ?></textarea>
         </div>
 

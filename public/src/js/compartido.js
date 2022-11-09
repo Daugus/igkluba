@@ -84,3 +84,14 @@ portadas.forEach((imagen) => {
   imagen.addEventListener('animationend', () => imagen.classList.remove('animacion-subir'));
   imagen.addEventListener('mouseover', () => imagen.classList.add('animacion-subir'));
 });
+const agregarContadorPalabras = (max) => {
+  const contador = document.querySelector('#contador');
+  const textarea = document.querySelector('textarea');
+  textarea.addEventListener('input', () => (contador.innerText = `${contarPalabras(textarea.value)}/${max}`));
+};
+
+const contarPalabras = (texto) =>
+  texto
+    .trim()
+    .split(/[\n ]/)
+    .filter((i) => i !== '').length;

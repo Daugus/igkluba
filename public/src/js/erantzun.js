@@ -1,5 +1,7 @@
 'use strict';
 
+agregarContadorPalabras(100);
+
 const form = document.querySelector('#form-iritzia');
 const btnEnviar = document.querySelector('#enviar');
 btnEnviar.addEventListener('click', (e) => {

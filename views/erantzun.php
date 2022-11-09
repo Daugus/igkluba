@@ -35,13 +35,13 @@ agregarHead('Erantzun | IGKluba', __FILE__);
   headerGeneral();
   ?>
 
-  <main class="flex-center-col main-form">
+  <main class="flex-center-col main-form" id="main-erantzun">
     <div class="form-container">
       <h1>Erantzun</h1>
 
       <form action="" method="post" class="flex-stretch-col" id="form-iritzia">
-        <div class="campo">
-          <label for="texto">Erantzuna:</label>
+        <div class="campo textarea-container">
+          <label for="texto">Erantzuna:<br><span id="contador">0/100</span></label>
           <textarea name="texto" id="texto" minlength="1" maxlength="2295" placeholder="Zure erantzuna (100 hitz gehienez)..."></textarea>
         </div>
 

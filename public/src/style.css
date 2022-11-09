@@ -291,6 +291,28 @@ textarea {
   background: var(--borde-gradiente-radius);
 }
 
+.textarea-container {
+  position: relative;
+}
+
+.textarea-container span {
+  position: absolute;
+  font-weight: 400;
+
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  width: 5rem;
+  text-align: right;
+}
+
+#main-iritzi .textarea-container span {
+  left: -2rem;
+}
+
+#main-erantzun .textarea-container span {
+  left: 0.25rem;
+}
+
 /* ===== header ===== */
 header {
   padding: 1rem 4rem;
