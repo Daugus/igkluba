@@ -27,7 +27,7 @@ btnRegistro.addEventListener('click', (e) => {
 
   if (valoresEnviados.centro === '-') return mostrarMensajeError('Aukeratu ikastetxe bat', campos.centro);
 
-  if (!/^[A-Za-z0-9]{8,8}$/.test(valoresEnviados.clase)) return mostrarMensajeError('Klasearen kodea ez da egokia', campos.clase);
+  if (!/^[A-Za-z0-9]{6,6}$/.test(valoresEnviados.clase)) return mostrarMensajeError('Klasearen kodea ez da egokia', campos.clase);
 
   if (valoresEnviados.fecha === '' || calcularEdad(valoresEnviados.fecha) < 12)
     return mostrarMensajeError('Hamar urte baino gehiago izan behar dituzu', campos.fecha);

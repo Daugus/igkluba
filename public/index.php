@@ -14,13 +14,13 @@ if ($cantidadSecciones === 1) {
     $busqueda = $page[1];
   }
 } else if ($cantidadSecciones === 3 && $page[0] !== 'bilaketa') {
-  if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun', 'profila'])) {
+  if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun', 'profila', 'klasea'])) {
     $id = $page[1];
 
-    if (in_array($page[2], ['iritzi', 'erantzun', 'hizkuntza-igo'])) {
+    if (in_array($page[2], ['iritzi', 'erantzun', 'hizkuntza-igo', 'klasea'])) {
       $ruta_elegida = '../views/' . $page[2] . '.php';
     } else if (($page[0] !== 'iritzia' && in_array($page[2], ['aldatu', 'ezabatu', 'eskaera']))
-      || in_array($page[0], ['liburua', 'profila']) && in_array($page[2], ['onartu', 'ukatu'])
+      || in_array($page[0], ['liburua', 'profila']) && in_array($page[2], ['onartu', 'ukatu', 'kendu'])
     ) {
       $ruta_elegida = '../views/' . $page[0] . '.php';
       $busqueda = $page[1];

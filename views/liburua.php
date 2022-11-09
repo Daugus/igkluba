@@ -14,6 +14,7 @@ $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
 
 if (empty($libro) || ($accion === '' && $libro['aceptado'] === 0)) header('Location: /nagusia');
+if ($accion === 'kendu') header("Location: /liburua/$id");
 if ($accion === 'onartu') {
   $update = $pdo->prepare('UPDATE libro SET aceptado = 1 where id = :id;');
   $update->execute(['id' => $id]);

@@ -6,6 +6,7 @@ include_once '../modules/session.php';
 checkLogin();
 
 $error = '';
+$pedirClase = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $apodoEnviado = $_REQUEST['apodo'];
@@ -15,13 +16,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $usrCorrecto = buscarCuenta($apodoEnviado);
   if (empty($usrCorrecto) || !password_verify($passEnviado, $usrCorrecto['pass'])) {
     $error = 'Ezizena edo pasahitza txarto sartu egin da. Saiatu berriz.';
-  } else if ($usrCorrecto['activo'] === 0) {
+  } else if ($usrCorrecto['activo'] === 0 || $_SESSION['mostrarMensajeError']) {
     $error = 'Zure kontua oraindik ez dago onartuta.';
+    unset($_SESSION['mostrarMensajeError']);
+  } else if ($usrCorrecto['rol'] === 'Ikasle' && $usrCorrecto['cod_clase'] === null && !isset($_REQUEST['clase'])) {
+    $error = 'Ez zara klase baten partea';
+    $pedirClase = true;
   } else {
-    include_once '../modules/session.php';
-    saveSession($usrCorrecto);
-    $destino = isset($_SESSION['url']) ? $_SESSION['url'] : '/nagusia';
-    header("Location: $destino");
+    $claseValida = true;
+
+    include '../modules/db-config.php';
+    if (isset($_REQUEST['clase'])) {
+      $clase = $pdo->prepare('SELECT cod FROM clase where cod = :cod');
+      $clase->execute(['cod' => $_REQUEST['clase']]);
+      $clase = $clase->fetch();
+
+      $claseValida = $clase !== false;
+    }
+
+    if ($claseValida) {
+      if (isset($_REQUEST['clase'])) {
+        $update = $pdo->prepare('UPDATE cuenta SET cod_clase = :cod_clase WHERE apodo = :apodo');
+        $update->execute(['cod_clase' => $_REQUEST['clase'], 'apodo' => $_REQUEST['apodo']]);
+        $_SESSION['mostrarMensajeError'] = true;
+        header('Location: /hasi');
+      } else {
+        include_once '../modules/session.php';
+        saveSession($usrCorrecto);
+        $destino = isset($_SESSION['url']) ? $_SESSION['url'] : '/nagusia';
+        header("Location: $destino");
+      }
+    } else {
+      $error = 'Klase hori es da existitzen';
+      $pedirClase = true;
+    }
   }
 }
 
@@ -42,8 +70,17 @@ agregarHead('Saioa hasi | IGKluba', __FILE__);
 
         <div class="campo">
           <label for="pass">Pasahitza:</label>
-          <input type="password" id="pass" name="pass" minlength="1" maxlength="30" placeholder="Zure pasahitza">
+          <input type="password" id="pass" name="pass" minlength="1" maxlength="30" placeholder="Zure pasahitza" value="<?php if (isset($_REQUEST['pass'])) echo $_REQUEST['pass'] ?>">
         </div>
+
+        <?php if ($pedirClase) { ?>
+          <div class="campo">
+            <label for="clase">Klasea:</label>
+            <input type="text" id="clase" name="clase" maxlength="6" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
+          </div>
+        <?php
+        }
+        ?>
 
         <button class="btn" id="login">Saioa hasi</button>
       </form>

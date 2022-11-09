@@ -251,21 +251,49 @@ function agregarClases($clases): void
 {
 ?>
   <section id="clases">
-    <h2 id="klaseak">Ikasleak:</h2>
+    <h2 id="klaseak">Nire klaseak:</h2>
 
-    <?php
-    foreach ($clases as $clase) {
-      $url = "/klasea/" .  $clase['cod'];
-    ?>
-      <article class="flex-center-col clase">
-        <h3><a href="<?php echo $url ?>"><?php echo $clase['nombre'] ?></a></h3>
-        <a href="<?php echo $url ?>">Kodea: <?php echo $clase['cod'] ?></a>
-        <a href="<?php echo $url ?>">Curso: <?php echo $clase['nivel'] ?></a>
-        <a href="<?php echo $url ?>">Curso: <?php echo $clase['curso'] ?></a>
-      </article>
-    <?php
-    }
-    ?>
+    <div class="grid">
+      <?php
+      foreach ($clases as $clase) {
+        $url = "/klasea/" .  $clase['cod'];
+      ?>
+        <article class="flex-stretch-col container clase">
+          <h3><?php echo $clase['nombre'] ?></h3>
+          <p><span>Kodea</span>: <?php echo $clase['cod'] ?></p>
+          <p><span>Ikasturtea</span>: <?php echo $clase['curso'] ?></p>
+          <p><span>Maila</span>: <?php echo $clase['nivel'] ?></p>
+          <a href="<?php echo $url ?>" class="btn">Klasea ikusi</a>
+        </article>
+      <?php
+      }
+      ?>
+
+      <div class="form-container">
+        <form action="klasea" method="POST" class="flex-stretch-col" id="form-clase">
+          <h3>Klasea gehitu</h3>
+
+          <div class="campo">
+            <label for="nombre">Izena:</label><input type="text" name="nombre" id="nombre">
+          </div>
+
+          <div class="campo">
+            <label for="nivel">Maila:</label>
+            <div class="select-container">
+              <select name="nivel" id="nivel">
+                <option disabled selected>-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn" type="submit" id="enviar">Gehitu</button>
+        </form>
+      </div>
+    </div>
   </section>
 <?php
 }
@@ -288,14 +316,14 @@ function agregarAlumnos($alumnos): void
 {
 ?>
   <section class="listado-alumnos">
-    <h2>Ikasleak:</h2>
+    <h2 id="ikasleak">Ikasleak:</h2>
 
     <div class="grid" id="alumnos">
       <?php
       foreach ($alumnos as $alumno) {
-        $url = '/profila/' . $alumno['apodo'] . '/eskaera';
+        $url = '/profila/' . $alumno['apodo'];
       ?>
-        <article class="flex-space-between-col cuenta">
+        <article class="flex-center-col cuenta">
           <a href="<?php echo $url ?>" class="cuenta__foto">
             <?php
             $rutaImagen = '../public/src/img/profila/' . $alumno['id'] .  '.png';
@@ -312,6 +340,11 @@ function agregarAlumnos($alumnos): void
             <a href="<?php echo $url ?>" class="cuenta__nombre">
               <?php echo $alumno['nombre'] . ' ' . $alumno['apellido'] ?>
             </a>
+          </div>
+
+          <div class="flex-center-col botones">
+            <a href="/profila/<?php echo $alumno['apodo'] ?>" class="btn">Profila ikusi</a>
+            <a href="/profila/<?php echo $alumno['apodo'] ?>/kendu" class="btn">Klasetatik kendu</a>
           </div>
         </article>
       <?php
@@ -334,13 +367,13 @@ function buscarCuentas(bool $activo, string $rol, string $centro, string $idProf
   } else {
     $cuentas = $pdo->prepare(
       "SELECT *
-  FROM cuenta
-  WHERE id_centro = :id_centro
-  AND activo = :activo
-  AND rol = :rol
-  AND cod_clase in (SELECT cod
-  FROM clase c JOIN profesor_clase pc ON c.cod = pc.cod_clase
-  WHERE pc.id_profesor = '$idProfesor');"
+        FROM cuenta
+        WHERE id_centro = :id_centro
+        AND activo = :activo
+        AND rol = :rol
+        AND cod_clase in (SELECT cod
+          FROM clase c JOIN profesor_clase pc ON c.cod = pc.cod_clase
+          WHERE pc.id_profesor = '$idProfesor');"
     );
   }
 

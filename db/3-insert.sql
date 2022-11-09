@@ -4,8 +4,8 @@ use igkluba;
 insert into centro
 values (1, 'Unamuno');
 insert into clase (cod, nombre, nivel, curso, id_centro)
-values ('1234abcd', '2dw3', 3, '2022-2023', 1),
-  ('5678efgh', 'otra clase', 4, '2022-2023', 1);
+values ('123abc', '2dw3', 3, '2022-2023', 1),
+  ('456def', 'otra clase', 4, '2022-2023', 1);
 insert into cuenta (
     id,
     nombre,
@@ -73,7 +73,7 @@ values (
     '2000-1-1',
     'ejemplo@gmail.com',
     null,
-    '1234abcd',
+    '123abc',
     1
   ),
   (
@@ -87,7 +87,7 @@ values (
     '2000-1-1',
     'ejemplo@gmail.com',
     null,
-    '1234abcd',
+    '123abc',
     1
   ),
   (
@@ -105,8 +105,8 @@ values (
     1
   );
 insert into profesor_clase
-values (3, '1234abcd'),
-  (6, '5678efgh');
+values (3, '123abc'),
+  (6, '456def');
 insert into idioma
 values (1, 'Gaztelania'),
   (2, 'Euskara'),

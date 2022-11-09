@@ -31,16 +31,22 @@ if ($accion === 'onartu') {
   $delete->execute(['apodo' => $usuario['apodo']]);
   unlink('../public/src/img/profila/' . $usuario['id'] . '.png');
   header('Location: /profila#kontu-eskaerak');
+} else if ($accion === 'kendu') {
+  $update = $pdo->prepare('UPDATE cuenta SET cod_clase = null, activo = 0 where apodo = :apodo;');
+  $update->execute(['apodo' => $usuario['apodo']]);
+  header('Location: /klasea/' . $usuario['cod_clase']);
 }
 
 if ($usuario['rol'] === 'Ikasle') {
+  if ($usuario['cod_clase'] === null) header('Location: /nagusia');
+
   $clase = $pdo->prepare('SELECT * FROM clase WHERE cod = :cod_clase;');
   $clase->execute(['cod_clase' => $usuario['cod_clase']]);
   $clase = $clase->fetch();
 }
 
 include_once '../templates/head.php';
-agregarHead($usuario['apodo'] . ' | IGKluba');
+agregarHead($usuario['apodo'] . ' | IGKluba', __FILE__);
 
 include_once '../modules/select.php';
 ?>
@@ -82,8 +88,26 @@ include_once '../modules/select.php';
     </section>
 
     <?php
-    if ($accion === 'eskaera') {
+    if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+      $perteneceClaseProfesorActual = false;
+
+      if ($_SESSION['usr']['rol'] === 'Irakasle') {
+        $clase = $pdo->prepare('SELECT cod_clase FROM profesor_clase WHERE cod_clase = :cod_clase AND id_profesor = :id_profesor');
+        $clase->execute(['cod_clase' => $usuario['cod_clase'], 'id_profesor' => $_SESSION['usr']['id']]);
+        $clase = $clase->fetch();
+
+        $perteneceClaseProfesorActual = $clase !== false;
+      }
+
+      if (($perteneceClaseProfesorActual || $_SESSION['usr']['rol'] === 'Admin') && $accion !== 'eskaera') {
     ?>
+        <a href="/profila/<?php echo $usuario['apodo'] ?>/kendu" class="btn">Klasetatik kendu</a>
+    <?php
+      }
+    }
+    ?>
+
+    <?php if ($accion === 'eskaera') { ?>
       <section>
         <a href="/profila/<?php echo $usuario['apodo'] ?>/onartu" class="btn">Eskaera onartu</a>
         <a href="/profila/<?php echo $usuario['apodo'] ?>/ukatu" class="btn">Eskaera ukatu</a>
@@ -98,7 +122,7 @@ include_once '../modules/select.php';
         $solicitudesCuentas = buscarCuentas(false, 'Irakasle', $usuario['id_centro']);
       } else {
         $misClases = buscarClases($usuario);
-        if (count($misClases) > 0) agregarClases($misClases);
+        agregarClases($misClases);
 
         $solicitudesCuentas = buscarCuentas(false, 'Ikasle', $usuario['id_centro'], $usuario['id']);
       }
@@ -108,7 +132,7 @@ include_once '../modules/select.php';
 
     if ($usuario['rol'] !== 'Admin') {
       $misSolicitudesLibros = buscarSolicitudesLibros($usuario, true);
-      if (count($misSolicitudesLibros) > 0) agregarSolicitudesLibros($misSolicitudesLibros, true);
+      if (count($misSolicitudesLibros) > 0) agregarSolicitudesLibros($misSolicitudesLibros, $_SESSION['usr']['id'] === $usuario['id'] && true);
     }
 
     $reviews = buscarReviews($usuario['id'], ['r.id_cuenta = :id']);

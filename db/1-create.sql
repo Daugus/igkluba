@@ -10,7 +10,7 @@ create table if not exists centro (
   nombre varchar(60) not null
 );
 create table if not exists clase (
-  cod char(8) primary key,
+  cod char(6) primary key,
   nombre varchar(30) not null,
   nivel tinyint(1) not null,
   curso char(9) not null,

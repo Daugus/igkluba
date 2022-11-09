@@ -74,10 +74,6 @@ h2 {
   margin-bottom: 0.5rem;
 }
 
-:is(h1, h2) span {
-  font-weight: 500;
-}
-
 p {
   font-size: 1.25rem;
   line-height: 1.6;
@@ -92,14 +88,19 @@ p {
 }
 
 a,
-a:visited {
+a:visited,
+.form-container button {
   text-decoration: underline 0.15rem var(--clr-transparente);
   transition: text-decoration var(--transicion);
+}
 
+a,
+a:visited {
   color: var(--clr-acento);
 }
 
-a:not(nav a):hover {
+a:not(nav a):hover,
+.form-container button:hover {
   text-decoration-color: initial;
 }
 
@@ -110,18 +111,6 @@ a:not(nav a):hover {
   justify-content: center;
   align-items: center;
   margin-top: 3%;
-}
-
-.form-container,
-#menu-busqueda {
-  background-color: var(--clr-blanco);
-  padding: 1.75rem 2.75rem;
-
-  box-shadow: var(--sombra-alrededor);
-
-  border: 3px solid transparent;
-  border-radius: 2rem;
-  background: var(--borde-gradiente-radius);
 }
 
 .form-container form {
@@ -511,6 +500,7 @@ a.btn-hasiera {
   width: 100%;
 }
 
+.libro__portada,
 .cuenta__foto img:not([src$='.svg']) {
   box-shadow: var(--sombra-alrededor);
 }
@@ -617,6 +607,7 @@ a.btn-hasiera {
 /* --- libro --- */
 #main-libro,
 #main-personal,
+#main-clase,
 .main-form {
   gap: 2.5rem;
 }
@@ -678,7 +669,8 @@ span,
 #main-personal h2 {
   margin-top: 2rem;
 }
-:is(#iritziak, [id$='eskaerak'])::before {
+
+:is(#iritziak, [id$='eskaerak'], #klaseak)::before {
   content: '';
   display: block;
   height: 4rem;
@@ -724,7 +716,7 @@ span,
 #main-libro #sinopsis,
 #opiniones,
 :is(#main-respuestas) > section {
-  max-width: 70ch;
+  width: min(100%, 70ch);
   text-align: justify;
 }
 
@@ -735,10 +727,11 @@ span,
 /* - área personal - */
 #main-personal #informacion {
   column-gap: 8rem;
+  width: min(70%, 70ch);
 }
 
 #main-personal #perfil {
-  flex: 0 1 20%;
+  flex: 0 0 30%;
 }
 
 #main-personal #perfil img {
@@ -749,13 +742,29 @@ span,
   color: inherit;
 }
 
-/* ===== área personal ===== */
 #main-personal [class^='solicitudes'] a.btn {
   margin-top: 1rem;
 }
 
 #main-personal .solicitudes-cuentas img {
   width: 100%;
+}
+
+.clase {
+  text-align: left;
+}
+
+.clase h3 {
+  margin-bottom: 0.5rem;
+}
+
+/* --- clase --- */
+#main-clase .volver {
+  align-self: center;
+}
+
+#main-clase .botones {
+  gap: 0.5rem;
 }
 
 /* ===== footer ===== */
@@ -847,11 +856,11 @@ a.btn {
 }
 
 .mensaje-error {
-  position: absolute;
+  position: fixed;
   background-color: var(--clr-error);
   color: var(--clr-blanco);
 
-  top: 1.5rem;
+  top: 4rem;
   left: 50%;
   translate: -50% 0;
   z-index: 2;
@@ -940,6 +949,18 @@ a.btn {
 
 .foto-perfil {
   aspect-ratio: 1 / 1;
+}
+
+.container,
+.form-container {
+  background-color: var(--clr-blanco);
+  padding: 1.75rem 2.75rem;
+
+  box-shadow: var(--sombra-alrededor);
+
+  border: 3px solid transparent;
+  border-radius: 2rem;
+  background: var(--borde-gradiente-radius);
 }
 
 .portada-libro {

@@ -127,7 +127,7 @@ agregarHead('Sortu kontua | IGKluba', __FILE__);
 
         <div class="campo">
           <label for="clase">Klasea:</label>
-          <input type="text" id="clase" name="clase" maxlength="8" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
+          <input type="text" id="clase" name="clase" maxlength="6" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
         </div>
 
         <div class="campo">
