@@ -767,6 +767,7 @@ a.btn {
 .grupo-volver,
 .grupo-botones {
   gap: 0.5rem;
+  color: #ffffff;
 }
 
 .foto-perfil {
@@ -782,6 +783,15 @@ a.btn {
   display: none;
 }
 
+/* Login y register */
+.htmlLoginRegister {
+  background-image: url(/src/img/collage.png);
+
+}
+
+.bodyLoginRegister {
+  background-color: rgba(20,64,158,0.9);
+}
 
 @media screen and (max-width: 500px) {
 
