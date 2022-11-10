@@ -75,6 +75,7 @@ include_once '../modules/select.php';
           <p id="apodo"><?php echo $usuario['apodo'] ?></p>
         </div>
 
+        <p><span>Kontu mota:</span> <?php echo $usuario['rol'] ?></p>
         <p><span>Jaiotze data:</span> <?php echo date_format(date_create($usuario['fecha_nacimiento']), 'd/m/Y') ?></p>
         <p><span>E-maila:</span> <?php echo $usuario['correo'] ?></p>
 
