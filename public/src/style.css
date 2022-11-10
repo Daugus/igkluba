@@ -498,13 +498,16 @@
   }
 
   .libro__portada,
-  .cuenta__foto img:not([src$='.svg']) {
+  #main-libro #portada,
+  :is(.cuenta__foto img, #main-personal .foto-perfil):not([src$='.svg']) {
     box-shadow: var(--sombra-alrededor);
   }
 
   .libro__portada,
   .cuenta__foto,
-  :is(.libro__portada, .cuenta__foto) img {
+  :is(.libro__portada, .cuenta__foto) img,
+  #main-libro #portada,
+  #main-personal .foto-perfil {
     border-radius: 8px;
   }
 
