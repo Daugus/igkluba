@@ -29,8 +29,11 @@ function headerGeneral(String $valueBusqueda = ''): void
 {
 ?>
   <header class="flex-space-between-row" id="header-general">
-    <div>
+    <div id="logoNormal">
       <a href="/naugusia"><img src="/src/img/logo.png" alt="Logo IGKluba"></a>
+    </div>
+    <div id="logoMovil">
+      <a href="/naugusia"><img src="/src/img/logo-sin-texto.png" alt="Logo IGKluba"></a>
     </div>
 
     <form id="buscador" action="/bilaketa" method="POST" class="flex-center-row">

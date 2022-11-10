@@ -778,7 +778,7 @@ a.btn {
   aspect-ratio: 1 / 1.55;
 }
 
-#footerMovil {
+#footerMovil, #logoMovil{
   display: none;
 }
 
@@ -871,11 +871,14 @@ a.btn {
   /* header */ 
 
   #header-general {
-    gap: 1rem;
+    gap: 0rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
   }
 
   .flex-space-between-row {
-    flex-direction: column;
+    flex-direction: row;
+    padding: 0;
   }
 
   #header-perfil {
@@ -884,6 +887,23 @@ a.btn {
 
   #nav-general {
     display: none;
+  }
+
+  #logoNormal {
+    display: none;
+  }
+
+  #logoMovil{
+    display: block;
+    margin-left: 2.5%;
+  }
+
+  #buscador {
+    margin-right: 2.5%;
+  }
+
+  #buscador > input {
+    padding: 0.5rem 1rem;
   }
 
   /* liburua escatu */
