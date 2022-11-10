@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $usrCorrecto = buscarCuenta($apodoEnviado);
   if (empty($usrCorrecto) || !password_verify($passEnviado, $usrCorrecto['pass'])) {
     $error = 'Ezizena edo pasahitza txarto sartu egin da. Saiatu berriz.';
-  } else if ($usrCorrecto['activo'] === 0 || $_SESSION['mostrarMensajeError']) {
+  } else if (($usrCorrecto['activo'] === 0 && $usrCorrecto['cod_clase'] !== null) || isset($_SESSION['mostrarMensajeError'])) {
     $error = 'Zure kontua oraindik ez dago onartuta.';
     unset($_SESSION['mostrarMensajeError']);
   } else if ($usrCorrecto['rol'] === 'Ikasle' && $usrCorrecto['cod_clase'] === null && !isset($_REQUEST['clase'])) {
@@ -82,7 +82,7 @@ agregarHead('Saioa hasi | IGKluba', __FILE__);
         }
         ?>
 
-        <button class="btn" id="login">Saioa hasi</button>
+        <button class="btn" id="login"><?php echo $pedirClase ? 'Eskatu' : 'Saioa hasi' ?></button>
       </form>
     </div>
 
