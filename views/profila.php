@@ -88,7 +88,7 @@ include_once '../modules/select.php';
     </section>
 
     <?php
-    if ($_SESSION['usr']['rol'] !== 'Ikasle') {
+    if ($usuario['rol'] !== 'Admin' && $_SESSION['usr']['rol'] !== 'Ikasle') {
       $perteneceClaseProfesorActual = false;
 
       if ($_SESSION['usr']['rol'] === 'Irakasle') {
