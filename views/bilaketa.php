@@ -26,6 +26,8 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
   ?>
 
   <main>
+    <?php agregarSelectColumnas(); ?>
+
     <?php
     include_once '../modules/select.php';
     $query = http_build_query($_REQUEST);

@@ -58,6 +58,8 @@ include_once '../modules/select.php';
   ?>
 
   <main class="flex-center-col" id="main-personal">
+    <?php agregarSelectColumnas(); ?>
+
     <section class="flex-center-row" id="informacion">
       <div id="perfil">
         <?php

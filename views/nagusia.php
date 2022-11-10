@@ -16,6 +16,7 @@ agregarHead('IGKluba');
   ?>
 
   <main>
+    <?php agregarSelectColumnas(); ?>
     <h1>Gehien irakurritako liburuak</h1>
 
     <?php

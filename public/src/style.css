@@ -44,6 +44,9 @@
   --transicion-rapida: 100ms ease-in-out;
   --transicion: 200ms ease-in-out;
 
+  /* máximo columnas para grid */
+  --columnas: 4;
+
   font-family: 'Inter', sans-serif;
 }
 
@@ -104,7 +107,7 @@ a:not(nav a):hover,
   text-decoration-color: initial;
 }
 
-#fondo-libro{
+#fondo-libro {
   background-image: url(/src/img/fondo-libros.png);
 }
 
@@ -436,6 +439,12 @@ main:not(#main-hasiera) {
   padding-block: 3rem;
 }
 
+#select-columnas {
+  position: absolute;
+  top: 14.25rem;
+  right: 5rem;
+}
+
 /* --- hasiera --- */
 #body-hasiera {
   background-color: var(--clr-acento);
@@ -496,7 +505,6 @@ a.btn-hasiera {
 /* --- nagusia / bilaketa / eskaerak --- */
 .grid {
   --gap: 8rem;
-  --columnas: 4;
   --min-width: 12rem;
 
   --total-gap-width: calc((var(--columnas) - 1) * var(--gap));
@@ -779,6 +787,7 @@ span,
 
 .clase {
   text-align: left;
+  gap: 0.5rem;
 }
 
 .clase h3 {

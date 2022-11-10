@@ -29,3 +29,21 @@ function closeSession(): void
   session_unset();
   header('Location: /hasiera');
 }
+
+function agregarSelectColumnas(): void
+{
+?>
+  <div class="flex-center-row" id="select-columnas">
+    <label for="select-columnas">Zutabe kopuruaren muga:</label>
+
+    <div class="select-container">
+      <select name="columnas" id="columnas">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+  </div>
+
+<?php
+}

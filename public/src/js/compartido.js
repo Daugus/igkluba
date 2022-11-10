@@ -1,5 +1,20 @@
 'use strict';
 
+const selectColumnas = document.querySelector('#select-columnas');
+selectColumnas?.addEventListener('input', (e) => cambiarCantidadColumnas(e.target.value));
+
+const cambiarCantidadColumnas = (cantidad) => {
+  console.log(cantidad);
+  localStorage.setItem('columnas', cantidad);
+  document.documentElement.style.setProperty('--columnas', cantidad);
+};
+
+if (localStorage.getItem('columnas')) {
+  const columnas = localStorage.getItem('columnas');
+  cambiarCantidadColumnas(columnas);
+  if (selectColumnas != undefined) selectColumnas.querySelector(`[value='${columnas}']`).selected = true;
+}
+
 const navLinks = document.querySelectorAll('#nav-general a');
 navLinks.forEach((link) => {
   if (link.href === window.location.href) return link.parentElement.classList.add('active');
@@ -15,7 +30,7 @@ btnBuscar?.addEventListener('click', (e) => {
   if (campoBusqueda.value !== '') formBuscador.submit();
 });
 
-const selectorArchivo = () => {
+function selectorArchivo() {
   const fileInput = document.querySelector('[type="file"]');
   const labelFileInput = document.querySelector('.file-input-text');
   labelFileInput.addEventListener('keyup', (e) => {
@@ -24,8 +39,9 @@ const selectorArchivo = () => {
       fileInput.click();
     }
   });
+
   fileInput.addEventListener('input', () => (labelFileInput.querySelector('span').innerText = fileInput.files[0].name));
-};
+}
 
 const eliminarMensajesError = () => {
   document.querySelectorAll('.mensaje-error').forEach((mensaje) => mensaje.remove());
