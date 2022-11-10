@@ -60,38 +60,42 @@ include_once '../templates/head.php';
 agregarHead('Saioa hasi | IGKluba', __FILE__);
 ?>
 
-<body>
-  <main class="flex-center-col main-form">
-    <div class="form-container">
-      <h1>Saioa hasi</h1>
+<body class="body-hasiera">
+  <main id="main-hasiera">
+    <div id="fondo-movil"></div>
+    <div class="flex-center-col clm-izq-hasiera">
+      <div class="form-container">
+        <h1>Saioa hasi</h1>
 
-      <form action="" method="post" class="flex-stretch-col">
-        <div class="campo">
-          <label for="apodo">Ezizena:</label>
-          <input type="text" id="apodo" name="apodo" minlength="1" maxlength="20" placeholder="Zure ezizena" value="<?php if (isset($_REQUEST['apodo'])) echo $_REQUEST['apodo'] ?>">
-        </div>
-
-        <div class="campo">
-          <label for="pass">Pasahitza:</label>
-          <input type="password" id="pass" name="pass" minlength="1" maxlength="30" placeholder="Zure pasahitza" value="<?php if (isset($_REQUEST['pass'])) echo $_REQUEST['pass'] ?>">
-        </div>
-
-        <?php if ($pedirClase) { ?>
+        <form action="" method="post" class="flex-stretch-col">
           <div class="campo">
-            <label for="clase">Klasea:</label>
-            <input type="text" id="clase" name="clase" maxlength="6" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
+            <label for="apodo">Ezizena:</label>
+            <input type="text" id="apodo" name="apodo" minlength="1" maxlength="20" placeholder="Zure ezizena" value="<?php if (isset($_REQUEST['apodo'])) echo $_REQUEST['apodo'] ?>">
           </div>
-        <?php
-        }
-        ?>
 
-        <button class="btn" id="login"><?php echo $pedirClase ? 'Eskatu' : 'Saioa hasi' ?></button>
-      </form>
+          <div class="campo">
+            <label for="pass">Pasahitza:</label>
+            <input type="password" id="pass" name="pass" minlength="1" maxlength="30" placeholder="Zure pasahitza" value="<?php if (isset($_REQUEST['pass'])) echo $_REQUEST['pass'] ?>">
+          </div>
+
+          <?php if ($pedirClase) { ?>
+            <div class="campo">
+              <label for="clase">Klasea:</label>
+              <input type="text" id="clase" name="clase" maxlength="6" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
+            </div>
+          <?php
+          }
+          ?>
+
+          <button class="btn" id="login"><?php echo $pedirClase ? 'Eskatu' : 'Saioa hasi' ?></button>
+        </form>
+      </div>
+
+      <div class="flex-center-col grupo-botones">
+        <a href="/sortu" class="volver">Oraindik ez dut kontua sortu</a>
+        <a href="/hasiera" class="volver">Itzuli</a>
+      </div>
     </div>
-
-    <div class="flex-center-col grupo-botones">
-      <a href="/sortu" class="volver">Oraindik ez dut kontua sortu</a>
-      <a href="/hasiera" class="volver">Itzuli</a>
     </div>
   </main>
 

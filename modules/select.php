@@ -103,6 +103,7 @@ function buscarSolicitudesLibros(array $usuario, bool $propias = false): array
     }
   }
 
+  $libros->execute([]);
   return $libros->fetchAll();
 }
 
@@ -355,7 +356,7 @@ function agregarReviews(array $reviews, bool $seccionPersonal = false): void
             ?>
           </div>
 
-          <div class="flex-stretch-row">
+          <div class="flex-stretch-row grupo-botones">
             <?php if (!$seccionPersonal) { ?>
               <a href="/iritzia/<?php echo $review['id'] ?>/erantzun" class="btn">Erantzun</a>
             <?php

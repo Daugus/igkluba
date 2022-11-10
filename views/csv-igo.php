@@ -27,8 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
       $libro = array_combine($columnas, $datos);
 
-      //  TODO: arreglar encoding ANSI
-
       $tieneSerie = !empty($libro['serie']) && $libro['serie'] !== '-';
 
       $insert = $pdo->prepare('INSERT INTO libro (autor, serie, serie_num, fecha_pub, formato, sinopsis, enlace, aceptado)

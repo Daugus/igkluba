@@ -1,40 +1,19 @@
 <?php
-function headerInicio(): void
-{
-?>
-  <header id="header-inicio" class="flex-space-between-row">
-    <div id="logo">
-      <img src="/src/img/logo.png" alt="Logo IGKluba">
-    </div>
-    <nav>
-      <ul class="flex-center-row">
-        <a href="/sortu" class="btn">Sortu kontua</a>
-        <a href="/hasi" class="btn">Saioa hasi</a>
-      </ul>
-    </nav>
-  </header>
-<?php
-}
-
-function headerLogin(): void
-{
-?>
-  <header id="header-login" class="flex-center-row">
-    <a href="/"><img src="/src/img/logo.png" alt="Logo IGKluba"></a>
-  </header>
-<?php
-}
-
 function headerGeneral(String $valueBusqueda = ''): void
 {
 ?>
-  <header class="flex-space-between-row" id="header-general">
+  <header class="flex-space-between-row">
     <div>
-      <a href="/naugusia"><img src="/src/img/logo.png" alt="Logo IGKluba"></a>
+      <a href="/naugusia">
+        <picture>
+          <source srcset="/src/img/logo-sin-texto.png" media="(max-width: 40em)">
+          <img src="/src/img/logo.png" alt="Logo IGKluba">
+        </picture>
+      </a>
     </div>
 
     <form id="buscador" action="/bilaketa" method="POST" class="flex-center-row">
-      <input id="busqueda" type="search" name="busqueda" placeholder="Bilatu liburua edo egilea..." value="<?php echo $valueBusqueda ?>">
+      <input id="busqueda" type="search" name="busqueda" placeholder="Bilatu liburua..." value="<?php echo $valueBusqueda ?>">
       <button id="buscar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
     </form>
 
@@ -52,7 +31,7 @@ function headerGeneral(String $valueBusqueda = ''): void
   <nav id="nav-general">
     <ul class="flex-center-row">
       <li><a href="/nagusia">Hasiera</a></li>
-      <li><a href="/profila">Gune pertsonala</a></li>
+      <li><a href="/profila">Profila</a></li>
       <li><a href="/liburua-igo">Liburua <?php echo $_SESSION['usr']['rol'] === 'Admin' ? 'igo' : 'eskatu' ?></a></li>
       <li><a href="/itxi" id="logout">Saioa itxi</a></li>
     </ul>

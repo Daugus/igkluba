@@ -128,12 +128,6 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
         <button class="btn" id="enviar"><?php echo ucfirst($accion) ?></button>
       </form>
     </div>
-
-    <?php if ($_SESSION['usr']['rol'] === 'Admin') { ?>
-      <a href="/csv-igo" class="volver">CSV igo</a>
-    <?php
-    }
-    ?>
   </main>
 
   <?php

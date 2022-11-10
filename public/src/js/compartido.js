@@ -5,14 +5,14 @@ selectColumnas?.addEventListener('input', (e) => cambiarCantidadColumnas(e.targe
 
 const cambiarCantidadColumnas = (cantidad) => {
   localStorage.setItem('columnas', cantidad);
-  document.documentElement.style.setProperty('--columnas', cantidad);
+  document.documentElement.style.setProperty('--max-columnas', cantidad);
 };
 
 if (localStorage.getItem('columnas')) {
   const columnas = localStorage.getItem('columnas');
   cambiarCantidadColumnas(columnas);
   if (selectColumnas != undefined) selectColumnas.querySelector(`[value='${columnas}']`).selected = true;
-}
+} else cambiarCantidadColumnas(4);
 
 const navLinks = document.querySelectorAll('#nav-general a');
 navLinks.forEach((link) => {

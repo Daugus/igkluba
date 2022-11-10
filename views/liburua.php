@@ -115,10 +115,9 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
       <p><?php echo $libro['sinopsis'] ?></p>
     </section>
 
-    <section>
+    <section class="flex-center-row grupo-botones">
       <?php
       if ($accion !== 'eskaera') {
-        // TODO: comprobar fecha de pub
         $comprobarReview = $pdo->prepare('SELECT id FROM review WHERE id_cuenta = :id_cuenta AND id_libro = :id_libro');
         $comprobarReview->execute(['id_cuenta' => $_SESSION['usr']['id'], 'id_libro' => $id]);
         $comprobarReview = $comprobarReview->fetch();

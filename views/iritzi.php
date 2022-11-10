@@ -51,7 +51,6 @@ if ($editar) {
 
   if (!empty($review)) header('Location: /liburua/' . $id);
 }
-// TODO: comprobar fecha de pub
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ((bool) $_REQUEST['editar']) {

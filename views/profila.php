@@ -89,6 +89,15 @@ include_once '../modules/select.php';
       </div>
     </section>
 
+    <?php if ($_SESSION['usr']['id'] === $usuario['id']) { ?>
+      <section>
+        <a href="/itxi" class="btn">Saioa itxi</a>
+      </section>
+    <?php
+    }
+    ?>
+
+
     <?php
     if ($usuario['rol'] !== 'Admin' && $_SESSION['usr']['rol'] !== 'Ikasle') {
       $perteneceClaseProfesorActual = false;
@@ -101,7 +110,7 @@ include_once '../modules/select.php';
         $perteneceClaseProfesorActual = $clase !== false;
       }
 
-      if (($perteneceClaseProfesorActual || $_SESSION['usr']['rol'] === 'Admin') && $accion !== 'eskaera') {
+      if ($usuario['rol'] === 'Ikasle' && (($perteneceClaseProfesorActual || $_SESSION['usr']['rol'] === 'Admin') && $accion !== 'eskaera')) {
     ?>
         <a href="/profila/<?php echo $usuario['apodo'] ?>/kendu" class="btn">Klasetatik kendu</a>
     <?php
@@ -120,7 +129,6 @@ include_once '../modules/select.php';
       if (count($solicitudesLibros) > 0) agregarSolicitudesLibros($solicitudesLibros);
 
       $solicitudesIdioma = buscarSolicitudesIdioma($usuario, false);
-
       if (count($solicitudesIdioma) > 0) agregarSolicitudesIdioma($solicitudesIdioma, false);
 
       if ($usuario['rol'] === 'Admin') {

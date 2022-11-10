@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $clase->execute(['cod' => $_REQUEST['clase']]);
       $clase = $clase->fetch();
 
-      if ($empty($clase)) $error = 'Klase hori es da existitzen';
+      if (empty($clase)) $error = 'Klase hori es da existitzen';
     }
 
     if ($error === '') {
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($buscarCorreo)) {
           $error = 'E-mail hori aukeratuta dago';
         } else {
-          if ($tipoUsuario === 'Ikasle') {
+          if ($tipoUsuario === 'ikasle') {
             $insert = $pdo->prepare(
               'INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, id_centro, correo)
                 VALUES (:nombre, :apellido, :apodo, :rol, :activo, :pass, :fecha_nacimiento, :cod_clase, :id_centro, :correo)'
@@ -104,106 +104,110 @@ include_once '../templates/head.php';
 agregarHead('Sortu kontua | IGKluba', __FILE__);
 ?>
 
-<body id="fondo-libro">
-  <main class="flex-center-col main-form">
-    <div class="form-container">
-      <h1>Sortu kontua</h1>
+<body class="body-hasiera">
+  <main id="main-hasiera">
+    <div id="fondo-movil"></div>
+    <div class="flex-center-col clm-izq-hasiera">
+      <div class="form-container">
+        <h1>Sortu kontua</h1>
 
-      <form action="" method="post" enctype="multipart/form-data" class="flex-stretch-col">
-        <div class="campo">
-          <label for="nombre">Izena:</label>
-          <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Zure izena" value="<?php if (isset($_REQUEST['nombre'])) echo $_REQUEST['nombre'] ?>">
-        </div>
-
-        <div class=" campo">
-          <label for="apellido">Abizena:</label>
-          <input type="text" id="apellido" name="apellido" maxlength="50" placeholder="Zure abizena" value="<?php if (isset($_REQUEST['apellido'])) echo $_REQUEST['apellido'] ?>">
-        </div>
-
-        <div class="campo">
-          <label for="apodo">Ezizena:</label>
-          <input type="text" id="apodo" name="apodo" maxlength="20" placeholder="Zure ezizena" value="<?php if (isset($_REQUEST['apodo'])) echo $_REQUEST['apodo'] ?>">
-        </div>
-
-        <div class="campo">
-          <label for="correo">E-maila:</label>
-          <input type="email" id="correo" name="correo" maxlength="100" placeholder="Zure e-maila" value="<?php if (isset($_REQUEST['correo'])) echo $_REQUEST['correo'] ?>">
-        </div>
-
-        <div class="campo">
-          <label for="centro">Ikastetxea:</label>
-
-          <div class="select-container">
-            <select name="centro" id="centro">
-              <option disabled selected>-</option>
-              <?php
-              include_once '../modules/db-config.php';
-              $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
-              $centros->execute();
-              $centros = $centros->fetchAll();
-              foreach ($centros as $centro) {
-              ?>
-                <option value="<?php echo $centro['id'] ?>" <?php if (isset($_REQUEST['centro']) && $centro['id'] === $_REQUEST['centro']) echo 'selected' ?>><?php echo $centro['nombre'] ?></option>
-              <?php
-              }
-              ?>
-            </select>
-          </div>
-        </div>
-
-        <?php if ($tipoUsuario === 'ikasle') { ?>
+        <form action="" method="post" enctype="multipart/form-data" class="flex-stretch-col">
           <div class="campo">
-            <label for="clase">Klasea:</label>
-            <input type="text" id="clase" name="clase" maxlength="6" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
+            <label for="nombre">Izena:</label>
+            <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Zure izena" value="<?php if (isset($_REQUEST['nombre'])) echo $_REQUEST['nombre'] ?>">
           </div>
+
+          <div class=" campo">
+            <label for="apellido">Abizena:</label>
+            <input type="text" id="apellido" name="apellido" maxlength="50" placeholder="Zure abizena" value="<?php if (isset($_REQUEST['apellido'])) echo $_REQUEST['apellido'] ?>">
+          </div>
+
+          <div class="campo">
+            <label for="apodo">Ezizena:</label>
+            <input type="text" id="apodo" name="apodo" maxlength="20" placeholder="Zure ezizena" value="<?php if (isset($_REQUEST['apodo'])) echo $_REQUEST['apodo'] ?>">
+          </div>
+
+          <div class="campo">
+            <label for="correo">E-maila:</label>
+            <input type="email" id="correo" name="correo" maxlength="100" placeholder="Zure e-maila" value="<?php if (isset($_REQUEST['correo'])) echo $_REQUEST['correo'] ?>">
+          </div>
+
+          <div class="campo">
+            <label for="centro">Ikastetxea:</label>
+
+            <div class="select-container">
+              <select name="centro" id="centro">
+                <option disabled selected>-</option>
+                <?php
+                include_once '../modules/db-config.php';
+                $centros = $pdo->prepare('SELECT id, nombre FROM centro;');
+                $centros->execute();
+                $centros = $centros->fetchAll();
+                foreach ($centros as $centro) {
+                ?>
+                  <option value="<?php echo $centro['id'] ?>" <?php if (isset($_REQUEST['centro']) && $centro['id'] === $_REQUEST['centro']) echo 'selected' ?>><?php echo $centro['nombre'] ?></option>
+                <?php
+                }
+                ?>
+              </select>
+            </div>
+          </div>
+
+          <?php if ($tipoUsuario === 'ikasle') { ?>
+            <div class="campo">
+              <label for="clase">Klasea:</label>
+              <input type="text" id="clase" name="clase" maxlength="6" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
+            </div>
+          <?php
+          } else {
+          ?>
+            <div class="campo">
+              <label for="tel">Telefonoa:</label>
+              <input type="tel" id="tel" name="tel" maxlength="9" placeholder="Zure telefono zenbakia" value="<?php if (isset($_REQUEST['tel'])) echo $_REQUEST['tel'] ?>">
+            </div>
+          <?php
+          }
+          ?>
+
+          <div class="campo">
+            <label for="fecha">Jaiotze data:</label>
+            <input type="date" id="fecha" name="fecha" value="<?php if (isset($_REQUEST['fecha'])) echo $_REQUEST['fecha'] ?>">
+          </div>
+
+          <div class="campo">
+            <label for="imagen">Profileko argazkia:</label>
+            <label for="imagen" class="file-input-text" tabindex="0"><i class="fa-solid fa-file-image"></i> <span>Aukeratu argazki bat...</span></label>
+            <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" class="hidden">
+          </div>
+
+          <div class="campo">
+            <label for="pwd">Pasahitza:</label>
+            <input type="password" id="pwd" name="pwd" maxlength="30" placeholder="Zure pasahitza">
+          </div>
+
+          <div class="campo">
+            <label for="pwdConf">Pasahitza berridatzi:</label>
+            <input type="password" id="pwdConf" name="pwdConf" maxlength="30" placeholder="Zure pasahitza">
+          </div>
+
+          <button type="submit" class="btn" id="registrarse">Sortu kontua</button>
+        </form>
+      </div>
+
+      <div class="flex-center-col grupo-volver">
+        <a href="/hasi" class="volver">Kontua badaukat</a>
+        <?php if ($tipoUsuario === 'ikasle') { ?>
+          <a href="/sortu/irakasle" class="volver">Irakaslea naiz</a>
         <?php
         } else {
         ?>
-          <div class="campo">
-            <label for="tel">Telefonoa:</label>
-            <input type="tel" id="tel" name="tel" maxlength="9" placeholder="Zure telefono zenbakia" value="<?php if (isset($_REQUEST['tel'])) echo $_REQUEST['tel'] ?>">
-          </div>
+          <a href="/sortu/ikasle" class="volver">Ikaslea naiz</a>
         <?php
         }
         ?>
-
-        <div class="campo">
-          <label for="fecha">Jaiotze data:</label>
-          <input type="date" id="fecha" name="fecha" value="<?php if (isset($_REQUEST['fecha'])) echo $_REQUEST['fecha'] ?>">
-        </div>
-
-        <div class="campo">
-          <label for="imagen">Profileko argazkia:</label>
-          <label for="imagen" class="file-input-text" tabindex="0"><i class="fa-solid fa-file-image"></i> <span>Aukeratu argazki bat...</span></label>
-          <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" class="hidden">
-        </div>
-
-        <div class="campo">
-          <label for="pwd">Pasahitza:</label>
-          <input type="password" id="pwd" name="pwd" maxlength="30" placeholder="Zure pasahitza">
-        </div>
-
-        <div class="campo">
-          <label for="pwdConf">Pasahitza berridatzi:</label>
-          <input type="password" id="pwdConf" name="pwdConf" maxlength="30" placeholder="Zure pasahitza">
-        </div>
-
-        <button type="submit" class="btn" id="registrarse">Sortu kontua</button>
-      </form>
+        <a href="/hasiera" class="volver">Itzuli</a>
+      </div>
     </div>
-
-    <div class="flex-center-col grupo-volver">
-      <a href="/hasi" class="volver">Kontua badaukat</a>
-      <?php if ($tipoUsuario === 'ikasle') { ?>
-        <a href="/sortu/irakasle" class="volver">Irakaslea naiz</a>
-      <?php
-      } else {
-      ?>
-        <a href="/sortu/ikasle" class="volver">Ikaslea naiz</a>
-      <?php
-      }
-      ?>
-      <a href="/hasiera" class="volver">Itzuli</a>
     </div>
   </main>
 
