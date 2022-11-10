@@ -274,7 +274,7 @@ function agregarClases($clases): void
           <h3>Klasea gehitu</h3>
 
           <div class="campo">
-            <label for="nombre">Izena:</label><input type="text" name="nombre" id="nombre">
+            <label for="nombre">Izena:</label><input type="text" maxlength="30" name="nombre" id="nombre">
           </div>
 
           <div class="campo">

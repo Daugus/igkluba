@@ -737,6 +737,7 @@ span,
 
 #main-libro #sinopsis,
 #opiniones,
+#clases,
 :is(#main-respuestas) > section {
   width: min(100%, 70ch);
   text-align: justify;
@@ -778,6 +779,10 @@ span,
 
 .clase h3 {
   margin-bottom: 0.5rem;
+}
+
+#main-personal #nombre {
+  width: min(100%, 15ch);
 }
 
 /* --- clase --- */
