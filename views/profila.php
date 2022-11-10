@@ -118,6 +118,10 @@ include_once '../modules/select.php';
       $solicitudesLibros = buscarSolicitudesLibros($usuario);
       if (count($solicitudesLibros) > 0) agregarSolicitudesLibros($solicitudesLibros);
 
+      $solicitudesIdioma = buscarSolicitudesIdioma($usuario, false);
+
+      if (count($solicitudesIdioma) > 0) agregarSolicitudesIdioma($solicitudesIdioma, false);
+
       if ($usuario['rol'] === 'Admin') {
         $solicitudesCuentas = buscarCuentas(false, 'Irakasle', $usuario['id_centro']);
       } else {
@@ -131,6 +135,9 @@ include_once '../modules/select.php';
     }
 
     if ($usuario['rol'] !== 'Admin') {
+      $misSolicitudesIdioma = buscarSolicitudesIdioma($usuario, true);
+      if (count($misSolicitudesIdioma) > 0) agregarSolicitudesIdioma($misSolicitudesIdioma, $_SESSION['usr']['id'] === $usuario['id'] && true);
+
       $misSolicitudesLibros = buscarSolicitudesLibros($usuario, true);
       if (count($misSolicitudesLibros) > 0) agregarSolicitudesLibros($misSolicitudesLibros, $_SESSION['usr']['id'] === $usuario['id'] && true);
     }

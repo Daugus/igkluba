@@ -151,6 +151,65 @@ function agregarSolicitudesLibros(array $solicitudesLibros, bool $propias = fals
 <?php
 }
 
+function agregarSolicitudesIdioma(array $solicitudesIdioma, bool $propias = false): void
+{
+?>
+  <section class="solicitudes-idioma">
+    <?php if ($propias) { ?>
+      <h2 id="nire-hizkuntza-eskaerak">Nire hizkuntza eskaerak</h2>
+    <?php
+    } else {
+    ?>
+      <h2 id="hizkuntza-eskaerak">Hizkuntza eskaerak</h2>
+    <?php
+    }
+    ?>
+
+    <div class="grid">
+      <?php
+      foreach ($solicitudesIdioma as $idioma) {
+        $url = '/liburua/' . $idioma['id_libro'] . '/eskaera';
+      ?>
+
+        <article class="flex-space-between-col libro">
+
+          <a href="<?php echo $url ?>" class="libro__portada">
+            <img src="/src/img/azala/<?php echo $idioma['id_libro'] ?>.png" alt="Portada" class="portada-libro">
+          </a>
+          <div class="flex-center-col libro__texto">
+            <p class="libro__titulo" title="<?php echo $idioma['titulo_libro'] ?>"><?php echo $idioma['titulo_libro'] ?></p>
+          </div>
+
+
+          <h3>Hizkuntza berria:</h3>
+          <p><?php echo $idioma['idioma_nombre'] ?></p>
+
+          <h3>Izenburu berria:</h3>
+          <p><?php echo $idioma['nuevo_titulo'] ?></p>
+
+          <?php if (!$propias) { ?>
+            <section class="flex-space-between-col">
+              <a href=" /hizkuntza-igo/<?php echo $idioma['id'] ?>/onartu" class="btn">Eskaera onartu</a>
+              <a href="/hizkuntza-igo/<?php echo $idioma['id'] ?>/ukatu" class="btn">Eskaera ukatu</a>
+            </section>
+          <?php
+          }
+          ?>
+
+        </article>
+
+
+
+      <?php
+      }
+      ?>
+    </div>
+  </section>
+<?php
+}
+
+
+
 function buscarReviews(int $id, array $condiciones): array
 {
   include '../modules/db-config.php';
@@ -164,6 +223,91 @@ function buscarReviews(int $id, array $condiciones): array
   $reviews->execute(['id' => $id]);
 
   return $reviews->fetchAll();
+}
+
+function buscarSolicitudesIdioma(array $usuario, bool $propias = false)
+{
+  include '../modules/db-config.php';
+  if ($propias) {
+    $solicitudes = $pdo->prepare(
+      "SELECT DISTINCT
+        solicitud_idioma.id,
+        solicitud_idioma.id_libro,
+        idiomas_libro.titulo_alternativo AS titulo_libro,
+        solicitud_idioma.id_cuenta,
+        cuenta.nombre AS nombre_cuenta,
+        cuenta.apellido AS apellidos_cuenta,
+        cuenta.apodo,
+        idioma.nombre AS idioma_nombre,
+        solicitud_idioma.id_idioma,
+        solicitud_idioma.titulo_alternativo AS nuevo_titulo
+      FROM
+          solicitud_idioma
+      LEFT JOIN idioma ON idioma.id = solicitud_idioma.id_idioma
+      LEFT JOIN idiomas_libro ON idiomas_libro.id_libro = solicitud_idioma.id_libro
+      LEFT JOIN cuenta ON cuenta.id = solicitud_idioma.id_cuenta
+      WHERE solicitud_idioma.id_cuenta = :id_cuenta
+      GROUP BY solicitud_idioma.id;"
+
+    );
+
+    $solicitudes->execute(['id_cuenta' => $usuario['id']]);
+  } else {
+    if ($usuario['rol'] === 'Admin') {
+      $solicitudes = $pdo->prepare(
+        "SELECT DISTINCT
+        solicitud_idioma.id,
+        solicitud_idioma.id_libro,
+        idiomas_libro.titulo_alternativo AS titulo_libro,
+        solicitud_idioma.id_cuenta,
+        cuenta.nombre AS nombre_cuenta,
+        cuenta.apellido AS apellidos_cuenta,
+        cuenta.apodo,
+        idioma.nombre AS idioma_nombre,
+        solicitud_idioma.id_idioma,
+        solicitud_idioma.titulo_alternativo AS nuevo_titulo
+      FROM
+          solicitud_idioma
+      LEFT JOIN idioma ON idioma.id = solicitud_idioma.id_idioma
+      LEFT JOIN idiomas_libro ON idiomas_libro.id_libro = solicitud_idioma.id_libro
+      LEFT JOIN cuenta ON cuenta.id = solicitud_idioma.id_cuenta
+      GROUP BY solicitud_idioma.id;"
+      );
+
+      $solicitudes->execute([]);
+    } else {
+      $clases = $clases = array_column(buscarClases($usuario), 'cod_clase');
+
+      $clases = implode(', ', array_map(function ($clase) {
+        return "'$clase'";
+      }, $clases));
+
+      $solicitudes = $pdo->prepare(
+        "SELECT DISTINCT
+          solicitud_idioma.id,
+          solicitud_idioma.id_libro,
+          idiomas_libro.titulo_alternativo as titulo_libro,
+          solicitud_idioma.id_cuenta,
+          cuenta.nombre as nombre_cuenta,
+          cuenta.apellido as apellidos_cuenta,
+          cuenta.apodo,
+          idioma.nombre as idioma_nombre,
+          solicitud_idioma.id_idioma,
+          solicitud_idioma.titulo_alternativo as nuevo_titulo
+        from
+            solicitud_idioma
+        left join idioma on idioma.id = solicitud_idioma.id_idioma
+        left join idiomas_libro on idiomas_libro.id_libro = solicitud_idioma.id_libro
+        left join cuenta on cuenta.id = solicitud_idioma.id_cuenta
+        where cuenta.cod_clase in ($clases)
+        group by solicitud_idioma.id;"
+      );
+
+      $solicitudes->execute([]);
+    }
+  }
+
+  return $solicitudes->fetchAll();
 }
 
 function agregarReviews(array $reviews, bool $seccionPersonal = false): void

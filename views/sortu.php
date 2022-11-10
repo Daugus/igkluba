@@ -78,7 +78,7 @@ include_once '../templates/head.php';
 agregarHead('Sortu kontua | IGKluba', __FILE__);
 ?>
 
-<body>
+<body id="fondo-libro">
   <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Sortu kontua</h1>

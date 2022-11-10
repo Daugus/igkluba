@@ -104,6 +104,10 @@ a:not(nav a):hover,
   text-decoration-color: initial;
 }
 
+#fondo-libro{
+  background-image: url(/src/img/fondo-libros.png);
+}
+
 #collage {
   width: 1000;
   height: 700;
