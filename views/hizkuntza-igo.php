@@ -9,13 +9,33 @@ agregarHead('Saioa hasi | IGKluba', __FILE__);
 include_once '../modules/session.php';
 checkSession();
 
+include_once '../modules/db-config.php';
+if ($accion === 'onartu') {
+  $select = $pdo->prepare('SELECT titulo_alternativo, id_libro FROM solicitud_idioma WHERE id = :id');
+  $select->execute(['id' => $id]);
+  $solicitud = $select->fetch();
+
+  $update = $pdo->prepare('UPDATE idiomas_libro SET titulo_alternativo = :nuevo_titulo where id_libro = :id_libro;');
+  $update->execute(['id_libro' => $solicitud['id_libro'], 'nuevo_titulo' => $solicitud['titulo_alternativo']]);
+
+  $delete = $pdo->prepare('DELETE FROM solicitud_idioma where id = :id;');
+  $delete->execute(['id' => $id]);
+
+  header('Location: /profila#hizkuntza-eskaerak');
+} else if ($accion === 'ukatu') {
+  $delete = $pdo->prepare('DELETE FROM solicitud_idioma where id = :id;');
+  $delete->execute(['id' => $id]);
+
+  header('Location: /profila#hizkuntza-eskaerak');
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  include_once '../modules/db-config.php';
+
   $id_libro = $id;
   $id_cuenta = $_SESSION['usr']['id'];
   $id_idioma = $_REQUEST['idioma'];
-  $titulo_alternativo = $_REQUEST['nuevoIdioma'];
+  $titulo_alternativo = $_REQUEST['nombreLibro'];
 
   if ($id_idioma === 'otro') {
 
@@ -25,23 +45,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     $insert->execute([
-      'nombre' => $_REQUEST['nombreLibro']
+      'nombre' => $_REQUEST['nuevoIdioma']
     ]);
 
     $id_idioma = $pdo->lastInsertId();
   }
 
-
-  $insert = $pdo->prepare(
-    "INSERT INTO solicitud_idioma (id_libro, id_cuenta, id_idioma, titulo_alternativo)
+  if ($_SESSION['usr']['rol'] === 'Admin') {
+    $insert = $pdo->prepare(
+      "INSERT INTO idiomas_libro (id_libro, id_idioma, titulo_alternativo)
+      VALUES (:id_libro,  :id_idioma, :titulo_alternativo)"
+    );
+    $insert->execute([
+      'id_libro' => $id_libro,
+      'id_idioma' => $id_idioma,
+      'titulo_alternativo' => $titulo_alternativo
+    ]);
+  } else {
+    $insert = $pdo->prepare(
+      "INSERT INTO solicitud_idioma (id_libro, id_cuenta, id_idioma, titulo_alternativo)
       VALUES (:id_libro, :id_cuenta, :id_idioma, :titulo_alternativo)"
-  );
-  $insert->execute([
-    'id_libro' => $id_libro,
-    'id_cuenta' => $id_cuenta,
-    'id_idioma' => $id_idioma,
-    'titulo_alternativo' => $titulo_alternativo
-  ]);
+    );
+    $insert->execute([
+      'id_libro' => $id_libro,
+      'id_cuenta' => $id_cuenta,
+      'id_idioma' => $id_idioma,
+      'titulo_alternativo' => $titulo_alternativo
+    ]);
+  }
 
   header('Location: /profila/');
 }
