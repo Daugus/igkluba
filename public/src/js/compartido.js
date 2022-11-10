@@ -4,7 +4,6 @@ const selectColumnas = document.querySelector('#select-columnas');
 selectColumnas?.addEventListener('input', (e) => cambiarCantidadColumnas(e.target.value));
 
 const cambiarCantidadColumnas = (cantidad) => {
-  console.log(cantidad);
   localStorage.setItem('columnas', cantidad);
   document.documentElement.style.setProperty('--columnas', cantidad);
 };
