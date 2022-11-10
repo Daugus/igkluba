@@ -7,6 +7,7 @@ checkSession();
 
 include_once '../modules/db-config.php';
 
+// Editar una review
 $editar = ($accion === '') ? false : true;
 if ($editar) {
   $review = $pdo->prepare('SELECT * FROM review WHERE id = :id_review');
@@ -15,6 +16,7 @@ if ($editar) {
 
   if (empty($review)) header('Location: /liburua/' . $id);
 
+  // Eliminar una review
   if ($accion === 'ezabatu') {
     echo ('DELETE FROM review WHERE id = ' . $id . ';');
     $delete = $pdo->prepare('DELETE FROM review WHERE id = :id_review;');
@@ -53,6 +55,7 @@ if ($editar) {
 }
 // TODO: comprobar fecha de pub
 
+// Añadir la review 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ((bool) $_REQUEST['editar']) {
     $update = $pdo->prepare(
@@ -116,6 +119,7 @@ agregarHead('Iritzia eman | IGKluba', __FILE__);
           <p><?php echo $libro['autor'] ?></p>
         </div>
 
+        <!-- Nota del libro -->
         <div class="campo">
           <label for="nota">Nota:</label>
           <div class="select-nota">
@@ -135,6 +139,7 @@ agregarHead('Iritzia eman | IGKluba', __FILE__);
           </div>
         </div>
 
+        <!-- Idiomas del libro -->
         <div class="campo">
           <label for="idioma">Irakurritako hizkuntza:</label>
 

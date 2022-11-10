@@ -8,11 +8,13 @@ checkSession();
 if (!isset($busqueda)) header('Location: /nagusia');
 $id = $busqueda;
 
+// Coger toda la informacion del libro
 include_once '../modules/db-config.php';
 $libro = $pdo->prepare('SELECT * FROM libro WHERE id = :id;');
 $libro->execute(['id' => $id]);
 $libro = $libro->fetch();
 
+// Botones de aceptar o rechazar
 if (empty($libro) || ($accion === '' && $libro['aceptado'] === 0)) header('Location: /nagusia');
 if ($accion === 'kendu') header("Location: /liburua/$id");
 if ($accion === 'onartu') {
@@ -26,6 +28,7 @@ if ($accion === 'onartu') {
   header('Location: /profila#liburu-eskaerak');
 }
 
+// Saca los titulos de los libros
 $titulos = $pdo->prepare(
   'SELECT i.nombre AS nombre_idioma, il.titulo_alternativo AS titulo
     FROM idiomas_libro il JOIN idioma i ON il.id_idioma = i.id
@@ -35,6 +38,7 @@ $titulos = $pdo->prepare(
 $titulos->execute(['id_libro' => $id]);
 $titulos = $titulos->fetchAll();
 
+// Consulta de etiquetas
 if ($accion !== 'eskaera') {
   $consultaEtiquetas = $pdo->prepare('SELECT nombre FROM etiqueta WHERE id_libro = :id_libro');
   $consultaEtiquetas->execute(['id_libro' => $id]);
@@ -50,7 +54,7 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
   include_once '../templates/header.php';
   headerGeneral();
   ?>
-
+  <!-- Información del libro con variables sacadas de una consulta -->
   <main class="flex-center-col" id="main-libro">
     <section class="flex-center-row" id="informacion">
       <div id="portada">
@@ -66,7 +70,7 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
           <?php
           }
           ?>
-
+          <!-- nota media sacada de la base de datos -->
           <p id="autor"><?php echo $libro['autor'] ?></p>
           <?php if ($accion !== 'eskaera') { ?>
             <p class="nota">
@@ -141,6 +145,7 @@ agregarHead($titulos[0]['titulo'] . ' | IGKluba');
     </section>
 
     <?php
+    // Buscar las reviews
     if ($accion !== 'eskaera') {
       include_once '../modules/select.php';
       $reviews = buscarReviews($libro['id'], ['r.id_libro = :id', 'r.texto <> ""']);

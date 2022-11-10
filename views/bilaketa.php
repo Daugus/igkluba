@@ -5,6 +5,7 @@
 include_once '../modules/session.php';
 checkSession();
 
+// Pagina de busqueda para los libros
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['busqueda'])) {
   $busqueda = trim($_REQUEST['busqueda']);
   $_SESSION['busquedaOriginal'] = $busqueda;
@@ -26,6 +27,7 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
   ?>
 
   <main>
+    <!-- Desplegable para seleccionar la cantidad de columnas -->
     <?php agregarSelectColumnas(); ?>
 
     <?php
@@ -54,13 +56,14 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
         $orden = ['l.nota_media'];
         break;
     }
-
+    // Orden ascendente o descendente para la busqueda
     if (isset($_REQUEST['ordena']) && $_REQUEST['ordena'] === 'gora') {
       $orden[0] .= ' ASC';
     } else {
       $orden[0] .= ' DESC';
     }
 
+    // Busqueda de libros
     $libros = buscarLibros($condicion, $orden);
 
     $resultados = count($libros);
@@ -71,6 +74,7 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
     $cantidadPaginas = count($libros);
     $rutaBusqueda = '/bilaketa/' . $busquedaOriginal;
 
+    // Ruta de la busqueda
     if ($pagina !== 1) {
       if ($cantidadPaginas === 0) {
         header("Location: $rutaBusqueda/1?$query");
@@ -79,7 +83,7 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
       }
     }
     ?>
-
+    <!-- Contar el numero de resultados que ha dado -->
     <h1 id="titulo-busqueda">"<?php echo $busquedaOriginal ?>" bilaketa <?php echo $resultados ?> erantzunak eman ditu:</h1>
 
     <?php if ($resultados > 0) { ?>
@@ -88,6 +92,7 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
           <form method="get" action="GET" class="flex-stretch-col">
             <p>Ordenatu</p>
 
+            <!-- Filtros de busqueda -->
             <div class="select-container">
               <select name="orden" id="orden">
                 <option value="igoera" <?php if (isset($_REQUEST['ordenatu']) && $_REQUEST['ordenatu'] === 'igoera') echo 'selected' ?>>Igoera data</option>
@@ -119,6 +124,7 @@ agregarHead($busquedaOriginal . ' | IGKluba', __FILE__);
 
           if ($cantidadPaginas > 1) {
           ?>
+            <!-- Cantidad de paginas -->
             <ul class="flex-center-row" id="selector-pagina">
               <?php
               foreach (range(1, $cantidadPaginas) as $enlacePagina) {

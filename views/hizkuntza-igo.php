@@ -9,6 +9,7 @@ agregarHead('Saioa hasi | IGKluba', __FILE__);
 include_once '../modules/session.php';
 checkSession();
 
+// Actualizar titulo, añadir idioma o eliminar la solicitud de idioma
 include_once '../modules/db-config.php';
 if ($accion === 'onartu') {
   $select = $pdo->prepare('SELECT titulo_alternativo, id_libro FROM solicitud_idioma WHERE id = :id');
@@ -29,7 +30,7 @@ if ($accion === 'onartu') {
   header('Location: /profila#hizkuntza-eskaerak');
 }
 
-
+// Coge la información
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $id_libro = $id;
@@ -39,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($id_idioma === 'otro') {
 
+    // Inserta en la base de datos el nombre del idioma
     $insert = $pdo->prepare(
       "INSERT INTO idioma (nombre)
       VALUES (:nombre)"
@@ -51,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_idioma = $pdo->lastInsertId();
   }
 
+  // Inserta el nuevo idioma en la base de datos
   if ($_SESSION['usr']['rol'] === 'Admin') {
     $insert = $pdo->prepare(
       "INSERT INTO idiomas_libro (id_libro, id_idioma, titulo_alternativo)
@@ -97,6 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="campo">
           <label for="idioma">Irakurritako hizkuntza:</label>
 
+          <!-- Select para sacar el idioma que no este de un libro de la base de datos -->
           <div class="select-container">
             <select name="idioma" id="idioma">
               <option disabled selected>-</option>
@@ -137,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </main>
 
+  <!-- mensaje de error -->
   <?php if (!empty($error)) { ?>
     <div class="mensaje-error"><i class="fa-solid fa-circle-exclamation"></i>
       <p><?php echo $error ?></p>

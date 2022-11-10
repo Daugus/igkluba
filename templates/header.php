@@ -33,11 +33,13 @@ function headerGeneral(String $valueBusqueda = ''): void
       <a href="/naugusia"><img src="/src/img/logo.png" alt="Logo IGKluba"></a>
     </div>
 
+    <!-- Buscador -->
     <form id="buscador" action="/bilaketa" method="POST" class="flex-center-row">
       <input id="busqueda" type="search" name="busqueda" placeholder="Bilatu liburua edo egilea..." value="<?php echo $valueBusqueda ?>">
       <button id="buscar" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
     </form>
 
+    <!-- Foto de perfil -->
     <div id="header-perfil">
       <a href="/profila">
         <?php
@@ -48,6 +50,7 @@ function headerGeneral(String $valueBusqueda = ''): void
       </a>
     </div>
   </header>
+
 
   <nav id="nav-general">
     <ul class="flex-center-row">

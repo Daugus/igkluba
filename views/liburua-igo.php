@@ -69,7 +69,7 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
   include_once '../templates/header.php';
   headerGeneral();
   ?>
-
+  <!-- Información del libro -->
   <main class="flex-center-col main-form">
     <div class="form-container">
       <h1>Liburua <?php echo $accion ?></h1>
@@ -103,6 +103,7 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
         <div class="campo">
           <label for="formato">Formatua:</label>
 
+          <!-- Select con el formato del libro sacado de la base de datos -->
           <div class="select-container">
             <select name="formato" id="formato">
               <option disabled selected>-</option>
@@ -129,6 +130,7 @@ agregarHead('Liburua ' . $accion . ' | IGKluba', __FILE__);
       </form>
     </div>
 
+    <!-- Importar CSV de una pagina web -->
     <?php if ($_SESSION['usr']['rol'] === 'Admin') { ?>
       <a href="/csv-igo" class="volver">CSV igo</a>
     <?php

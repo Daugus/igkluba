@@ -5,12 +5,14 @@
 include_once '../modules/session.php';
 checkSession();
 
+// Sacar las reviews
 include_once '../modules/db-config.php';
 $review = $pdo->prepare('SELECT r.id AS id_review, l.id AS id_libro FROM review r JOIN libro l ON r.id_libro = l.id WHERE r.id = :id');
 $review->execute(['id' => $id]);
 $review = $review->fetch();
 if (empty($review)) header('Location: /nagusia');
 
+// Insertar respuestas
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   include_once '../modules/db-config.php';
   $insert = $pdo->prepare('INSERT INTO respuesta (texto, id_review, id_cuenta, aceptado)

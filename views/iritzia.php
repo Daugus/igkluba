@@ -8,6 +8,7 @@ checkSession();
 if (!isset($busqueda)) header('Location: /nagusia');
 $id_review = $busqueda;
 
+// Enseñar la review
 include_once '../modules/db-config.php';
 $review = $pdo->prepare('SELECT * FROM review WHERE id = :id;');
 $review->execute(['id' => $id_review]);
@@ -74,6 +75,7 @@ agregarHead(implode(' ', array_slice(explode(' ', $review['texto']), 0, 6)) . '.
           foreach ($respuestas as $respuesta) {
           ?>
             <li>
+              <!-- Información del usuario en la review -->
               <article class="repuesta">
                 <h3 id="reviewer">
                   <?php

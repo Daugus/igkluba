@@ -5,7 +5,7 @@
 include_once '../modules/session.php';
 checkSession();
 
-
+// Crear y gestionar el codigo de la clase
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   include_once '../modules/db-config.php';
 
@@ -43,6 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if (!isset($busqueda) || $_SESSION['usr']['rol'] !== 'Irakasle') header('Location: /profila');
 
+
+// Eliminar clase
 if ($accion === 'ezabatu') {
   include_once '../modules/db-config.php';
   $delete = $pdo->prepare('DELETE FROM clase WHERE cod = :cod');
@@ -76,6 +78,7 @@ agregarHead($clase['nombre'] . ' | IGKluba');
   <main class="flex-stretch-col" id="main-clase">
     <h1><?php echo $clase['nombre'] ?></h1>
 
+    <!-- Datos de la clase -->
     <section id="datos">
       <p><span>Kodea</span>: <?php echo $clase['cod'] ?></p>
       <p><span>Maila</span>: <?php echo $clase['nivel'] ?></p>
@@ -91,6 +94,7 @@ agregarHead($clase['nombre'] . ' | IGKluba');
     <a href="/klasea/<?php echo $clase['cod'] ?>/ezabatu" class="btn">Klasea ezabatu</a>
 
     <?php
+    // Busca los alumnos
     $alumnos = buscarAlumnos($clase['cod']);
     if (count($alumnos) > 0) agregarAlumnos($alumnos);
     ?>
