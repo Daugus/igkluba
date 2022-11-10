@@ -103,7 +103,6 @@ function buscarSolicitudesLibros(array $usuario, bool $propias = false): array
     }
   }
 
-  $libros->execute();
   return $libros->fetchAll();
 }
 
@@ -197,9 +196,6 @@ function agregarSolicitudesIdioma(array $solicitudesIdioma, bool $propias = fals
           ?>
 
         </article>
-
-
-
       <?php
       }
       ?>
@@ -207,8 +203,6 @@ function agregarSolicitudesIdioma(array $solicitudesIdioma, bool $propias = fals
   </section>
 <?php
 }
-
-
 
 function buscarReviews(int $id, array $condiciones): array
 {
@@ -282,25 +276,27 @@ function buscarSolicitudesIdioma(array $usuario, bool $propias = false)
         return "'$clase'";
       }, $clases));
 
+      if (empty($clases)) $clases = "'a'";
+
       $solicitudes = $pdo->prepare(
         "SELECT DISTINCT
-          solicitud_idioma.id,
-          solicitud_idioma.id_libro,
-          idiomas_libro.titulo_alternativo as titulo_libro,
-          solicitud_idioma.id_cuenta,
-          cuenta.nombre as nombre_cuenta,
-          cuenta.apellido as apellidos_cuenta,
-          cuenta.apodo,
-          idioma.nombre as idioma_nombre,
-          solicitud_idioma.id_idioma,
-          solicitud_idioma.titulo_alternativo as nuevo_titulo
-        from
-            solicitud_idioma
-        left join idioma on idioma.id = solicitud_idioma.id_idioma
-        left join idiomas_libro on idiomas_libro.id_libro = solicitud_idioma.id_libro
-        left join cuenta on cuenta.id = solicitud_idioma.id_cuenta
-        where cuenta.cod_clase in ($clases)
-        group by solicitud_idioma.id;"
+            solicitud_idioma.id,
+            solicitud_idioma.id_libro,
+            idiomas_libro.titulo_alternativo as titulo_libro,
+            solicitud_idioma.id_cuenta,
+            cuenta.nombre as nombre_cuenta,
+            cuenta.apellido as apellidos_cuenta,
+            cuenta.apodo,
+            idioma.nombre as idioma_nombre,
+            solicitud_idioma.id_idioma,
+            solicitud_idioma.titulo_alternativo as nuevo_titulo
+          from
+              solicitud_idioma
+          left join idioma on idioma.id = solicitud_idioma.id_idioma
+          left join idiomas_libro on idiomas_libro.id_libro = solicitud_idioma.id_libro
+          left join cuenta on cuenta.id = solicitud_idioma.id_cuenta
+          where cuenta.cod_clase in ($clases)
+          group by solicitud_idioma.id;"
       );
 
       $solicitudes->execute([]);

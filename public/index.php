@@ -12,6 +12,9 @@ if ($cantidadSecciones === 1) {
   if (in_array($page[0], ['liburua', 'iritzia', 'profila', 'klasea'])) {
     $ruta_elegida = '../views/' . $page[0] . '.php';
     $busqueda = $page[1];
+  } else if ($page[0] === 'sortu') {
+    $ruta_elegida = '../views/' . $page[0] . '.php';
+    $tipoUsuario = $page[1];
   }
 } else if ($cantidadSecciones === 3 && $page[0] !== 'bilaketa') {
   if (in_array($page[0], ['liburua', 'iritzia', 'iritzi', 'erantzun', 'profila', 'klasea'])) {

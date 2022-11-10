@@ -5,6 +5,8 @@
 include_once '../modules/session.php';
 checkLogin();
 
+if (!isset($tipoUsuario) || !in_array($tipoUsuario, ['ikasle', 'irakasle'])) header('Location: /sortu/ikasle');
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,13 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($error === '') {
     include_once '../modules/db-config.php';
-    $clase = $pdo->prepare('SELECT cod FROM clase where cod = :cod');
-    $clase->execute(['cod' => $_REQUEST['clase']]);
-    $clase = $clase->fetch();
+    if ($tipoUsuario === 'ikasle') {
+      $clase = $pdo->prepare('SELECT cod FROM clase where cod = :cod');
+      $clase->execute(['cod' => $_REQUEST['clase']]);
+      $clase = $clase->fetch();
 
-    if (empty($clase)) {
-      $error = 'Klase hori es da existitzen';
-    } else {
+      if ($empty($clase)) $error = 'Klase hori es da existitzen';
+    }
+
+    if ($error === '') {
       $buscarApodo = $pdo->prepare('SELECT apodo FROM cuenta WHERE apodo = :apodo');
       $buscarApodo->execute(['apodo' => $_REQUEST['apodo']]);
       $buscarApodo = $buscarApodo->fetch();
@@ -49,20 +53,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($buscarCorreo)) {
           $error = 'E-mail hori aukeratuta dago';
         } else {
-          $insert = $pdo->prepare('INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, id_centro, correo)
-          VALUES (:nombre, :apellido, :apodo, :rol, :activo, :pass, :fecha_nacimiento, :cod_clase, :id_centro, :correo)');
-          $insert->execute([
-            'nombre' => $_REQUEST['nombre'],
-            'apellido' => $_REQUEST['apellido'],
-            'apodo' => $_REQUEST['apodo'],
-            'rol' => 'ikasle',
-            'activo' => 0,
-            'pass' => password_hash($_REQUEST['pwd'], PASSWORD_DEFAULT),
-            'fecha_nacimiento' => $_REQUEST['fecha'],
-            'cod_clase' => $_REQUEST['clase'],
-            'id_centro' => $_REQUEST['centro'],
-            'correo' => $_REQUEST['correo']
-          ]);
+          if ($tipoUsuario === 'Ikasle') {
+            $insert = $pdo->prepare(
+              'INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, id_centro, correo)
+                VALUES (:nombre, :apellido, :apodo, :rol, :activo, :pass, :fecha_nacimiento, :cod_clase, :id_centro, :correo)'
+            );
+            $insert->execute([
+              'nombre' => $_REQUEST['nombre'],
+              'apellido' => $_REQUEST['apellido'],
+              'apodo' => $_REQUEST['apodo'],
+              'rol' => $tipoUsuario,
+              'activo' => 0,
+              'pass' => password_hash($_REQUEST['pwd'], PASSWORD_DEFAULT),
+              'fecha_nacimiento' => $_REQUEST['fecha'],
+              'cod_clase' => $_REQUEST['clase'],
+              'id_centro' => $_REQUEST['centro'],
+              'correo' => $_REQUEST['correo']
+            ]);
+          } else {
+            $insert = $pdo->prepare(
+              'INSERT INTO cuenta (nombre, apellido, apodo, rol, activo, pass, fecha_nacimiento, cod_clase, tel, id_centro, correo)
+                VALUES (:nombre, :apellido, :apodo, :rol, :activo, :pass, :fecha_nacimiento, :cod_clase, :tel, :id_centro, :correo)'
+            );
+            $insert->execute([
+              'nombre' => $_REQUEST['nombre'],
+              'apellido' => $_REQUEST['apellido'],
+              'apodo' => $_REQUEST['apodo'],
+              'rol' => $tipoUsuario,
+              'activo' => 0,
+              'pass' => password_hash($_REQUEST['pwd'], PASSWORD_DEFAULT),
+              'fecha_nacimiento' => $_REQUEST['fecha'],
+              'cod_clase' => null,
+              'tel' => $_REQUEST['tel'],
+              'id_centro' => $_REQUEST['centro'],
+              'correo' => $_REQUEST['correo']
+            ]);
+          }
 
           $rutaArchivo = $directorio . $pdo->lastInsertId() . '.png';
           move_uploaded_file($archivo['tmp_name'], $rutaArchivo);
@@ -125,10 +151,21 @@ agregarHead('Sortu kontua | IGKluba', __FILE__);
           </div>
         </div>
 
-        <div class="campo">
-          <label for="clase">Klasea:</label>
-          <input type="text" id="clase" name="clase" maxlength="6" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
-        </div>
+        <?php if ($tipoUsuario === 'ikasle') { ?>
+          <div class="campo">
+            <label for="clase">Klasea:</label>
+            <input type="text" id="clase" name="clase" maxlength="6" placeholder="Klasearen kodea" value="<?php if (isset($_REQUEST['clase'])) echo $_REQUEST['clase'] ?>">
+          </div>
+        <?php
+        } else {
+        ?>
+          <div class="campo">
+            <label for="tel">Telefonoa:</label>
+            <input type="tel" id="tel" name="tel" maxlength="9" placeholder="Zure telefono zenbakia" value="<?php if (isset($_REQUEST['tel'])) echo $_REQUEST['tel'] ?>">
+          </div>
+        <?php
+        }
+        ?>
 
         <div class="campo">
           <label for="fecha">Jaiotze data:</label>
@@ -157,6 +194,15 @@ agregarHead('Sortu kontua | IGKluba', __FILE__);
 
     <div class="flex-center-col grupo-volver">
       <a href="/hasi" class="volver">Kontua badaukat</a>
+      <?php if ($tipoUsuario === 'ikasle') { ?>
+        <a href="/sortu/irakasle" class="volver">Irakaslea naiz</a>
+      <?php
+      } else {
+      ?>
+        <a href="/sortu/ikasle" class="volver">Ikaslea naiz</a>
+      <?php
+      }
+      ?>
       <a href="/hasiera" class="volver">Itzuli</a>
     </div>
   </main>

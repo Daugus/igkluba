@@ -27,7 +27,10 @@ btnRegistro.addEventListener('click', (e) => {
 
   if (valoresEnviados.centro === '-') return mostrarMensajeError('Aukeratu ikastetxe bat', campos.centro);
 
-  if (!/^[A-Za-z0-9]{6,6}$/.test(valoresEnviados.clase)) return mostrarMensajeError('Klasearen kodea ez da egokia', campos.clase);
+  if (valoresEnviados.clase != undefined && !/^[A-Za-z0-9]{6,6}$/.test(valoresEnviados.clase))
+    return mostrarMensajeError('Klasearen kodea ez da egokia', campos.clase);
+
+  if (valoresEnviados.tel != undefined && !/^[\d]{9,9}$/.test(valoresEnviados.tel)) return mostrarMensajeError('Telefonoa ez da egokia', campos.tel);
 
   if (valoresEnviados.fecha === '' || calcularEdad(valoresEnviados.fecha) < 12)
     return mostrarMensajeError('Hamar urte baino gehiago izan behar dituzu', campos.fecha);

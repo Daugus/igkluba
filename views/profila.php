@@ -58,7 +58,7 @@ include_once '../modules/select.php';
   ?>
 
   <main class="flex-center-col" id="main-personal">
-    <?php agregarSelectColumnas(); ?>
+    <?php if ($accion !== 'eskaera') agregarSelectColumnas(); ?>
 
     <section class="flex-center-row" id="informacion">
       <div id="perfil">
@@ -116,7 +116,6 @@ include_once '../modules/select.php';
       </section>
     <?php
     } else if ($_SESSION['usr']['id'] === $usuario['id'] && $usuario['rol'] !== 'Ikasle') {
-
       $solicitudesLibros = buscarSolicitudesLibros($usuario);
       if (count($solicitudesLibros) > 0) agregarSolicitudesLibros($solicitudesLibros);
 
