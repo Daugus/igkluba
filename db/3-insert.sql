@@ -80,7 +80,7 @@ values (
     5,
     'Nombre',
     'Apellidos',
-    'test',
+    'ejemplo',
     'ikasle',
     true,
     '$2y$10$dPLb4Xobi78PUlFtWuAzi.2SIAVtqhY2dmrfrdA1ICfYXmfY/nvSS',
